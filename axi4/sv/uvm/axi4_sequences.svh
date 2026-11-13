@@ -283,12 +283,6 @@ class axi4_write_readback_seq #(
           off = (max_off / bytes_per_beat) * bytes_per_beat;
           a   = base4k + off;
         end
-        // Additional WRAP alignment to the wrap container
-        if (burst == AXI4_BURST_WRAP) begin
-          longint unsigned container;
-          container = total_bytes;
-          if (container != 0) a = (a / container) * container;
-        end
         wr.addr = a[ADDR_W-1:0];
       end
       wr.allocate_payload();
@@ -846,11 +840,17 @@ class axi4_same_id_pipeline_seq #(
     for (int unsigned i = 0; i < num_txns; i++) begin
       axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) wr;
       wr = new($sformatf("same_id_wr_%0d", i));
-      wr.is_write = 1'b1; wr.id = id; wr.addr = base_addr + i*STRB_W;
-      wr.len = 8'd0; wr.size = $clog2(STRB_W); wr.burst = AXI4_BURST_INCR; wr.user = '0;
-      wr.allocate_payload(); wr.data[0] = {$urandom(), $urandom()};
-      if (DATA_W <= 32) wr.data[0] = $urandom();
-      wr.strb[0] = '1;
+      wr.is_write = 1'b1; wr.id = id; wr.addr = base_addr + i*(4*STRB_W);
+      wr.len = 8'd3; wr.size = $clog2(STRB_W); wr.burst = AXI4_BURST_INCR; wr.user = '0;
+      wr.allocate_payload();
+
+      for (int unsigned b = 0; b < wr.num_beats(); b++) begin
+        wr.data[b] = {$urandom(), $urandom()};
+        if (DATA_W <= 32)
+          wr.data[b] = $urandom();
+
+        wr.strb[b] = '1;
+      end
       start_item(wr); finish_item(wr); wrs.push_back(wr);
     end
     wait (seen == num_txns);
@@ -867,7 +867,7 @@ class axi4_same_id_pipeline_seq #(
     foreach (wrs[i]) begin
       axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) rd;
       rd = new($sformatf("same_id_rd_%0d", i));
-      rd.is_write = 1'b0; rd.id = id; rd.addr = wrs[i].addr; rd.len = 8'd0;
+      rd.is_write = 1'b0; rd.id = id; rd.addr = wrs[i].addr; rd.len = wrs[i].len;
       rd.size = wrs[i].size; rd.burst = wrs[i].burst; rd.user = '0;
       rd.allocate_payload(); start_item(rd); finish_item(rd);
     end

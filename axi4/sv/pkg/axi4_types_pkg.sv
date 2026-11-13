@@ -71,7 +71,7 @@ package axi4_types_pkg;
     longint unsigned container;
     container = axi4_total_bytes(size, len);
     if (container == 0) return 1'b0;
-    return ((start_addr % container) == 0);
+    return ((start_addr % axi4_size_to_bytes(size)) == 0);
   endfunction
 
   function automatic bit axi4_crosses_4kb(

@@ -60,6 +60,7 @@ module axi4_ram_slave #(
   logic [2:0]        wr_size;
   logic [1:0]        wr_burst;
   logic              wr_active;
+  int unsigned wready_stall_count;
 
   logic [ID_W-1:0]   rd_id;
   logic [USER_W-1:0] rd_user;
@@ -130,6 +131,7 @@ module axi4_ram_slave #(
       buser     <= '0;
       wr_active <= 1'b0;
       wr_beat   <= '0;
+      wready_stall_count <= 0;
 
       arready   <= 1'b1;
       rvalid    <= 1'b0;
@@ -153,6 +155,17 @@ module axi4_ram_slave #(
         wr_beat   <= '0;
         awready   <= 1'b0;
         wready    <= 1'b1;
+        wready_stall_count <= 0;
+      end
+
+      // Hold WREADY low for three cycles after first W beat
+      if (wr_active && !wready && (wready_stall_count != 0)) begin
+        if (wready_stall_count == 1) begin
+          wready_stall_count <= 0;
+          wready <= 1'b1;
+        end else begin
+          wready_stall_count <= wready_stall_count - 1;
+        end
       end
 
       if (wready && wvalid) begin
@@ -179,6 +192,12 @@ module axi4_ram_slave #(
         end else begin
           wr_beat <= wr_beat + 1;
           wr_addr <= beat_addr(wr_start_addr, wr_size, wr_len, wr_burst, wr_beat + 1);
+
+          // Apply backpressure before the second W beat
+          if (wr_beat == 0) begin
+            wready <= 1'b0;
+            wready_stall_count <= 3;
+          end
         end
       end
 

@@ -9,3 +9,8 @@ axi4_dut_pipeline_test
 axi4_dut_error_test
 axi4_dut_delay_test
 axi4_dut_ral_test
+axi4_dut_wrap_alignment_test
+axi4_dut_fixed_test
+axi4_dut_incr_test
+axi4_dut_narrow_directed_test
+axi4_dut_4kb_boundary_test

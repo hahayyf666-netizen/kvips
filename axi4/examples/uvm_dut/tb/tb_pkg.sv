@@ -339,6 +339,10 @@ package tb_pkg;
       env_cfg.agent_cfgs[0].master_aw_delay_max = 2;
       env_cfg.agent_cfgs[0].master_ar_delay_min = 1;
       env_cfg.agent_cfgs[0].master_ar_delay_max = 2;
+      // Random R-channel backpressure from Master
+      env_cfg.agent_cfgs[0].master_rready_random = 1'b1;
+      env_cfg.agent_cfgs[0].master_rready_low_min = 3;
+      env_cfg.agent_cfgs[0].master_rready_low_max = 5;
     endfunction
     task run_phase(uvm_phase phase);
       axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
@@ -436,5 +440,552 @@ package tb_pkg;
       phase.drop_objection(this);
     endtask
   endclass
+
+
+  // Directed AXI4 burst verification sequence
+  class axi4_directed_burst_seq #(
+    int ADDR_W = 32,
+    int DATA_W = 64,
+    int ID_W   = 4,
+    int USER_W = 1
+  ) extends axi4_base_seq#(ADDR_W, DATA_W, ID_W, USER_W);
+
+    // WRAP burst starting address, configured by the test
+    logic [ADDR_W-1:0] start_addr;
+    axi4_burst_e burst_type = AXI4_BURST_WRAP;
+    logic [2:0] size_cfg = 3'd2;
+    logic [7:0] len_cfg = 8'd3;
+
+    `uvm_object_param_utils(
+      axi4_directed_burst_seq#(ADDR_W, DATA_W, ID_W, USER_W)
+    )
+
+    function new(string name = "axi4_directed_burst_seq");
+      super.new(name);
+
+    // Default WRAP starting address
+       start_addr = 'h2000;
+     endfunction
+
+task body();
+
+  axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) wr;
+  axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) rd;
+  int unsigned bus_bytes;
+  int unsigned bytes_per_beat;
+  longint unsigned beat_a;
+  int unsigned lane;
+ // Create write transaction
+  wr = new("wr");
+  // Configure AXI4 WRAP transaction
+  wr.is_write = 1'b1;
+  wr.id       = '0;
+  wr.addr     = start_addr;
+  wr.len      = len_cfg;
+  wr.size     = size_cfg;
+  wr.burst    = burst_type;
+  wr.user     = '0;
+
+  // Allocate payload arrays
+  wr.allocate_payload();
+// Fill four different data patterns
+bus_bytes      = DATA_W / 8;
+bytes_per_beat = (1 << wr.size);
+
+for (int unsigned i = 0; i < wr.num_beats(); i++) begin
+
+  // Generate different WDATA patterns
+  case (i)
+    0: wr.data[i] = 64'hA1A2_A3A4_A5A6_A7A8;
+    1: wr.data[i] = 64'hB1B2_B3B4_B5B6_B7B8;
+    2: wr.data[i] = 64'hC1C2_C3C4_C5C6_C7C8;
+    3: wr.data[i] = 64'hD1D2_D3D4_D5D6_D7D8;
+    default: wr.data[i] = '0;
+  endcase
+
+  // Calculate current beat address
+  beat_a = axi4_beat_addr(
+    longint'(wr.addr),
+    int'(wr.size),
+    int'(wr.len),
+    wr.burst,
+    i
+  );
+
+  // Calculate starting byte lane
+  lane = int'(beat_a % bus_bytes);
+
+  // Generate WSTRB
+  if (bytes_per_beat >= bus_bytes)
+    wr.strb[i] = '1;
+  else
+    wr.strb[i] =
+      (((1 << bytes_per_beat) - 1) << lane);
+
+  `uvm_info(get_type_name(),
+    $sformatf(
+      "Beat=%0d Addr=0x%0h Lane=%0d WSTRB=0x%0h WDATA=0x%0h",
+      i, beat_a, lane, wr.strb[i], wr.data[i]
+    ),
+    UVM_LOW)
+
+end
+  // Send the complete WRAP write transaction
+  start_item(wr);
+  finish_item(wr);
+
+  // Check whether the transaction was aborted
+  if (wr.reset_aborted || wr.timeout_aborted) begin
+    `uvm_fatal(get_type_name(),
+      "WRAP write transaction was aborted")
+  end
+
+  // Check write response
+  if (wr.bresp != AXI4_RESP_OKAY) begin
+    `uvm_fatal(get_type_name(),
+      $sformatf("Expected BRESP=OKAY, got %0d", wr.bresp))
+  end
+
+  `uvm_info(get_type_name(),
+    "Burst write completed with BRESP=OKAY",
+    UVM_LOW)
+
+  // Create matching read transaction
+     rd = new("rd");
+
+       // Configure AXI4 WRAP read transaction
+     rd.is_write = 1'b0;
+     rd.id       = wr.id;
+     rd.addr     = wr.addr;
+     rd.len      = wr.len;
+     rd.size     = wr.size;
+     rd.burst    = wr.burst;
+     rd.user     = wr.user;
+
+                       // Allocate read payload arrays
+    rd.allocate_payload();
+
+  // Send the complete WRAP read transaction
+  start_item(rd);
+  finish_item(rd);
+
+  // Check whether the read transaction was aborted
+  if (rd.reset_aborted || rd.timeout_aborted) begin
+    `uvm_fatal(get_type_name(),
+      "WRAP read transaction was aborted")
+  end
+
+  // Check RRESP for every beat
+  for (int unsigned i = 0; i < rd.num_beats(); i++) begin
+    if (rd.rresp[i] != AXI4_RESP_OKAY) begin
+      `uvm_fatal(get_type_name(),
+        $sformatf(
+          "Expected RRESP=OKAY at beat %0d, got %0d",
+          i, rd.rresp[i]
+        ))
+    end
+  end
+
+  `uvm_info(get_type_name(),
+    "Burst read completed with all RRESP=OKAY",
+    UVM_LOW)
+`uvm_info(get_type_name(),
+    $sformatf(
+      "BURST WRITE: addr=0x%0h len=%0d size=%0d beats=%0d data_slots=%0d strb_slots=%0d",
+      wr.addr, wr.len, wr.size, wr.num_beats(),
+      wr.data.size(), wr.strb.size()
+    ),
+    UVM_LOW)
+
+endtask
+
+  endclass
+
+
+  // Directed WRAP alignment test
+  class axi4_dut_wrap_alignment_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_wrap_alignment_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+
+      axi4_directed_burst_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) seq;
+
+      logic [ADDR_W-1:0] selected_addr;
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) probe;
+      bit random_ok;
+
+      // Keep simulation alive
+      phase.raise_objection(this);
+
+      // Get master sequencer
+      seqr = env.get_master_sequencer(0);
+
+      if (seqr == null)
+        `uvm_fatal(get_type_name(),
+          "Master sequencer not found")
+
+      // Default starting address
+      selected_addr = 'h2000;
+
+      // Override address through command line
+      void'($value$plusargs(
+        "WRAP_ADDR=%h", selected_addr
+      ));
+
+      // Create and configure sequence
+      seq = new("seq");
+      seq.start_addr = selected_addr;
+      // Constraint-only probe
+      probe = new("probe");
+
+      // Disable only the default INCR constraint
+      probe.c_burst_default.constraint_mode(0);
+
+      // Experiment A: legal WRAP address
+      random_ok = probe.randomize() with {
+        is_write == 1'b1;
+        addr     == 32'h0000_2008;
+        len      == 8'd3;
+        size     == 3'd2;
+        burst    == AXI4_BURST_WRAP;
+      };
+
+      if (!random_ok) begin
+        `uvm_fatal(get_type_name(),
+          "Legal WRAP address 0x2008 was rejected")
+      end else begin
+        `uvm_info(get_type_name(),
+          "Constraint PASS: 0x2008 accepted",
+          UVM_LOW)
+      end
+
+      // Experiment B: illegal WRAP address
+      random_ok = probe.randomize() with {
+        is_write == 1'b1;
+        addr     == 32'h0000_2002;
+        len      == 8'd3;
+        size     == 3'd2;
+        burst    == AXI4_BURST_WRAP;
+      };
+
+      if (random_ok) begin
+        `uvm_fatal(get_type_name(),
+          "Illegal WRAP address 0x2002 was accepted")
+      end else begin
+        `uvm_info(get_type_name(),
+          "Constraint PASS: 0x2002 rejected",
+          UVM_LOW)
+      end
+
+      `uvm_info(get_type_name(),
+        $sformatf(
+          "Starting WRAP test: AWADDR=0x%0h",
+          selected_addr
+        ),
+        UVM_LOW)
+
+      // Start sequence
+      seq.start(seqr);
+
+      // Allow monitor and scoreboard to finish processing
+      repeat (128) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
+
+  // Directed FIXED burst test
+  class axi4_dut_fixed_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_fixed_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+
+      axi4_directed_burst_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) seq;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+
+      if (seqr == null)
+        `uvm_fatal(get_type_name(),
+          "Master sequencer not found")
+
+      // Configure FIXED burst
+      seq = new("seq");
+      seq.start_addr = 'h3000;
+      seq.burst_type = AXI4_BURST_FIXED;
+      seq.len_cfg = 8'd3;
+      seq.size_cfg = 3'd3;
+
+      `uvm_info(get_type_name(),
+        "Starting FIXED test: AWADDR=0x3000 LEN=3 SIZE=3",
+        UVM_LOW)
+
+      seq.start(seqr);
+
+      repeat (128) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
+
+  // Directed INCR burst test
+  class axi4_dut_incr_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_incr_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+
+      axi4_directed_burst_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) seq;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+
+      if (seqr == null)
+        `uvm_fatal(get_type_name(),
+          "Master sequencer not found")
+
+      // Configure INCR burst
+      seq = new("seq");
+      seq.start_addr = 'h4000;
+      seq.burst_type = AXI4_BURST_INCR;
+      seq.len_cfg = 8'd3;
+      seq.size_cfg = 3'd3;
+
+      `uvm_info(get_type_name(),
+        "Starting INCR test: AWADDR=0x4000 LEN=3 SIZE=3",
+        UVM_LOW)
+
+      seq.start(seqr);
+
+      repeat (128) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
+
+  // Directed Narrow Transfer test
+  class axi4_dut_narrow_directed_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_narrow_directed_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+
+      axi4_directed_burst_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) seq;
+
+      logic [ADDR_W-1:0] base_addr;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+
+      if (seqr == null)
+        `uvm_fatal(get_type_name(),
+          "Master sequencer not found")
+
+      // Test SIZE=0, 1 and 2
+      for (int unsigned size_i = 0; size_i < 3; size_i++) begin
+
+        base_addr = 32'h5000 + (size_i * 32'h0100);
+
+        // Step 1: Initialize four full-width words
+        seq = new($sformatf("prefill_size_%0d", size_i));
+        seq.start_addr = base_addr;
+        seq.burst_type = AXI4_BURST_INCR;
+        seq.len_cfg = 8'd3;
+        seq.size_cfg = 3'd3;
+
+        `uvm_info(get_type_name(),
+          $sformatf("Prefill SIZE=%0d at 0x%0h",
+            size_i, base_addr),
+          UVM_LOW)
+
+        seq.start(seqr);
+
+        // Step 2: Run the Narrow Transfer
+        seq = new($sformatf("narrow_size_%0d", size_i));
+        seq.start_addr = base_addr;
+        seq.burst_type = AXI4_BURST_INCR;
+        seq.len_cfg = 8'd3;
+        seq.size_cfg = size_i[2:0];
+
+        `uvm_info(get_type_name(),
+          $sformatf("Narrow test SIZE=%0d at 0x%0h",
+            size_i, base_addr),
+          UVM_LOW)
+
+        seq.start(seqr);
+
+      end
+
+      repeat (128) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
+
+  // Directed 4KB boundary test
+  class axi4_dut_4kb_boundary_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_4kb_boundary_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+
+      axi4_directed_burst_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) seq;
+
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) probe;
+      bit random_ok;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+
+      if (seqr == null)
+        `uvm_fatal(get_type_name(), "Master sequencer not found")
+
+      probe = new("probe");
+
+      // Legal: ends exactly at 4KB boundary
+      random_ok = probe.randomize() with {
+        is_write == 1'b1;
+        addr == 32'h0000_1FF0;
+        len == 8'd1;
+        size == 3'd3;
+        burst == AXI4_BURST_INCR;
+      };
+
+      if (!random_ok)
+        `uvm_fatal(get_type_name(), "Legal 4KB burst rejected")
+      else
+        `uvm_info(get_type_name(), "4KB PASS: 0x1FF0 accepted", UVM_LOW)
+
+      // Illegal: crosses 4KB boundary
+      random_ok = probe.randomize() with {
+        is_write == 1'b1;
+        addr == 32'h0000_1FF8;
+        len == 8'd1;
+        size == 3'd3;
+        burst == AXI4_BURST_INCR;
+      };
+
+      if (random_ok)
+        `uvm_fatal(get_type_name(), "Illegal 4KB crossing accepted")
+      else
+        `uvm_info(get_type_name(), "4KB PASS: 0x1FF8 rejected", UVM_LOW)
+
+      // Send legal transaction
+      seq = new("seq");
+      seq.start_addr = 'h1FF0;
+      seq.burst_type = AXI4_BURST_INCR;
+      seq.len_cfg = 8'd1;
+      seq.size_cfg = 3'd3;
+
+      seq.start(seqr);
+
+      repeat (128) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
+
+  // Intentional illegal 4KB crossing for SVA negative testing
+  class axi4_dut_4kb_sva_negative_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_4kb_sva_negative_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+
+      axi4_directed_burst_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) seq;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+
+      if (seqr == null)
+        `uvm_fatal(get_type_name(), "Master sequencer not found")
+
+      // Manually configure an illegal transaction.
+      // Deliberately do NOT call randomize().
+      seq = new("seq");
+      seq.start_addr = 'h1FF8;
+      seq.burst_type = AXI4_BURST_INCR;
+      seq.len_cfg = 8'd1;
+      seq.size_cfg = 3'd3;
+
+      `uvm_info(get_type_name(),
+        "NEGATIVE TEST: sending illegal 4KB crossing",
+        UVM_LOW)
+
+      seq.start(seqr);
+
+      repeat (128) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
+
 
 endpackage

@@ -77,7 +77,7 @@ function automatic bit kvips_wrap_addr_aligned(
   longint unsigned container;
   container = kvips_total_bytes(len, size);
   if (container == 0) return 1'b1;
-  return (({1'b0, addr} % container) == 0);
+  return (({1'b0, addr} % kvips_bytes_per_beat(size)) == 0);
 endfunction
 
 // VALID/payload stability while stalled (VALID && !READY)

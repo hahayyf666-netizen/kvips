@@ -48,9 +48,15 @@ module top;
           $display("DUTDBG STATE arv=%0d arr=%0d rd_active=%0d rv=%0d rr=%0d rlast=%0d beat=%0d", axi.arvalid, axi.arready, dut.rd_active, axi.rvalid, axi.rready, axi.rlast, dut.rd_beat);
         if (axi.awvalid && axi.awready) $display("DUTDBG AW addr=%h len=%0d size=%0d burst=%0d", axi.awaddr, axi.awlen, axi.awsize, axi.awburst);
         if (axi.wvalid && axi.wready) $display("DUTDBG W data=%h last=%0d", axi.wdata, axi.wlast);
+        if (axi.wvalid && !axi.wready)
+          $display("DUTDBG W_STALL data=%h strb=%h last=%0d",
+                   axi.wdata, axi.wstrb, axi.wlast);
         if (axi.bvalid && axi.bready) $display("DUTDBG B resp=%0d", axi.bresp);
         if (axi.arvalid && axi.arready) $display("DUTDBG AR addr=%h len=%0d size=%0d burst=%0d", axi.araddr, axi.arlen, axi.arsize, axi.arburst);
         if (axi.rvalid && axi.rready) $display("DUTDBG R data=%h last=%0d resp=%0d", axi.rdata, axi.rlast, axi.rresp);
+        if (axi.rvalid && !axi.rready)
+          $display("DUTDBG R_STALL data=%h id=%h last=%0d resp=%0d",
+                   axi.rdata, axi.rid, axi.rlast, axi.rresp);
       end
     end
   end
