@@ -107,7 +107,14 @@ package axi4_types_pkg;
 
     case (burst)
       AXI4_BURST_FIXED: axi4_beat_addr = start_addr;
-      AXI4_BURST_INCR:  axi4_beat_addr = start_addr + longint'(beat) * bytes_per_beat;
+      AXI4_BURST_INCR: begin
+        if (beat == 0)
+          axi4_beat_addr = start_addr;
+        else begin
+          base = (start_addr / bytes_per_beat) * bytes_per_beat;
+          axi4_beat_addr = base + longint'(beat) * bytes_per_beat;
+        end
+      end
       AXI4_BURST_WRAP: begin
         if (burst_bytes == 0) begin
           axi4_beat_addr = start_addr;

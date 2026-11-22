@@ -71,8 +71,8 @@ while IFS= read -r test_name || [[ -n "${test_name}" ]]; do
         max_rd_uninit="${r}"
         ;;
       axi4_dut_strobe_test)
-        min_rd_uninit=3
-        max_rd_uninit=3
+        min_rd_uninit=5
+        max_rd_uninit=5
         ;;
       axi4_dut_unaligned_test)
         min_rd_uninit=8

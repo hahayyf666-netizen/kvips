@@ -41,7 +41,7 @@ fi
 args=("$@")
 has_test=0
 has_verbosity=0
-for arg in "${args[@]}"; do
+for arg in "$@"; do
   [[ "${arg}" == +UVM_TESTNAME=* ]] && has_test=1
   [[ "${arg}" == +UVM_VERBOSITY=* ]] && has_verbosity=1
 done

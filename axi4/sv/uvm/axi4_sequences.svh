@@ -742,6 +742,94 @@ class axi4_strobe_patterns_seq #(
       if (rd.data[0] !== expected)
         `uvm_fatal(get_type_name(), $sformatf("WSTRB mismatch pattern=%0d exp=0x%0h got=0x%0h", p, expected, rd.data[0]))
     end
+    // Non-narrow + single active byte lane.
+    begin
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) wr;
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) rd;
+      logic [DATA_W-1:0] expected;
+      logic [DATA_W-1:0] write_data;
+      logic [ADDR_W-1:0] addr;
+
+      expected = '0;
+      expected[7:0] = 8'hA5;
+      write_data = '1;
+      write_data[7:0] = 8'hA5;
+      addr = base_addr + 4*STRB_W;
+
+      wr = new("cross_full_single_wr");
+      wr.is_write = 1'b1;
+      wr.id = id;
+      wr.addr = addr;
+      wr.len = 8'd0;
+      wr.size = $clog2(STRB_W);
+      wr.burst = AXI4_BURST_INCR;
+      wr.user = '0;
+      wr.allocate_payload();
+      wr.data[0] = write_data;
+      wr.strb[0] = 8'h01;
+      start_item(wr);
+      finish_item(wr);
+
+      rd = new("cross_full_single_rd");
+      rd.is_write = 1'b0;
+      rd.id = id;
+      rd.addr = addr;
+      rd.len = 8'd0;
+      rd.size = $clog2(STRB_W);
+      rd.burst = AXI4_BURST_INCR;
+      rd.user = '0;
+      rd.allocate_payload();
+      start_item(rd);
+      finish_item(rd);
+
+      if (rd.rresp.size() != 1 || rd.rresp[0] != AXI4_RESP_OKAY)
+        `uvm_fatal(get_type_name(), "Non-narrow single-strobe response failed")
+      if (rd.data[0] !== expected)
+        `uvm_fatal(get_type_name(), "Non-narrow single-strobe readback mismatch")
+    end
+
+    // Narrow + zero active byte lanes.
+    begin
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) wr;
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) rd;
+      logic [DATA_W-1:0] expected;
+      logic [ADDR_W-1:0] addr;
+
+      expected = '0;
+      addr = base_addr + 5*STRB_W;
+
+      wr = new("cross_narrow_none_wr");
+      wr.is_write = 1'b1;
+      wr.id = id;
+      wr.addr = addr;
+      wr.len = 8'd0;
+      wr.size = $clog2(STRB_W) - 1;
+      wr.burst = AXI4_BURST_INCR;
+      wr.user = '0;
+      wr.allocate_payload();
+      wr.data[0] = '1;
+      wr.strb[0] = '0;
+      start_item(wr);
+      finish_item(wr);
+
+      rd = new("cross_narrow_none_rd");
+      rd.is_write = 1'b0;
+      rd.id = id;
+      rd.addr = addr;
+      rd.len = 8'd0;
+      rd.size = $clog2(STRB_W) - 1;
+      rd.burst = AXI4_BURST_INCR;
+      rd.user = '0;
+      rd.allocate_payload();
+      start_item(rd);
+      finish_item(rd);
+
+      if (rd.rresp.size() != 1 || rd.rresp[0] != AXI4_RESP_OKAY)
+        `uvm_fatal(get_type_name(), "Narrow zero-strobe response failed")
+      if (rd.data[0] !== expected)
+        `uvm_fatal(get_type_name(), "Narrow zero-strobe readback mismatch")
+    end
+
   endtask
 endclass
 

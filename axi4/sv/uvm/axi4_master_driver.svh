@@ -814,9 +814,21 @@ class axi4_master_driver #(
     int unsigned beats;
     int unsigned cycles;
     bit hs_ok;
+    bit drive_last;
+    bit premature_last;
     tr.reset_aborted = 1'b0;
     tr.allocate_payload();
     beats = tr.num_beats();
+
+    if (tr.wlast_fault_missing &&
+        (tr.wlast_fault_premature_beat != '1))
+      `uvm_fatal(RID, "Conflicting WLAST faults")
+
+    if (tr.wlast_fault_premature_beat != '1) begin
+      if ((beats < 2) ||
+          (tr.wlast_fault_premature_beat >= beats-1))
+        `uvm_fatal(RID, "Invalid premature WLAST beat")
+    end
 
     if (tr.aw_delay_cycles >= 0) begin
       repeat (tr.aw_delay_cycles) @(posedge vif.aclk);
@@ -860,7 +872,13 @@ class axi4_master_driver #(
       @(negedge vif.aclk);
       vif.wdata  <= tr.data[i];
       vif.wstrb  <= (tr.strb.size() == beats) ? tr.strb[i] : '1;
-      vif.wlast  <= (i == (beats-1));
+      premature_last = (tr.wlast_fault_premature_beat != '1) &&
+                        (i == tr.wlast_fault_premature_beat);
+      drive_last = (i == (beats-1));
+      if (tr.wlast_fault_missing && (i == beats-1))
+        drive_last = 1'b0;
+      if (premature_last) drive_last = 1'b1;
+      vif.wlast <= drive_last;
       vif.wuser  <= tr.user;
       vif.wvalid <= 1'b1;
       wait_w_handshake(hs_ok);
@@ -871,6 +889,10 @@ class axi4_master_driver #(
         else                      tr.reset_aborted = 1'b1;
         drive_idle();
         return;
+      end
+      if (premature_last) begin
+        `uvm_info(RID, "Premature WLAST accepted; stopping remaining beats", UVM_LOW)
+        break;
       end
     end
 

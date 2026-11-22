@@ -35,6 +35,8 @@ class axi4_item #(
   int aw_delay_cycles = -1;
   int ar_delay_cycles = -1;
   int w_beat_gap_cycles = -1;
+  bit wlast_fault_missing = 1'b0;
+  int unsigned wlast_fault_premature_beat = '1;
 
   rand logic [DATA_W-1:0]   data[];  // one entry per beat
   rand logic [STRB_W-1:0]   strb[];  // one entry per beat (writes)
@@ -106,6 +108,8 @@ class axi4_item #(
     aw_delay_cycles = -1;
     ar_delay_cycles = -1;
     w_beat_gap_cycles = -1;
+    wlast_fault_missing = 1'b0;
+    wlast_fault_premature_beat = '1;
     allow_4kb_cross     = 1'b0;
     allow_wrap_misalign = 1'b0;
   endfunction
@@ -148,6 +152,8 @@ class axi4_item #(
     `uvm_field_int(aw_delay_cycles, UVM_DEFAULT)
     `uvm_field_int(ar_delay_cycles, UVM_DEFAULT)
     `uvm_field_int(w_beat_gap_cycles, UVM_DEFAULT)
+    `uvm_field_int(wlast_fault_missing, UVM_DEFAULT)
+    `uvm_field_int(wlast_fault_premature_beat, UVM_DEFAULT)
     `uvm_field_array_int(data, UVM_DEFAULT)
     `uvm_field_array_int(strb, UVM_DEFAULT)
     `uvm_field_enum(axi4_resp_e, bresp, UVM_DEFAULT)

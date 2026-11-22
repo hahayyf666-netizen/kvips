@@ -25,4 +25,16 @@
     `endif \
   end
 
+// Scope-aware waveform dump helper.
+`define KVIPS_MAYBE_ENABLE_WAVES_SCOPE(BASENAME, SCOPE) \
+  if ($test$plusargs("KVIPS_WAVES")) begin \
+    `ifdef FSDB \
+      $fsdbDumpfile({BASENAME,".fsdb"}); \
+      $fsdbDumpvars(0, SCOPE); \
+    `else \
+      $dumpfile({BASENAME,".vcd"}); \
+      $dumpvars(0, SCOPE); \
+    `endif \
+  end
+
 `endif // KVIPS_WAVE_DUMP_SVH

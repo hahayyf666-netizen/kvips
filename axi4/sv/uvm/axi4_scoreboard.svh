@@ -81,6 +81,73 @@ class axi4_scoreboard #(
     return longint'(a);
   endfunction
 
+
+  // Independent address reference model for Scoreboard.
+  // Does NOT call axi4_beat_addr().
+  // INCR uses iterative address progression.
+  // WRAP uses iterative increment and boundary rollover.
+  function automatic longint unsigned sb_expected_beat_addr(
+    input longint unsigned start_addr,
+    input int unsigned size,
+    input int unsigned len,
+    input axi4_burst_e burst,
+    input int unsigned beat
+  );
+
+    longint unsigned step;
+    longint unsigned addr;
+    longint unsigned wrap_bytes;
+    longint unsigned wrap_base;
+    longint unsigned wrap_limit;
+
+    step = 64'd1 << size;
+    addr = start_addr;
+
+    case (burst)
+
+      // FIXED: address never changes.
+      AXI4_BURST_FIXED: begin
+        addr = start_addr;
+      end
+
+      // INCR: first beat preserves the original address.
+      // The next beat starts at the next SIZE-aligned address.
+      AXI4_BURST_INCR: begin
+        for (int unsigned n = 0; n < beat; n++) begin
+          if (n == 0)
+            addr = ((start_addr / step) + 1) * step;
+          else
+            addr = addr + step;
+        end
+      end
+
+      // WRAP: increment until the wrap boundary, then roll over.
+      AXI4_BURST_WRAP: begin
+
+        wrap_bytes = step * (longint'(len) + 1);
+        wrap_base = (start_addr / wrap_bytes) * wrap_bytes;
+        wrap_limit = wrap_base + wrap_bytes;
+
+        addr = start_addr;
+
+        for (int unsigned n = 0; n < beat; n++) begin
+          addr = addr + step;
+
+          if (addr >= wrap_limit)
+            addr = wrap_base;
+        end
+      end
+
+      default: begin
+        addr = start_addr;
+      end
+
+    endcase
+
+    return addr;
+
+  endfunction
+
   function automatic void apply_write_beat(
     longint unsigned base_addr,
     logic [DATA_W-1:0] data,
@@ -146,7 +213,7 @@ class axi4_scoreboard #(
       if (!enable) return;
 
       for (int unsigned i = 0; i < beats; i++) begin
-        longint unsigned base = axi4_beat_addr(to_addr_u(t.addr), int'(t.size), int'(t.len), t.burst, i);
+        longint unsigned base = sb_expected_beat_addr(to_addr_u(t.addr), int'(t.size), int'(t.len), t.burst, i);
         logic [STRB_W-1:0] strb = (t.strb.size() == beats) ? t.strb[i] : '1;
         apply_write_beat(base, t.data[i], strb);
       end
@@ -164,7 +231,7 @@ class axi4_scoreboard #(
           continue;
         end
 
-        base = axi4_beat_addr(to_addr_u(t.addr), int'(t.size), int'(t.len), t.burst, i);
+        base = sb_expected_beat_addr(to_addr_u(t.addr), int'(t.size), int'(t.len), t.burst, i);
         exp  = build_expected_beat(base, any_uninit);
         if (any_uninit) begin
           sum_rd_uninit_beats++;

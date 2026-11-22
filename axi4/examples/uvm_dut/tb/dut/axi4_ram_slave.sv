@@ -89,7 +89,14 @@ module axi4_ram_slave #(
       start_u = longint'(start_addr);
       case (burst)
         2'b00: beat_addr = start_addr; // FIXED
-        2'b01: beat_addr = start_u + longint'(beat) * step; // INCR
+        2'b01: begin
+          if (beat == 0)
+            beat_addr = start_addr;
+          else begin
+            wrap_base = (start_u / step) * step;
+            beat_addr = wrap_base + longint'(beat) * step;
+          end
+        end
         2'b10: begin // WRAP
           total = (longint'(len) + 1) * step;
           if (total == 0) beat_addr = start_addr;
@@ -148,7 +155,7 @@ module axi4_ram_slave #(
         wr_id     <= awid;
         wr_user   <= awuser;
         wr_start_addr <= awaddr;
-        wr_addr   <= awaddr;
+        wr_addr   <= beat_addr(awaddr, awsize, awlen, awburst, 0);
         wr_len    <= awlen;
         wr_size   <= awsize;
         wr_burst  <= awburst;
@@ -211,7 +218,7 @@ module axi4_ram_slave #(
         rd_id     <= arid;
         rd_user   <= aruser;
         rd_start_addr <= araddr;
-        rd_addr   <= araddr;
+        rd_addr   <= beat_addr(araddr, arsize, arlen, arburst, 0);
         rd_len    <= arlen;
         rd_size   <= arsize;
         rd_burst  <= arburst;

@@ -5,6 +5,111 @@ package tb_pkg;
   import axi4_types_pkg::*;
   import axi4_uvm_pkg::*;
 
+  // Independent AXI4 Burst Address Reference Model.
+  // This function does NOT call axi4_beat_addr().
+  function automatic bit tb_expected_beat_addr(
+      input  longint unsigned start_addr,
+      input  int unsigned     size,
+      input  int unsigned     len,
+      input  axi4_burst_e     burst,
+      input  int unsigned     beat,
+      input  int unsigned     data_w,
+      output longint unsigned expected_addr
+  );
+
+      longint unsigned bytes_per_beat;
+      longint unsigned aligned_addr;
+      longint unsigned wrap_bytes;
+      longint unsigned wrap_base;
+      longint unsigned wrap_limit;
+      int unsigned bus_bytes;
+
+      expected_addr = start_addr;
+
+      if (data_w == 0 || (data_w % 8) != 0)
+          return 1'b0;
+
+      bus_bytes = data_w / 8;
+
+      if ((bus_bytes & (bus_bytes - 1)) != 0)
+          return 1'b0;
+
+      if (size >= 64)
+          return 1'b0;
+
+      bytes_per_beat = 64'd1 << size;
+
+      if (bytes_per_beat > bus_bytes)
+          return 1'b0;
+
+      if (beat > len)
+          return 1'b0;
+
+      case (burst)
+
+          AXI4_BURST_FIXED: begin
+              if (len > 15)
+                  return 1'b0;
+
+              expected_addr = start_addr;
+          end
+
+          AXI4_BURST_INCR: begin
+              if (len > 255)
+                  return 1'b0;
+
+              if (beat == 0) begin
+                  expected_addr = start_addr;
+              end
+              else begin
+                  aligned_addr =
+                      (start_addr / bytes_per_beat)
+                      * bytes_per_beat;
+
+                  expected_addr =
+                      aligned_addr
+                      + longint'(beat) * bytes_per_beat;
+              end
+          end
+
+          AXI4_BURST_WRAP: begin
+
+              if (!(len == 1 || len == 3 ||
+                    len == 7 || len == 15))
+                  return 1'b0;
+
+              if ((start_addr % bytes_per_beat) != 0)
+                  return 1'b0;
+
+              wrap_bytes =
+                  bytes_per_beat * (longint'(len) + 1);
+
+              wrap_base =
+                  (start_addr / wrap_bytes) * wrap_bytes;
+
+              wrap_limit = wrap_base + wrap_bytes;
+
+              expected_addr = start_addr;
+
+              for (int unsigned n = 0; n < beat; n++) begin
+
+                  expected_addr =
+                      expected_addr + bytes_per_beat;
+
+                  if (expected_addr >= wrap_limit)
+                      expected_addr = wrap_base;
+              end
+          end
+
+          default: return 1'b0;
+
+      endcase
+
+      return 1'b1;
+
+  endfunction
+
+
   // Small, portable RAL model used by the DUT integration test.  It is kept
   // in the example package so the AXI4 VIP itself remains free of register
   // map assumptions.
@@ -797,6 +902,432 @@ endtask
 
   endclass
 
+  // Directed FIXED/WRAP x SIZE cross coverage test.
+  class axi4_dut_burst_size_cross_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_burst_size_cross_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+
+      axi4_directed_burst_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) seq;
+
+      logic [ADDR_W-1:0] fixed_addr;
+      logic [ADDR_W-1:0] wrap_addr;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+
+      if (seqr == null)
+        `uvm_fatal(get_type_name(),
+          "Master sequencer not found")
+
+      // Run FIXED and WRAP for SIZE=0, 1 and 2.
+      for (int unsigned size_i = 0; size_i < 3; size_i++) begin
+
+        // Choose aligned addresses for each transfer size.
+        case (size_i)
+          0: begin
+            fixed_addr = 'h6001;
+            wrap_addr  = 'h7001;
+          end
+
+          1: begin
+            fixed_addr = 'h6102;
+            wrap_addr  = 'h7102;
+          end
+
+          2: begin
+            fixed_addr = 'h6204;
+            wrap_addr  = 'h7204;
+          end
+
+          default:
+            `uvm_fatal(get_type_name(), "Unsupported SIZE")
+        endcase
+
+        // --------------------------------
+        // FIXED + SIZE
+        // --------------------------------
+        seq = new($sformatf("fixed_size_%0d", size_i));
+
+        seq.start_addr = fixed_addr;
+        seq.burst_type = AXI4_BURST_FIXED;
+        seq.len_cfg    = 8'd3;
+        seq.size_cfg   = size_i[2:0];
+
+        `uvm_info(get_type_name(),
+          $sformatf(
+            "Starting FIXED + SIZE=%0d ADDR=0x%0h LEN=3",
+            size_i, fixed_addr
+          ),
+          UVM_LOW)
+
+        seq.start(seqr);
+
+        // --------------------------------
+        // WRAP + SIZE
+        // --------------------------------
+        seq = new($sformatf("wrap_size_%0d", size_i));
+
+        seq.start_addr = wrap_addr;
+        seq.burst_type = AXI4_BURST_WRAP;
+        seq.len_cfg    = 8'd3;
+        seq.size_cfg   = size_i[2:0];
+
+        `uvm_info(get_type_name(),
+          $sformatf(
+            "Starting WRAP + SIZE=%0d ADDR=0x%0h LEN=3",
+            size_i, wrap_addr
+          ),
+          UVM_LOW)
+
+        seq.start(seqr);
+
+      end
+
+      repeat (128) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
+
+  // Directed AXI4 maximum-length INCR burst test.
+  class axi4_dut_len_256_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_len_256_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+
+      axi4_directed_burst_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) seq;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+
+      if (seqr == null)
+        `uvm_fatal(get_type_name(),
+          "Master sequencer not found")
+
+      seq = new("seq");
+
+      seq.start_addr = 'h8000;
+      seq.burst_type = AXI4_BURST_INCR;
+      seq.len_cfg    = 8'd255;
+      seq.size_cfg   = 3'd3;
+
+      `uvm_info(get_type_name(),
+        "Starting INCR maximum burst: ADDR=0x8000 LEN=255 SIZE=3 BEATS=256",
+        UVM_LOW)
+
+      seq.start(seqr);
+
+      repeat (128) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
+
+
+  // Directed sideband attribute coverage sequence.
+  class axi4_sideband_coverage_seq #(
+    int ADDR_W = 32,
+    int DATA_W = 64,
+    int ID_W   = 4,
+    int USER_W = 1
+  ) extends axi4_base_seq#(ADDR_W, DATA_W, ID_W, USER_W);
+
+    `uvm_object_param_utils(
+      axi4_sideband_coverage_seq#(ADDR_W, DATA_W, ID_W, USER_W)
+    )
+
+    function new(string name = "axi4_sideband_coverage_seq");
+      super.new(name);
+    endfunction
+
+    task body();
+
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) wr;
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) rd;
+
+      logic [3:0] qos_v;
+      logic [2:0] prot_v;
+      logic [3:0] cache_v;
+      logic [3:0] region_v;
+
+      for (int unsigned i = 0; i < 8; i++) begin
+
+        // Generate representative QOS values.
+        case (i)
+          1: qos_v = 4'd1;
+          2: qos_v = 4'd4;
+          3: qos_v = 4'd12;
+          4: qos_v = 4'd15;
+          default: qos_v = 4'd0;
+        endcase
+
+        // Cover all eight PROT values.
+        prot_v = i[2:0];
+
+        // Cover CACHE=0 and CACHE=F.
+        cache_v = (i < 4) ? 4'h0 : 4'hF;
+
+        // Cover REGION=0 and REGION=15.
+        region_v = (i < 4) ? 4'h0 : 4'hF;
+
+        // -------------------------
+        // Write transaction
+        // -------------------------
+        wr = new($sformatf("sideband_wr_%0d", i));
+
+        wr.is_write = 1'b1;
+        wr.id       = '0;
+        wr.addr     = 32'h9000 + i * (DATA_W/8);
+        wr.len      = 8'd0;
+        wr.size     = $clog2(DATA_W/8);
+        wr.burst    = AXI4_BURST_INCR;
+        wr.lock     = 1'b0;
+
+        wr.qos      = qos_v;
+        wr.prot     = prot_v;
+        wr.cache    = cache_v;
+        wr.region   = region_v;
+        wr.user     = '0;
+
+        wr.allocate_payload();
+
+        wr.data[0] = 64'hA5A5_0000_0000_0000 | i;
+        wr.strb[0] = '1;
+
+        start_item(wr);
+        finish_item(wr);
+
+        if (wr.reset_aborted || wr.timeout_aborted)
+          `uvm_fatal(get_type_name(), "Sideband write aborted")
+
+        if (wr.bresp != AXI4_RESP_OKAY)
+          `uvm_fatal(get_type_name(), "Sideband write BRESP error")
+
+        // -------------------------
+        // Read transaction
+        // -------------------------
+        rd = new($sformatf("sideband_rd_%0d", i));
+
+        rd.is_write = 1'b0;
+        rd.id       = '0;
+        rd.addr     = wr.addr;
+        rd.len      = wr.len;
+        rd.size     = wr.size;
+        rd.burst    = wr.burst;
+        rd.lock     = 1'b0;
+
+        rd.qos      = qos_v;
+        rd.prot     = prot_v;
+        rd.cache    = cache_v;
+        rd.region   = region_v;
+        rd.user     = '0;
+
+        rd.allocate_payload();
+
+        start_item(rd);
+        finish_item(rd);
+
+        if (rd.reset_aborted || rd.timeout_aborted)
+          `uvm_fatal(get_type_name(), "Sideband read aborted")
+
+        if (rd.rresp.size() != 1 ||
+            rd.rresp[0] != AXI4_RESP_OKAY)
+          `uvm_fatal(get_type_name(), "Sideband read RRESP error")
+
+        if (rd.data[0] !== wr.data[0])
+          `uvm_fatal(get_type_name(), "Sideband readback mismatch")
+
+        `uvm_info(get_type_name(),
+          $sformatf(
+            "Sideband case=%0d QOS=%0d PROT=%0d CACHE=%h REGION=%h",
+            i, qos_v, prot_v, cache_v, region_v
+          ),
+          UVM_LOW)
+
+      end
+
+    endtask
+
+  endclass
+
+
+  // Directed sideband coverage test.
+  class axi4_dut_sideband_coverage_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_sideband_coverage_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+
+      axi4_sideband_coverage_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) seq;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+
+      if (seqr == null)
+        `uvm_fatal(get_type_name(), "Master sequencer not found")
+
+      seq = new("seq");
+      seq.start(seqr);
+
+      repeat (64) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
+
+  // Lock attribute sampling sequence.
+  class axi4_lock_coverage_seq #(
+    int ADDR_W = 32,
+    int DATA_W = 64,
+    int ID_W   = 4,
+    int USER_W = 1
+  ) extends axi4_base_seq#(ADDR_W, DATA_W, ID_W, USER_W);
+
+    `uvm_object_param_utils(
+      axi4_lock_coverage_seq#(ADDR_W, DATA_W, ID_W, USER_W)
+    )
+
+    function new(string name = "axi4_lock_coverage_seq");
+      super.new(name);
+    endfunction
+
+    task body();
+
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) wr;
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) rd;
+
+      // First: initialize memory using a normal write.
+      wr = new("lock_normal_write");
+
+      wr.is_write = 1'b1;
+      wr.id       = '0;
+      wr.addr     = 'hA000;
+      wr.len      = 8'd0;
+      wr.size     = 3'd3;
+      wr.burst    = AXI4_BURST_INCR;
+      wr.lock     = 1'b0;
+      wr.user     = '0;
+
+      wr.allocate_payload();
+
+      wr.data[0] = 64'hA55A_1234_5678_9ABC;
+      wr.strb[0] = '1;
+
+      start_item(wr);
+      finish_item(wr);
+
+      if (wr.reset_aborted || wr.timeout_aborted)
+        `uvm_fatal(get_type_name(), "Normal write aborted")
+
+      if (wr.bresp != AXI4_RESP_OKAY)
+        `uvm_fatal(get_type_name(), "Normal write BRESP error")
+
+      // Second: issue a read with ARLOCK=1.
+      rd = new("lock_attribute_read");
+
+      rd.is_write = 1'b0;
+      rd.id       = '0;
+      rd.addr     = wr.addr;
+      rd.len      = 8'd0;
+      rd.size     = 3'd3;
+      rd.burst    = AXI4_BURST_INCR;
+      rd.lock     = 1'b1;
+      rd.user     = '0;
+
+      rd.allocate_payload();
+
+      start_item(rd);
+      finish_item(rd);
+
+      if (rd.reset_aborted || rd.timeout_aborted)
+        `uvm_fatal(get_type_name(), "LOCK read aborted")
+
+      if (rd.rresp.size() != 1 ||
+          rd.rresp[0] != AXI4_RESP_OKAY)
+        `uvm_fatal(get_type_name(), "LOCK read RRESP error")
+
+      if (rd.data[0] !== wr.data[0])
+        `uvm_fatal(get_type_name(), "LOCK readback mismatch")
+
+      `uvm_info(get_type_name(),
+        "LOCK=1 read attribute sampling completed",
+        UVM_LOW)
+
+    endtask
+
+  endclass
+
+
+  // Directed LOCK attribute coverage test.
+  class axi4_dut_lock_coverage_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_lock_coverage_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+
+      axi4_lock_coverage_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) seq;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+
+      if (seqr == null)
+        `uvm_fatal(get_type_name(), "Master sequencer not found")
+
+      seq = new("seq");
+      seq.start(seqr);
+
+      repeat (64) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
   // Directed Narrow Transfer test
   class axi4_dut_narrow_directed_test extends axi4_dut_base_test;
 
@@ -986,6 +1517,478 @@ endtask
     endtask
 
   endclass
+
+
+
+
+  // Sequence: generate a write with Missing WLAST on its final beat.
+  class axi4_missing_wlast_seq #(
+    int ADDR_W = 32,
+    int DATA_W = 64,
+    int ID_W = 4,
+    int USER_W = 1
+  ) extends axi4_base_seq#(ADDR_W, DATA_W, ID_W, USER_W);
+
+    `uvm_object_param_utils(
+      axi4_missing_wlast_seq#(ADDR_W, DATA_W, ID_W, USER_W)
+    )
+
+    function new(string name = "axi4_missing_wlast_seq");
+      super.new(name);
+    endfunction
+
+    task body();
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) wr;
+
+      wr = new("missing_wlast_write");
+      wr.is_write = 1'b1;
+      wr.id = 4'h3;
+      wr.addr = 32'h0000_C000;
+      wr.len = 8'd3;
+      wr.size = $clog2(DATA_W/8);
+      wr.burst = AXI4_BURST_INCR;
+      wr.user = '0;
+      wr.allocate_payload();
+
+      for (int unsigned i = 0; i < wr.num_beats(); i++) begin
+        wr.data[i] = 64'hA5A5_0000_0000_0000 + i;
+        wr.strb[i] = '1;
+      end
+
+      wr.wlast_fault_missing = 1'b1;
+
+      `uvm_info(get_type_name(),
+        "Starting 4-beat Missing WLAST negative test", UVM_NONE)
+
+      start_item(wr);
+      finish_item(wr);
+
+      if (wr.reset_aborted || wr.timeout_aborted)
+        `uvm_fatal(get_type_name(), "Missing WLAST write aborted")
+
+      if (wr.bresp != AXI4_RESP_OKAY)
+        `uvm_fatal(get_type_name(), "Unexpected BRESP")
+
+      `uvm_info(get_type_name(),
+        "Missing WLAST sequence completed", UVM_NONE)
+    endtask
+
+  endclass
+
+
+  // Test: launch the negative sequence.
+  class axi4_dut_missing_wlast_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_missing_wlast_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+      axi4_missing_wlast_seq#(ADDR_W, DATA_W, ID_W, USER_W) seq;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+      if (seqr == null)
+        `uvm_fatal(get_type_name(), "Master sequencer not found")
+
+      seq = new("seq");
+      seq.start(seqr);
+
+      repeat (16) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+    endtask
+
+  endclass
+
+
+
+
+  // Sequence: deliberately assert WLAST before the final beat.
+  class axi4_premature_wlast_seq #(
+    int ADDR_W = 32,
+    int DATA_W = 64,
+    int ID_W = 4,
+    int USER_W = 1
+  ) extends axi4_base_seq#(ADDR_W, DATA_W, ID_W, USER_W);
+
+    `uvm_object_param_utils(
+      axi4_premature_wlast_seq#(ADDR_W, DATA_W, ID_W, USER_W)
+    )
+
+    function new(string name = "axi4_premature_wlast_seq");
+      super.new(name);
+    endfunction
+
+    task body();
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) wr;
+
+      wr = new("premature_wlast_write");
+      wr.is_write = 1'b1;
+      wr.id = 4'h4;
+      wr.addr = 32'h0000_C100;
+      wr.len = 8'd3;
+      wr.size = $clog2(DATA_W/8);
+      wr.burst = AXI4_BURST_INCR;
+      wr.user = '0;
+      wr.allocate_payload();
+
+      for (int unsigned i = 0; i < wr.num_beats(); i++) begin
+        wr.data[i] = 64'h5A5A_0000_0000_0000 + i;
+        wr.strb[i] = '1;
+      end
+
+      // Beat index 1 means the second beat.
+      wr.wlast_fault_premature_beat = 1;
+
+      `uvm_info(get_type_name(),
+        "Starting 4-beat Premature WLAST negative test",
+        UVM_NONE)
+
+      start_item(wr);
+      finish_item(wr);
+
+      if (wr.reset_aborted || wr.timeout_aborted)
+        `uvm_fatal(get_type_name(), "Premature WLAST write aborted")
+
+      if (wr.bresp != AXI4_RESP_OKAY)
+        `uvm_fatal(get_type_name(), "Unexpected BRESP")
+
+      `uvm_info(get_type_name(),
+        "Premature WLAST sequence completed",
+        UVM_NONE)
+    endtask
+
+  endclass
+
+
+  class axi4_dut_premature_wlast_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_premature_wlast_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+      axi4_premature_wlast_seq#(ADDR_W, DATA_W, ID_W, USER_W) seq;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+      if (seqr == null)
+        `uvm_fatal(get_type_name(), "Master sequencer not found")
+
+      seq = new("seq");
+      seq.start(seqr);
+
+      repeat (16) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+    endtask
+
+  endclass
+
+
+
+  // Independent AXI4 Burst Address Reference Test.
+  class axi4_dut_addr_ref_test extends uvm_test;
+
+    `uvm_component_utils(axi4_dut_addr_ref_test)
+
+    function new(string name = "axi4_dut_addr_ref_test",
+                 uvm_component parent = null);
+      super.new(name, parent);
+    endfunction
+
+    task automatic check_case(
+        input string name,
+        input longint unsigned start_addr,
+        input int unsigned size,
+        input int unsigned len,
+        input axi4_burst_e burst,
+        input int unsigned data_w,
+        input longint unsigned golden[]
+    );
+
+      longint unsigned ref_addr;
+      longint unsigned common_addr;
+      int unsigned common_diff;
+
+      common_diff = 0;
+
+      `uvm_info("ADDR_REF",
+        $sformatf("Checking %s", name), UVM_LOW)
+
+      for (int unsigned i = 0; i <= len; i++) begin
+
+        if (!tb_expected_beat_addr(
+              start_addr, size, len, burst,
+              i, data_w, ref_addr)) begin
+
+          `uvm_error("ADDR_REF",
+            $sformatf("%s Beat %0d: reference rejected inputs",
+                      name, i))
+          continue;
+        end
+
+        // Check independent reference against manual golden address.
+        if (ref_addr !== golden[i]) begin
+          `uvm_error("ADDR_REF",
+            $sformatf(
+              "%s Beat %0d: REF=0x%0h GOLDEN=0x%0h",
+              name, i, ref_addr, golden[i]))
+        end
+
+        // Compare existing project function against golden address.
+        common_addr = axi4_beat_addr(
+            start_addr, size, len, burst, i
+        );
+
+        if (common_addr !== golden[i]) begin
+          common_diff++;
+
+          `uvm_info("ADDR_REF_DIFF",
+            $sformatf(
+              "%s Beat %0d: COMMON=0x%0h EXPECTED=0x%0h",
+              name, i, common_addr, golden[i]),
+            UVM_NONE)
+        end
+
+        `uvm_info("ADDR_REF_BEAT",
+          $sformatf(
+            "%s Beat=%0d REF=0x%0h COMMON=0x%0h GOLDEN=0x%0h",
+            name, i, ref_addr, common_addr, golden[i]),
+          UVM_LOW)
+
+      end
+
+      `uvm_info("ADDR_REF_CASE",
+        $sformatf("%s completed, common function differences=%0d",
+                  name, common_diff),
+        UVM_NONE)
+
+    endtask
+
+
+    task run_phase(uvm_phase phase);
+
+      longint unsigned fixed_exp[4];
+      longint unsigned incr_exp[4];
+      longint unsigned wrap_exp[4];
+      longint unsigned unaligned_exp[3];
+
+      phase.raise_objection(this);
+
+      // Case 1: FIXED
+      fixed_exp[0] = 'h1028;
+      fixed_exp[1] = 'h1028;
+      fixed_exp[2] = 'h1028;
+      fixed_exp[3] = 'h1028;
+
+      check_case("FIXED",
+        'h1028, 3, 3, AXI4_BURST_FIXED, 64, fixed_exp);
+
+      // Case 2: Aligned INCR
+      incr_exp[0] = 'h1028;
+      incr_exp[1] = 'h1030;
+      incr_exp[2] = 'h1038;
+      incr_exp[3] = 'h1040;
+
+      check_case("ALIGNED_INCR",
+        'h1028, 3, 3, AXI4_BURST_INCR, 64, incr_exp);
+
+      // Case 3: WRAP
+      wrap_exp[0] = 'h1028;
+      wrap_exp[1] = 'h1030;
+      wrap_exp[2] = 'h1038;
+      wrap_exp[3] = 'h1020;
+
+      check_case("WRAP",
+        'h1028, 3, 3, AXI4_BURST_WRAP, 64, wrap_exp);
+
+      // Case 4: Unaligned INCR
+      unaligned_exp[0] = 'h1007;
+      unaligned_exp[1] = 'h1008;
+      unaligned_exp[2] = 'h100C;
+
+      check_case("UNALIGNED_INCR",
+        'h1007, 2, 2, AXI4_BURST_INCR, 64,
+        unaligned_exp);
+
+      `uvm_info("ADDR_REF",
+        "All independent address reference cases completed",
+        UVM_NONE)
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
+
+
+  // End-to-end Unaligned INCR test with independent byte checks.
+
+  // End-to-end Unaligned INCR test with independent byte checks.
+
+  // Independent Unaligned INCR end-to-end sequence.
+  class axi4_dut_unaligned_incr_e2e_seq #(
+    int ADDR_W = 32,
+    int DATA_W = 64,
+    int ID_W   = 4,
+    int USER_W = 1
+  ) extends axi4_base_seq#(ADDR_W, DATA_W, ID_W, USER_W);
+
+    `uvm_object_param_utils(
+      axi4_dut_unaligned_incr_e2e_seq#(ADDR_W, DATA_W, ID_W, USER_W)
+    )
+
+    function new(string name = "axi4_dut_unaligned_incr_e2e_seq");
+      super.new(name);
+    endfunction
+
+    task body();
+
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) wr;
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) rd;
+
+      // WRITE TRANSACTION
+      wr = new("unaligned_write");
+
+      wr.is_write = 1'b1;
+      wr.id       = '0;
+      wr.addr     = 32'h1007;
+      wr.len      = 8'd2;
+      wr.size     = 3'd2;
+      wr.burst    = AXI4_BURST_INCR;
+      wr.user     = '0;
+
+      wr.allocate_payload();
+
+      wr.data[0] = 64'hA700_0000_0000_0000;
+      wr.strb[0] = 8'h80;
+
+      wr.data[1] = 64'h0000_0000_B3B2_B1B0;
+      wr.strb[1] = 8'h0F;
+
+      wr.data[2] = 64'hC7C6_C5C4_0000_0000;
+      wr.strb[2] = 8'hF0;
+
+      `uvm_info(get_type_name(),
+        "Starting independent Unaligned INCR write", UVM_LOW)
+
+      start_item(wr);
+      finish_item(wr);
+
+      if (wr.reset_aborted || wr.timeout_aborted)
+        `uvm_fatal(get_type_name(), "Write transaction aborted")
+
+      if (wr.bresp != AXI4_RESP_OKAY)
+        `uvm_error(get_type_name(),
+          $sformatf("Unexpected BRESP=%0d", wr.bresp))
+      else
+        `uvm_info(get_type_name(), "BRESP OKAY", UVM_LOW)
+
+      // READ TRANSACTION
+      rd = new("unaligned_read");
+
+      rd.is_write = 1'b0;
+      rd.id       = wr.id;
+      rd.addr     = wr.addr;
+      rd.len      = wr.len;
+      rd.size     = wr.size;
+      rd.burst    = wr.burst;
+      rd.user     = wr.user;
+
+      rd.allocate_payload();
+
+      `uvm_info(get_type_name(),
+        "Starting independent Unaligned INCR read", UVM_LOW)
+
+      start_item(rd);
+      finish_item(rd);
+
+      if (rd.reset_aborted || rd.timeout_aborted)
+        `uvm_fatal(get_type_name(), "Read transaction aborted")
+
+      if (rd.rresp.size() != 3)
+        `uvm_error(get_type_name(), "Unexpected RRESP array size")
+      else begin
+        for (int unsigned i = 0; i < 3; i++) begin
+          if (rd.rresp[i] != AXI4_RESP_OKAY)
+            `uvm_error(get_type_name(),
+              $sformatf("RRESP error at Beat %0d", i))
+        end
+      end
+
+      // Independent byte checks.
+      if (rd.data[0][63:56] !== 8'hA7)
+        `uvm_error(get_type_name(),
+          $sformatf("Beat 0 mismatch: got %h", rd.data[0][63:56]))
+      else
+        `uvm_info(get_type_name(), "Beat 0 Lane 7 PASS", UVM_LOW)
+
+      if (rd.data[1][31:0] !== 32'hB3B2_B1B0)
+        `uvm_error(get_type_name(),
+          $sformatf("Beat 1 mismatch: got %h", rd.data[1][31:0]))
+      else
+        `uvm_info(get_type_name(), "Beat 1 Lanes 0-3 PASS", UVM_LOW)
+
+      if (rd.data[2][63:32] !== 32'hC7C6_C5C4)
+        `uvm_error(get_type_name(),
+          $sformatf("Beat 2 mismatch: got %h", rd.data[2][63:32]))
+      else
+        `uvm_info(get_type_name(), "Beat 2 Lanes 4-7 PASS", UVM_LOW)
+
+      `uvm_info(get_type_name(),
+        "Independent Unaligned INCR data checks completed",
+        UVM_NONE)
+
+    endtask
+
+  endclass
+
+
+  // Test: starts the independent Unaligned INCR sequence.
+  class axi4_dut_unaligned_incr_e2e_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_unaligned_incr_e2e_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+
+      axi4_dut_unaligned_incr_e2e_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) seq;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+
+      if (seqr == null)
+        `uvm_fatal(get_type_name(), "Master sequencer not found")
+
+      seq = new("seq");
+      seq.start(seqr);
+
+      repeat (16) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
+
 
 
 endpackage

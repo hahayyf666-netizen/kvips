@@ -64,7 +64,7 @@ module top;
 
   initial begin
     `include "kvips_wave_dump.svh"
-    `KVIPS_MAYBE_ENABLE_WAVES("kvips_axi4_dut")
+    `KVIPS_MAYBE_ENABLE_WAVES_SCOPE("kvips_axi4_dut", top)
   end
 
 `ifdef VERILATOR
