@@ -14,3 +14,4 @@ axi4_dut_fixed_test
 axi4_dut_incr_test
 axi4_dut_narrow_directed_test
 axi4_dut_4kb_boundary_test
+axi4_dut_lane_sweep_test

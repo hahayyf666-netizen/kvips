@@ -28,8 +28,11 @@ class axi4_protocol_checker #(
 `endif
 
   typedef struct {
-    logic [ID_W-1:0] id;
-    int unsigned     beats;
+    logic [ID_W-1:0]   id;
+    int unsigned       beats;
+    logic [ADDR_W-1:0] addr;
+    logic [2:0]        size;
+    logic [1:0]        burst;
   } aw_state_t;
 
   typedef struct {
@@ -38,6 +41,8 @@ class axi4_protocol_checker #(
 
   aw_state_t aw_q[$];
   int unsigned early_w_bursts[$];
+  logic [DATA_W/8-1:0] w_strbs[$];
+  logic [DATA_W/8-1:0] early_w_strbs[$];
   int unsigned w_beats;
   bit          w_active;
   int unsigned wr_done[logic [ID_W-1:0]][$];
@@ -72,6 +77,8 @@ class axi4_protocol_checker #(
   function void clear_state();
     aw_q.delete();
     early_w_bursts.delete();
+    w_strbs.delete();
+    early_w_strbs.delete();
     w_beats = 0;
     w_active = 1'b0;
     foreach (wr_done[id]) wr_done[id].delete();
@@ -113,6 +120,81 @@ class axi4_protocol_checker #(
     end
   endfunction
 
+  // Check legal WSTRB lanes for one AXI write beat.
+  function void check_wstrb_for_beat(
+    input aw_state_t aw,
+    input int unsigned beat,
+    input logic [DATA_W/8-1:0] strobe
+  );
+    longint unsigned start_addr, aligned_addr, beat_addr;
+    longint unsigned bus_base, step, wrap_bytes, wrap_base;
+    int unsigned lower_lane, upper_lane;
+    logic [DATA_W/8-1:0] allowed_mask, illegal_mask;
+
+    if (aw.size > $clog2(DATA_W/8)) begin
+      checker_error("AWSIZE exceeds data bus width");
+      return;
+    end
+
+    step = 64'd1 << aw.size;
+    start_addr = aw.addr;
+    aligned_addr = (start_addr / step) * step;
+
+    case (aw.burst)
+      2'b00: beat_addr = start_addr;
+      2'b01: begin
+        if (beat == 0)
+          beat_addr = start_addr;
+        else
+          beat_addr = aligned_addr + beat*step;
+      end
+      2'b10: begin
+        wrap_bytes = step * aw.beats;
+        if (wrap_bytes == 0) begin
+          checker_error("Invalid WRAP burst size");
+          return;
+        end
+        wrap_base = (start_addr / wrap_bytes) * wrap_bytes;
+        beat_addr = wrap_base +
+          ((start_addr-wrap_base+beat*step) % wrap_bytes);
+      end
+      default: begin
+        checker_error("Reserved AWBURST value");
+        return;
+      end
+    endcase
+
+    if ((beat == 0) || (aw.burst == 2'b00)) begin
+      bus_base = (start_addr/(DATA_W/8))*(DATA_W/8);
+      lower_lane = int'(start_addr-bus_base);
+      upper_lane = int'(aligned_addr+step-1-bus_base);
+    end else begin
+      bus_base = (beat_addr/(DATA_W/8))*(DATA_W/8);
+      lower_lane = int'(beat_addr-bus_base);
+      upper_lane = lower_lane + int'(step)-1;
+    end
+
+    if ((lower_lane >= DATA_W/8) ||
+        (upper_lane >= DATA_W/8) ||
+        (lower_lane > upper_lane)) begin
+      checker_error("Invalid calculated byte lane range");
+      return;
+    end
+
+    allowed_mask = '0;
+    for (int unsigned lane=lower_lane;
+         lane<=upper_lane; lane++)
+      allowed_mask[lane] = 1'b1;
+
+    illegal_mask = strobe & ~allowed_mask;
+    if (illegal_mask !== '0) begin
+      checker_error($sformatf(
+        "WSTRB out of legal lanes: AWID=%0h beat=%0d AWADDR=%0h SIZE=%0d WSTRB=%0h allowed=%0h illegal=%0h",
+        aw.id, beat, aw.addr, aw.size,
+        strobe, allowed_mask, illegal_mask));
+    end
+  endfunction
+
   function void complete_write_burst(int unsigned beats);
     aw_state_t aw;
     if (aw_q.size() != 0) begin
@@ -121,24 +203,61 @@ class axi4_protocol_checker #(
         checker_error($sformatf("W burst length mismatch for AWID=0x%0h expected=%0d observed=%0d",
                                aw.id, aw.beats, beats));
       end
+
+      // Current master driver completes AW before sending W.
+      if (w_strbs.size() != beats) begin
+        checker_error($sformatf(
+          "WSTRB capture count mismatch: beats=%0d captured=%0d",
+          beats, w_strbs.size()));
+      end
+
+      for (int unsigned i=0; i<beats; i++) begin
+        if ((i < aw.beats) && (i < w_strbs.size()))
+          check_wstrb_for_beat(aw, i, w_strbs[i]);
+      end
+
       wr_done[aw.id].push_back(1);
     end else begin
       early_w_bursts.push_back(beats);
+      foreach (w_strbs[i])
+        early_w_strbs.push_back(w_strbs[i]);
     end
   endfunction
 
   function void accept_aw();
     aw_state_t aw;
+    int unsigned early_beats;
+
     aw.id = vif.awid;
     aw.beats = int'(vif.awlen) + 1;
+    aw.addr = vif.awaddr;
+    aw.size = vif.awsize;
+    aw.burst = vif.awburst;
     aw_hs++;
     check_sidebands(1'b1);
-    // W is an independent channel.  If a complete W burst arrived before AW,
-    // associate it now; otherwise retain the address in AXI AW order.
-    if ((early_w_bursts.size() != 0) && !w_active && (aw_q.size() == 0)) begin
-      if (early_w_bursts.pop_front() != aw.beats) begin
-        checker_error($sformatf("Early W burst length mismatch for AWID=0x%0h", aw.id));
+
+    // Match oldest completed W burst, even if another W
+    // burst is currently being received.
+    if ((early_w_bursts.size() != 0) &&
+        (aw_q.size() == 0)) begin
+
+      early_beats = early_w_bursts.pop_front();
+
+      if (early_beats != aw.beats) begin
+        checker_error($sformatf(
+          "Early W burst length mismatch AWID=0x%0h expected=%0d observed=%0d",
+          aw.id, aw.beats, early_beats));
       end
+
+      // Stage 3 will check each cached strobe before removal.
+      for (int unsigned i = 0; i < early_beats; i++) begin
+        if (early_w_strbs.size() == 0) begin
+          checker_error("Early WSTRB cache underflow");
+        end else begin
+          void'(early_w_strbs.pop_front());
+        end
+      end
+
       wr_done[aw.id].push_back(1);
     end else begin
       aw_q.push_back(aw);
@@ -150,7 +269,9 @@ class axi4_protocol_checker #(
     if (!w_active) begin
       w_active = 1'b1;
       w_beats = 0;
+      w_strbs.delete();
     end
+    w_strbs.push_back(vif.wstrb);
     w_beats++;
     if (vif.wlast) begin
       complete_write_burst(w_beats);

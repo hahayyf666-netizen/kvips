@@ -830,6 +830,91 @@ class axi4_strobe_patterns_seq #(
         `uvm_fatal(get_type_name(), "Narrow zero-strobe readback mismatch")
     end
 
+
+    // Check that unselected bytes preserve nonzero values.
+    begin : nonzero_preservation_case
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) wr;
+      axi4_item#(ADDR_W, DATA_W, ID_W, USER_W) rd;
+      logic [ADDR_W-1:0] addr;
+      logic [DATA_W-1:0] expected;
+
+      if (DATA_W != 64)
+        `uvm_fatal(get_type_name(), "Requires DATA_W=64")
+
+      addr = base_addr + 6*STRB_W;
+      expected = 64'h17161514_BBAA1110;
+
+      for (int unsigned step = 0; step < 3; step++) begin
+
+        wr = new($sformatf("preserve_wr_%0d", step));
+        wr.is_write = 1'b1;
+        wr.id = id;
+        wr.addr = addr;
+        wr.len = 8'd0;
+        wr.size = 3'd3;
+        wr.burst = AXI4_BURST_INCR;
+        wr.user = '0;
+        wr.allocate_payload();
+
+        case (step)
+          0: begin
+            wr.data[0] = 64'h17161514_13121110;
+            wr.strb[0] = 8'hFF;
+          end
+          1: begin
+            wr.data[0] = 64'h00000000_BBAA0000;
+            wr.strb[0] = 8'h0C;
+          end
+          2: begin
+            wr.data[0] = 64'hFFFFFFFF_FFFFFFFF;
+            wr.strb[0] = 8'h00;
+          end
+        endcase
+
+        start_item(wr);
+        finish_item(wr);
+
+        if (wr.reset_aborted || wr.timeout_aborted ||
+            wr.bresp != AXI4_RESP_OKAY)
+          `uvm_fatal(get_type_name(),
+            "Preservation write failed")
+
+        if (step > 0) begin
+
+          rd = new($sformatf("preserve_rd_%0d", step));
+          rd.is_write = 1'b0;
+          rd.id = id;
+          rd.addr = addr;
+          rd.len = 8'd0;
+          rd.size = 3'd3;
+          rd.burst = AXI4_BURST_INCR;
+          rd.user = '0;
+          rd.allocate_payload();
+
+          start_item(rd);
+          finish_item(rd);
+
+          if (rd.reset_aborted || rd.timeout_aborted ||
+              rd.rresp.size() != 1 || rd.data.size() != 1)
+            `uvm_fatal(get_type_name(),
+              "Preservation read incomplete")
+
+          if (rd.rresp[0] != AXI4_RESP_OKAY ||
+              rd.data[0] !== expected)
+            `uvm_fatal(get_type_name(),
+              $sformatf(
+                "Preservation step=%0d expected=%h actual=%h",
+                step, expected, rd.data[0]))
+
+          `uvm_info(get_type_name(),
+            $sformatf(
+              "PRESERVATION PASS step=%0d data=%h",
+              step, rd.data[0]), UVM_LOW)
+
+        end
+      end
+    end
+
   endtask
 endclass
 
@@ -1106,7 +1191,8 @@ class axi4_corner_case_seq #(
 
   task body();
     logic [ADDR_W-1:0] base4k;
-    base4k = logic'(longint'(base_addr) & ~longint'(12'hFFF));
+    base4k = base_addr;
+    base4k[11:0] = '0;
 
     // 1) Max INCR length (256 beats) at smallest size, aligned at 4KB base.
     begin
@@ -1125,7 +1211,10 @@ class axi4_corner_case_seq #(
       for (int unsigned i = 0; i < wr.num_beats(); i++) begin
         wr.data[i] = {$urandom(), $urandom()};
         if (DATA_W <= 32) wr.data[i] = $urandom();
-        wr.strb[i] = '1;
+        wr.strb[i] = '0;
+        wr.strb[i][i % (DATA_W/8)] = 1'b1;
+        if ($test$plusargs("KVIPS_BAD_WSTRB") && (i == 0))
+          wr.strb[i] = '1;
       end
       start_item(wr);
       finish_item(wr);
@@ -1174,7 +1263,9 @@ class axi4_corner_case_seq #(
         for (int unsigned b = 0; b < wr.num_beats(); b++) begin
           wr.data[b] = {$urandom(), $urandom()};
           if (DATA_W <= 32) wr.data[b] = $urandom();
-          wr.strb[b] = '1;
+          wr.strb[b] = '0;
+          for (int unsigned k=0; k<(1 << size); k++)
+            wr.strb[b][(wr.addr + ((burst == AXI4_BURST_FIXED) ? 0 : b*(1 << size)) + k) % (DATA_W/8)] = 1'b1;
         end
         start_item(wr);
         finish_item(wr);

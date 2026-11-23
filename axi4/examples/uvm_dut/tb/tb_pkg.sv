@@ -426,7 +426,7 @@ package tb_pkg;
       seqr = env.get_master_sequencer(0);
       if (seqr == null) `uvm_fatal(get_type_name(), "Master sequencer not found at index 0")
       seq = new("seq");
-      seq.base_addr = 32'h10000;
+      seq.base_addr = 32'hF000;
       seq.start(seqr);
       repeat (512) @(posedge vif.aclk);
       phase.drop_objection(this);
@@ -1989,6 +1989,59 @@ endtask
 
   endclass
 
+
+
+
+  // One-beat Lane Sweep with nonzero memory prefill.
+  class axi4_dut_lane_sweep_test extends axi4_dut_base_test;
+
+    `uvm_component_utils(axi4_dut_lane_sweep_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    task run_phase(uvm_phase phase);
+
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+
+      axi4_directed_burst_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) prefill;
+
+      axi4_lane_sweep_seq#(
+        ADDR_W, DATA_W, ID_W, USER_W
+      ) sweep;
+
+      phase.raise_objection(this);
+
+      seqr = env.get_master_sequencer(0);
+
+      if (seqr == null)
+        `uvm_fatal(get_type_name(), "Master sequencer not found")
+
+      wait (vif.areset_n === 1'b1);
+
+      // Initialize the complete 64-bit word with nonzero data.
+      prefill = new("lane_sweep_prefill");
+      prefill.start_addr = 32'h6000;
+      prefill.burst_type = AXI4_BURST_INCR;
+      prefill.len_cfg = 8'd0;
+      prefill.size_cfg = 3'd3;
+      prefill.start(seqr);
+
+      // Sweep all naturally aligned SIZE/Lane combinations.
+      sweep = new("lane_sweep");
+      sweep.base_addr = 32'h6000;
+      sweep.start(seqr);
+
+      repeat (32) @(posedge vif.aclk);
+
+      phase.drop_objection(this);
+
+    endtask
+
+  endclass
 
 
 endpackage

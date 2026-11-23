@@ -120,7 +120,8 @@ class axi4_monitor #(
     logic [3:0]  cache,
     logic [3:0]  region,
     int unsigned strb_pop,
-    bit          narrow
+    bit          narrow,
+    int unsigned start_lane
   );
     option.per_instance = 1;
     cp_is_write: coverpoint is_write;
@@ -171,6 +172,11 @@ class axi4_monitor #(
       bins some   = {[2:(STRB_W-1)]} iff (STRB_W > 2);
     }
     cp_narrow:   coverpoint narrow;
+
+    // Start byte lane coverage for write transactions.
+    cp_start_lane: coverpoint start_lane iff (is_write) {
+      bins lanes[] = {[0:STRB_W-1]};
+    }
 
     cx_burst_size: cross cp_burst, cp_size;
     cx_write_resp: cross cp_is_write, cp_resp;
@@ -450,10 +456,12 @@ class axi4_monitor #(
           trb.bresp = axi4_resp_e'(`AXI4_MON_CB.bresp);
 `ifndef VERILATOR
           if (cfg.coverage_enable) begin
+            int unsigned start_lane;
             spop = (trb.strb.size() != 0) ? $countones(trb.strb[0]) : STRB_W;
             is_narrow = (int'(trb.size) < $clog2(DATA_W/8));
+            start_lane = int'(trb.addr) % STRB_W;
             cov.sample(1'b1, trb.burst, int'(trb.size), int'(trb.len), trb.lock, trb.bresp,
-              trb.qos, trb.prot, trb.cache, trb.region, spop, is_narrow);
+              trb.qos, trb.prot, trb.cache, trb.region, spop, is_narrow, start_lane);
           end
 `endif
           maybe_record(trb, "axi4_write");
@@ -545,12 +553,14 @@ class axi4_monitor #(
           if (cfg.coverage_enable) begin
             axi4_resp_e resp0;
             int unsigned spop;
+            int unsigned start_lane;
             bit is_narrow;
             resp0 = (st.tr.rresp.size() != 0) ? st.tr.rresp[0] : AXI4_RESP_OKAY;
             spop = STRB_W;
             is_narrow = (int'(st.tr.size) < $clog2(DATA_W/8));
+            start_lane = int'(st.tr.addr) % STRB_W;
             cov.sample(1'b0, st.tr.burst, int'(st.tr.size), int'(st.tr.len), st.tr.lock, resp0,
-              st.tr.qos, st.tr.prot, st.tr.cache, st.tr.region, spop, is_narrow);
+              st.tr.qos, st.tr.prot, st.tr.cache, st.tr.region, spop, is_narrow, start_lane);
           end
 `endif
           ap.write(st.tr);
