@@ -1,0 +1,618 @@
+Tests
+
+Total Coverage Summary
+SCORE   GROUP
+ 97.73   97.73 258/264
+
+
+Total tests in report: 30
+-------------------------------------------------------------------------------
+Data from the following tests was used to generate this report
+TEST LOCATION
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_smoke_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_burst_mix_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_narrow_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_wrap_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_strobe_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_unaligned_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_boundary_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_pipeline_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_error_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_delay_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_ral_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_wrap_alignment_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fixed_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_incr_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_narrow_directed_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_4kb_boundary_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_lane_sweep_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_burst_size_cross_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_len_256_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_sideband_coverage_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_lock_coverage_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_unaligned_incr_e2e_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_id_width_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_closure_toggle_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_closure_random_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_closure_bready_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fc_size_lane_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fc_wstrb_beat_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fc_rresp_beat_test
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fc_backpressure_burst_test
+
+
+Total test records in report: 30
+-------------------------------------------------------------------------------
+TEST NO TEST LOCATION                                                                                                            TEST NAME STATUS STARTED                   FINISHED                  SIMULATION TIME
+T1      /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_smoke_test                                  Nov 25 12:20:52 PM CST 26 Nov 25 12:20:52 PM CST 26 9925000 ps
+T2      /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_burst_mix_test                              Nov 25 12:20:52 PM CST 26 Nov 25 12:20:52 PM CST 26 21385000 ps
+T3      /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_narrow_test                                 Nov 25 12:20:53 PM CST 26 Nov 25 12:20:53 PM CST 26 10775000 ps
+T4      /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_wrap_test                                   Nov 25 12:20:53 PM CST 26 Nov 25 12:20:53 PM CST 26 11705000 ps
+T11     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_strobe_test                                 Nov 25 12:20:53 PM CST 26 Nov 25 12:20:53 PM CST 26 1685000 ps
+T8      /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_unaligned_test                              Nov 25 12:20:53 PM CST 26 Nov 25 12:20:53 PM CST 26 1625000 ps
+T5      /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_boundary_test                               Nov 25 12:20:54 PM CST 26 Nov 25 12:20:54 PM CST 26 17425000 ps
+T24     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_pipeline_test                               Nov 25 12:20:54 PM CST 26 Nov 25 12:20:54 PM CST 26 6605000 ps
+T15     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_error_test                                  Nov 25 12:20:54 PM CST 26 Nov 25 12:20:54 PM CST 26 535000 ps
+T7      /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_delay_test                                  Nov 25 12:20:54 PM CST 26 Nov 25 12:20:54 PM CST 26 12145000 ps
+T23     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_ral_test                                    Nov 25 12:20:55 PM CST 26 Nov 25 12:20:55 PM CST 26 965000 ps
+T6      /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_wrap_alignment_test                         Nov 25 12:20:55 PM CST 26 Nov 25 12:20:55 PM CST 26 1635000 ps
+T20     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fixed_test                                  Nov 25 12:20:55 PM CST 26 Nov 25 12:20:55 PM CST 26 1635000 ps
+T28     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_incr_test                                   Nov 25 12:20:55 PM CST 26 Nov 25 12:20:55 PM CST 26 1635000 ps
+T9      /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_narrow_directed_test                        Nov 25 12:20:56 PM CST 26 Nov 25 12:20:56 PM CST 26 2885000 ps
+T29     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_4kb_boundary_test                           Nov 25 12:20:56 PM CST 26 Nov 25 12:20:56 PM CST 26 1555000 ps
+T10     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_lane_sweep_test                             Nov 25 12:20:56 PM CST 26 Nov 25 12:20:56 PM CST 26 2185000 ps
+T19     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_burst_size_cross_test                       Nov 25 12:20:56 PM CST 26 Nov 25 12:20:57 PM CST 26 2885000 ps
+T12     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_len_256_test                                Nov 25 12:20:57 PM CST 26 Nov 25 12:20:57 PM CST 26 11715000 ps
+T18     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_sideband_coverage_test                      Nov 25 12:20:57 PM CST 26 Nov 25 12:20:57 PM CST 26 1625000 ps
+T14     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_lock_coverage_test                          Nov 25 12:20:57 PM CST 26 Nov 25 12:20:57 PM CST 26 855000 ps
+T27     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_unaligned_incr_e2e_test                     Nov 25 12:20:57 PM CST 26 Nov 25 12:20:58 PM CST 26 475000 ps
+T30     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_id_width_test                               Nov 25 12:20:58 PM CST 26 Nov 25 12:20:58 PM CST 26 755000 ps
+T16     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_closure_toggle_test                         Nov 25 12:20:58 PM CST 26 Nov 25 12:20:58 PM CST 26 20895000 ps
+T13     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_closure_random_test                         Nov 25 12:20:58 PM CST 26 Nov 25 12:20:59 PM CST 26 386725000 ps
+T25     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_closure_bready_test                         Nov 25 12:20:59 PM CST 26 Nov 25 12:20:59 PM CST 26 17750000 ps
+T21     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fc_size_lane_test                           Nov 25 12:20:59 PM CST 26 Nov 25 12:20:59 PM CST 26 7190000 ps
+T22     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fc_wstrb_beat_test                          Nov 25 12:21:00 PM CST 26 Nov 25 12:21:00 PM CST 26 1200000 ps
+T17     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fc_rresp_beat_test                          Nov 25 12:21:00 PM CST 26 Nov 25 12:21:00 PM CST 26 610000 ps
+T26     /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fc_backpressure_burst_test                  Nov 25 12:21:00 PM CST 26 Nov 25 12:21:00 PM CST 26 4820000 ps
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_smoke_test
+Short name      T1
+Test name
+Test status
+Simulation time 9925000 ps
+CPU time        0.32 seconds
+Started         Nov 25 12:20:52 PM CST 26
+Finished        Nov 25 12:20:52 PM CST 26
+Peak memory     103636 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_smoke_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                 +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_smoke_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_burst_mix_test
+Short name      T2
+Test name
+Test status
+Simulation time 21385000 ps
+CPU time        0.27 seconds
+Started         Nov 25 12:20:52 PM CST 26
+Finished        Nov 25 12:20:52 PM CST 26
+Peak memory     103744 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_burst_mix_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM
+                _LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_burst_mix_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_narrow_test
+Short name      T3
+Test name
+Test status
+Simulation time 10775000 ps
+CPU time        0.22 seconds
+Started         Nov 25 12:20:53 PM CST 26
+Finished        Nov 25 12:20:53 PM CST 26
+Peak memory     103640 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_narrow_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LO
+                W +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_narrow_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_wrap_test
+Short name      T4
+Test name
+Test status
+Simulation time 11705000 ps
+CPU time        0.22 seconds
+Started         Nov 25 12:20:53 PM CST 26
+Finished        Nov 25 12:20:53 PM CST 26
+Peak memory     102628 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_wrap_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_wrap_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_strobe_test
+Short name      T11
+Test name
+Test status
+Simulation time 1685000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:20:53 PM CST 26
+Finished        Nov 25 12:20:53 PM CST 26
+Peak memory     102520 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_strobe_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LO
+                W +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_strobe_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_unaligned_test
+Short name      T8
+Test name
+Test status
+Simulation time 1625000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:20:53 PM CST 26
+Finished        Nov 25 12:20:53 PM CST 26
+Peak memory     102488 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_unaligned_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM
+                _LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_unaligned_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_boundary_test
+Short name      T5
+Test name
+Test status
+Simulation time 17425000 ps
+CPU time        0.22 seconds
+Started         Nov 25 12:20:54 PM CST 26
+Finished        Nov 25 12:20:54 PM CST 26
+Peak memory     102596 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_boundary_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_
+                LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_boundary_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_pipeline_test
+Short name      T24
+Test name
+Test status
+Simulation time 6605000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:20:54 PM CST 26
+Finished        Nov 25 12:20:54 PM CST 26
+Peak memory     103972 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_pipeline_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_
+                LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_pipeline_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_error_test
+Short name      T15
+Test name
+Test status
+Simulation time 535000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:20:54 PM CST 26
+Finished        Nov 25 12:20:54 PM CST 26
+Peak memory     102364 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_error_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                 +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_error_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_delay_test
+Short name      T7
+Test name
+Test status
+Simulation time 12145000 ps
+CPU time        0.22 seconds
+Started         Nov 25 12:20:54 PM CST 26
+Finished        Nov 25 12:20:54 PM CST 26
+Peak memory     103848 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_delay_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                 +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_delay_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_ral_test
+Short name      T23
+Test name
+Test status
+Simulation time 965000 ps
+CPU time        0.22 seconds
+Started         Nov 25 12:20:55 PM CST 26
+Finished        Nov 25 12:20:55 PM CST 26
+Peak memory     102596 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_ral_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +
+                KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_ral_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_wrap_alignment_test
+Short name      T6
+Test name
+Test status
+Simulation time 1635000 ps
+CPU time        0.24 seconds
+Started         Nov 25 12:20:55 PM CST 26
+Finished        Nov 25 12:20:55 PM CST 26
+Peak memory     116496 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_wrap_alignment_test +ntb_random_seed=1 +UVM_VERBOSIT
+                Y=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_wrap_alignment_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fixed_test
+Short name      T20
+Test name
+Test status
+Simulation time 1635000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:20:55 PM CST 26
+Finished        Nov 25 12:20:55 PM CST 26
+Peak memory     102488 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_fixed_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                 +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_fixed_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_incr_test
+Short name      T28
+Test name
+Test status
+Simulation time 1635000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:20:55 PM CST 26
+Finished        Nov 25 12:20:55 PM CST 26
+Peak memory     102492 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_incr_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_incr_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_narrow_directed_test
+Short name      T9
+Test name
+Test status
+Simulation time 2885000 ps
+CPU time        0.24 seconds
+Started         Nov 25 12:20:56 PM CST 26
+Finished        Nov 25 12:20:56 PM CST 26
+Peak memory     102548 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_narrow_directed_test +ntb_random_seed=1 +UVM_VERBOSI
+                TY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_narrow_directed_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_4kb_boundary_test
+Short name      T29
+Test name
+Test status
+Simulation time 1555000 ps
+CPU time        0.25 seconds
+Started         Nov 25 12:20:56 PM CST 26
+Finished        Nov 25 12:20:56 PM CST 26
+Peak memory     116500 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_4kb_boundary_test +ntb_random_seed=1 +UVM_VERBOSITY=
+                UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_4kb_boundary_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_lane_sweep_test
+Short name      T10
+Test name
+Test status
+Simulation time 2185000 ps
+CPU time        0.23 seconds
+Started         Nov 25 12:20:56 PM CST 26
+Finished        Nov 25 12:20:56 PM CST 26
+Peak memory     102576 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_lane_sweep_test +ntb_random_seed=1 +UVM_VERBOSITY=UV
+                M_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_lane_sweep_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_burst_size_cross_test
+Short name      T19
+Test name
+Test status
+Simulation time 2885000 ps
+CPU time        0.22 seconds
+Started         Nov 25 12:20:56 PM CST 26
+Finished        Nov 25 12:20:57 PM CST 26
+Peak memory     102536 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_burst_size_cross_test +ntb_random_seed=1 +UVM_VERBOS
+                ITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_burst_size_cross_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_len_256_test
+Short name      T12
+Test name
+Test status
+Simulation time 11715000 ps
+CPU time        0.22 seconds
+Started         Nov 25 12:20:57 PM CST 26
+Finished        Nov 25 12:20:57 PM CST 26
+Peak memory     102696 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_len_256_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_L
+                OW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_len_256_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_sideband_coverage_test
+Short name      T18
+Test name
+Test status
+Simulation time 1625000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:20:57 PM CST 26
+Finished        Nov 25 12:20:57 PM CST 26
+Peak memory     102508 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_sideband_coverage_test +ntb_random_seed=1 +UVM_VERBO
+                SITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_sideband_coverage_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_lock_coverage_test
+Short name      T14
+Test name
+Test status
+Simulation time 855000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:20:57 PM CST 26
+Finished        Nov 25 12:20:57 PM CST 26
+Peak memory     102492 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_lock_coverage_test +ntb_random_seed=1 +UVM_VERBOSITY
+                =UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_lock_coverage_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_unaligned_incr_e2e_test
+Short name      T27
+Test name
+Test status
+Simulation time 475000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:20:57 PM CST 26
+Finished        Nov 25 12:20:58 PM CST 26
+Peak memory     102492 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_unaligned_incr_e2e_test +ntb_random_seed=1 +UVM_VERB
+                OSITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_unaligned_incr_e2e_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_id_width_test
+Short name      T30
+Test name
+Test status
+Simulation time 755000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:20:58 PM CST 26
+Finished        Nov 25 12:20:58 PM CST 26
+Peak memory     102492 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_id_width_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_
+                LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_id_width_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_closure_toggle_test
+Short name      T16
+Test name
+Test status
+Simulation time 20895000 ps
+CPU time        0.24 seconds
+Started         Nov 25 12:20:58 PM CST 26
+Finished        Nov 25 12:20:58 PM CST 26
+Peak memory     104768 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_closure_toggle_test +ntb_random_seed=1 +UVM_VERBOSIT
+                Y=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_closure_toggle_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_closure_random_test
+Short name      T13
+Test name
+Test status
+Simulation time 386725000 ps
+CPU time        0.69 seconds
+Started         Nov 25 12:20:58 PM CST 26
+Finished        Nov 25 12:20:59 PM CST 26
+Peak memory     108108 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_closure_random_test +ntb_random_seed=1 +UVM_VERBOSIT
+                Y=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_closure_random_test
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_closure_bready_test
+Short name      T25
+Test name
+Test status
+Simulation time 17750000 ps
+CPU time        0.33 seconds
+Started         Nov 25 12:20:59 PM CST 26
+Finished        Nov 25 12:20:59 PM CST 26
+Peak memory     105568 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_closure_bready_test +ntb_random_seed=1 +UVM_VERBOSIT
+                Y=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_closure_bready_test +DUT_DEBUG +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOW
+                N
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fc_size_lane_test
+Short name      T21
+Test name
+Test status
+Simulation time 7190000 ps
+CPU time        0.24 seconds
+Started         Nov 25 12:20:59 PM CST 26
+Finished        Nov 25 12:20:59 PM CST 26
+Peak memory     104016 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_fc_size_lane_test +ntb_random_seed=1 +UVM_VERBOSITY=
+                UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_fc_size_lane_test +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fc_wstrb_beat_test
+Short name      T22
+Test name
+Test status
+Simulation time 1200000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:21:00 PM CST 26
+Finished        Nov 25 12:21:00 PM CST 26
+Peak memory     102832 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_fc_wstrb_beat_test +ntb_random_seed=1 +UVM_VERBOSITY
+                =UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_fc_wstrb_beat_test +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fc_rresp_beat_test
+Short name      T17
+Test name
+Test status
+Simulation time 610000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:21:00 PM CST 26
+Finished        Nov 25 12:21:00 PM CST 26
+Peak memory     102756 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_fc_rresp_beat_test +ntb_random_seed=1 +UVM_VERBOSITY
+                =UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_fc_rresp_beat_test +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage/axi4_dut_fc_backpressure_burst_test
+Short name      T26
+Test name
+Test status
+Simulation time 4820000 ps
+CPU time        0.21 seconds
+Started         Nov 25 12:21:00 PM CST 26
+Finished        Nov 25 12:21:00 PM CST 26
+Peak memory     102468 kb
+Host            localhost.localdomain
+User            ICer
+Command         /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /home/ICe
+                r/icdv_project/kvips/coverage_functional_enhancement/reports/final/coverage.vdb -cm_name axi4_dut_fc_backpressure_burst_test +ntb_random_seed=1 +UVM_V
+                ERBOSITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_fc_backpressure_burst_test +KVIPS_WAVES +KVIPS_AXI4_ASSERT_K
+                NOWN
+Directory       /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/final/regression

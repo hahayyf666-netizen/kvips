@@ -1,0 +1,20 @@
+Dashboard
+
+Date: Wed Nov 25 12:17:05 2026
+
+User: ICer
+
+Version: O-2018.09-SP2
+Command line: urg -full64 -dir /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/baseline/coverage.vdb -metric group -format both -show ratios -show tests -group maxmissing 1000 -group show_bin_values -report /home/ICer/icdv_project/kvips/coverage_functional_enhancement/reports/baseline/urg/functional
+Number of tests: 26
+
+-------------------------------------------------------------------------------
+Total Coverage Summary
+SCORE   GROUP
+ 81.82   81.82 216/264
+
+
+-------------------------------------------------------------------------------
+Total Groups Coverage Summary
+COVERED EXPECTED SCORE  COVERED EXPECTED INST SCORE WEIGHT
+216     264       81.82 216     264       81.82     1

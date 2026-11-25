@@ -187,6 +187,10 @@ package tb_pkg;
     endfunction
   endclass
 
+`ifndef VERILATOR
+  `include "axi4_dut_func_cov.svh"
+`endif
+
   class axi4_dut_base_test extends uvm_test;
     `uvm_component_utils(axi4_dut_base_test)
 
@@ -205,6 +209,9 @@ package tb_pkg;
     axi4_env_cfg#(ADDR_W, DATA_W, ID_W, USER_W) env_cfg;
     axi4_env#(ADDR_W, DATA_W, ID_W, USER_W)     env;
     axi4_scoreboard#(ADDR_W, DATA_W, ID_W, USER_W) sb;
+`ifndef VERILATOR
+    axi4_dut_func_cov enhanced_cov;
+`endif
     axi4_dut_regfile ral;
     axi4_dut_reg_adapter ral_adapter;
     uvm_reg_predictor#(axi4_item#(ADDR_W, DATA_W, ID_W, USER_W)) ral_predictor;
@@ -275,6 +282,15 @@ package tb_pkg;
       uvm_config_db#(axi4_env_cfg#(ADDR_W, DATA_W, ID_W, USER_W))::set(this, "env", "cfg", env_cfg);
       env = axi4_env#(ADDR_W, DATA_W, ID_W, USER_W)::type_id::create("env", this);
       sb = axi4_scoreboard#(ADDR_W, DATA_W, ID_W, USER_W)::type_id::create("sb", this);
+`ifndef VERILATOR
+      begin
+        int ext_enable;
+        if ($value$plusargs("DUT_FCOV_EXT=%d", ext_enable) && ext_enable != 0) begin
+          enhanced_cov = new("ram_fcov", this);
+          enhanced_cov.vif = vif;
+        end
+      end
+`endif
       ral = axi4_dut_regfile::type_id::create("ral");
       ral.build();
       ral_adapter = axi4_dut_reg_adapter::type_id::create("ral_adapter");
@@ -286,6 +302,9 @@ package tb_pkg;
     function void connect_phase(uvm_phase phase);
       super.connect_phase(phase);
       env.ap.connect(sb.analysis_export);
+`ifndef VERILATOR
+      if (enhanced_cov != null) env.ap.connect(enhanced_cov.analysis_export);
+`endif
       env.ap.connect(ral_predictor.bus_in);
     endfunction
   endclass
@@ -2296,5 +2315,6 @@ endtask
 
   `include "axi4_id_width_test.svh"
   `include "axi4_coverage_closure_tests.svh"
+  `include "axi4_dut_fc_tests.svh"
 
 endpackage

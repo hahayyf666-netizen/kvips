@@ -1,0 +1,11 @@
+Testbench Group List
+
+Total Groups Coverage Summary
+COVERED EXPECTED SCORE  COVERED EXPECTED INST SCORE WEIGHT
+79      79       100.00 79      79       100.00     1
+
+
+Total groups in report: 1
+-------------------------------------------------------------------------------
+COVERED EXPECTED SCORE  INSTANCES WEIGHT GOAL   AT LEAST PER INSTANCE AUTO BIN MAX PRINT MISSING COMMENT NAME
+79      79       100.00 100.00    1      100    1        1            64           64                    axi4_uvm_pkg::axi4_monitor#(32,64,4,1)::cov

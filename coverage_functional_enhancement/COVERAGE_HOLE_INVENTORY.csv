@@ -1,0 +1,52 @@
+﻿cross,bin,status,baseline_hits,final_hits,new_tests,basis
+cx_channel_stall,ar/medium_wait,Resolved,0,1,axi4_dut_fc_backpressure_burst_test=1,See modeled scenario and actual handshakes
+cx_channel_stall,ar/short_wait,Resolved,0,1,axi4_dut_fc_backpressure_burst_test=1,See modeled scenario and actual handshakes
+cx_channel_stall,aw/medium_wait,Resolved,0,1,axi4_dut_fc_backpressure_burst_test=1,See modeled scenario and actual handshakes
+cx_channel_stall,aw/short_wait,Resolved,0,1,axi4_dut_fc_backpressure_burst_test=1,See modeled scenario and actual handshakes
+cx_channel_stall,r/short_wait,Resolved,0,15,axi4_dut_fc_backpressure_burst_test=15,See modeled scenario and actual handshakes
+cx_channel_stall,w/medium_wait,Resolved,0,9,axi4_dut_fc_backpressure_burst_test=9,See modeled scenario and actual handshakes
+cx_response_stall,b/fixed_b/long_wait,Resolved,0,1,axi4_dut_fc_backpressure_burst_test=1,See modeled scenario and actual handshakes
+cx_response_stall,b/fixed_b/medium_wait,Resolved,0,1,axi4_dut_fc_backpressure_burst_test=1,See modeled scenario and actual handshakes
+cx_response_stall,b/fixed_b/none,Resolved,0,1,axi4_dut_fc_backpressure_burst_test=1,See modeled scenario and actual handshakes
+cx_response_stall,b/wrap_b/long_wait,Resolved,0,1,axi4_dut_fc_backpressure_burst_test=1,See modeled scenario and actual handshakes
+cx_response_stall,b/wrap_b/medium_wait,Resolved,0,1,axi4_dut_fc_backpressure_burst_test=1,See modeled scenario and actual handshakes
+cx_response_stall,b/wrap_b/none,Resolved,0,1,axi4_dut_fc_backpressure_burst_test=1,See modeled scenario and actual handshakes
+cx_response_stall,r/fixed_b/long_wait,Resolved,0,4,axi4_dut_fc_backpressure_burst_test=4,See modeled scenario and actual handshakes
+cx_response_stall,r/fixed_b/medium_wait,Resolved,0,4,axi4_dut_fc_backpressure_burst_test=4,See modeled scenario and actual handshakes
+cx_response_stall,r/fixed_b/short_wait,Resolved,0,5,axi4_dut_fc_backpressure_burst_test=5,See modeled scenario and actual handshakes
+cx_response_stall,r/incr_b/short_wait,Resolved,0,6,axi4_dut_fc_backpressure_burst_test=6,See modeled scenario and actual handshakes
+cx_response_stall,r/wrap_b/long_wait,Resolved,0,4,axi4_dut_fc_backpressure_burst_test=4,See modeled scenario and actual handshakes
+cx_response_stall,r/wrap_b/medium_wait,Resolved,0,4,axi4_dut_fc_backpressure_burst_test=4,See modeled scenario and actual handshakes
+cx_response_stall,r/wrap_b/short_wait,Resolved,0,4,axi4_dut_fc_backpressure_burst_test=4,See modeled scenario and actual handshakes
+cx_response_stall_length,r/fixed_b/multi_beat,Resolved,0,12,axi4_dut_fc_backpressure_burst_test=12,See modeled scenario and actual handshakes
+cx_response_stall_length,r/fixed_b/single_beat,Resolved,0,1,axi4_dut_fc_backpressure_burst_test=1,See modeled scenario and actual handshakes
+cx_response_stall_length,r/incr_b/single_beat,Resolved,0,3,axi4_dut_fc_backpressure_burst_test=3,See modeled scenario and actual handshakes
+cx_response_stall_length,r/wrap_b/multi_beat,Resolved,0,12,axi4_dut_fc_backpressure_burst_test=12,See modeled scenario and actual handshakes
+cx_rresp_pos,decerr/first,Resolved,0,1,axi4_dut_fc_rresp_beat_test=1,See modeled scenario and actual handshakes
+cx_rresp_pos,decerr/last_beat,Resolved,0,1,axi4_dut_fc_rresp_beat_test=1,See modeled scenario and actual handshakes
+cx_rresp_pos,decerr/middle,Resolved,0,2,axi4_dut_fc_rresp_beat_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_1/lane_1,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_1/lane_3,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_1/lane_5,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_1/lane_7,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_2/lane_1,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_2/lane_2,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_2/lane_3,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_2/lane_5,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_2/lane_6,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_3/lane_1,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_3/lane_2,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_3/lane_3,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_3/lane_4,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_3/lane_5,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_3/lane_6,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_size_start_lane,size_3/lane_7,Resolved,0,2,axi4_dut_fc_size_lane_test=2,See modeled scenario and actual handshakes
+cx_burst_len,fixed_b/beats_256,Excluded by definition,,,,FIXED is limited to 16 transfers
+cx_burst_len,wrap_b/beats_1,Excluded by definition,,,,"WRAP requires 2, 4, 8 or 16 transfers"
+cx_burst_len,wrap_b/beats_256,Excluded by definition,,,,"WRAP requires 2, 4, 8 or 16 transfers"
+cx_size_w_class,size_0/single_lane,Excluded by definition,,,,Enabling the only legal lane is All Legal
+cx_size_w_class,size_0/partial_strobe,Excluded by definition,,,,There is no strict subset of at least two legal lanes
+cx_size_w_class,size_1/partial_strobe,Excluded by definition,,,,"At most two legal lanes, so a nonempty subset is Single"
+cx_channel_stall,w/long_wait,Excluded by definition,,,,AW-first RAM WREADY throttle is at most three cycles
+cx_response_stall_length,b/wrap_b/single_beat,Excluded by definition,,,,Single-beat WRAP is illegal
+cx_response_stall_length,r/wrap_b/single_beat,Excluded by definition,,,,Single-beat WRAP is illegal

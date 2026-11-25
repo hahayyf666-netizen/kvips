@@ -1,0 +1,878 @@
+Group : axi4_uvm_pkg::axi4_monitor#(32,64,4,1)::cov
+
+===============================================================================
+Group : axi4_uvm_pkg::axi4_monitor#(32,64,4,1)::cov
+===============================================================================
+SCORE  INSTANCES WEIGHT GOAL   AT LEAST PER INSTANCE AUTO BIN MAX PRINT MISSING
+100.00 100.00    1      100    1        1            64           64
+
+
+Source File(s) :
+
+/home/ICer/icdv_project/kvips/coverage_functional_enhancement/source/final/axi4/sv/uvm/axi4_monitor.svh
+
+1 Instances:
+
+SCORE  WEIGHT GOAL   AT LEAST AUTO BIN MAX PRINT MISSING NAME
+100.00 1      100    1        64           64            top.me.obj.cov
+
+
+
+
+-------------------------------------------------------------------------------
+
+Summary for Group   axi4_uvm_pkg::axi4_monitor#(32,64,4,1)::cov
+
+
+
+CATEGORY  EXPECTED UNCOVERED COVERED PERCENT
+Variables 52       0         52      100.00
+Crosses   27       0         27      100.00
+
+
+Variables for Group  axi4_uvm_pkg::axi4_monitor#(32,64,4,1)::cov
+
+
+VARIABLE      EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST AUTO BIN MAX COMMENT
+cp_is_write   2        0         2       100.00  100  1      1        2
+cp_burst      3        0         3       100.00  100  1      1        0
+cp_size       4        0         4       100.00  100  1      1        0
+cp_len        6        0         6       100.00  100  1      1        0
+cp_lock       2        0         2       100.00  100  1      1        2
+cp_resp       4        0         4       100.00  100  1      1        0
+cp_qos        5        0         5       100.00  100  1      1        0
+cp_prot       8        0         8       100.00  100  1      1        0
+cp_cache      2        0         2       100.00  100  1      1        0
+cp_region     2        0         2       100.00  100  1      1        0
+cp_strb_pop   4        0         4       100.00  100  1      1        0
+cp_narrow     2        0         2       100.00  100  1      1        2
+cp_start_lane 8        0         8       100.00  100  1      1        0
+
+
+Crosses for Group  axi4_uvm_pkg::axi4_monitor#(32,64,4,1)::cov
+
+
+CROSS          EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST PRINT MISSING COMMENT
+cx_burst_size  12       0         12      100.00  100  1      1        0
+cx_write_resp  8        0         8       100.00  100  1      1        0
+cx_narrow_strb 7        0         7       100.00  100  1      1        0
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_is_write
+
+
+CATEGORY                     EXPECTED UNCOVERED COVERED PERCENT
+Automatically Generated Bins 2        0         2       100.00
+
+
+Automatically Generated Bins for cp_is_write
+
+
+Bins
+
+NAME    COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+auto[0] 1334  1        { [ 0 ] }        T1   50     T2   60     T3   100
+auto[1] 1247  1        { [ 1 ] }        T1   50     T2   60     T3   100
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_burst
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 3        0         3       100.00
+
+
+User Defined Bins for cp_burst
+
+
+Bins
+
+NAME  COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+wrap  673   1        --               T2   36     T3   82     T4   96
+incr  1271  1        --               T1   100    T2   48     T3   72
+fixed 637   1        --               T2   36     T3   46     T5   80
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_size
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 4        0         4       100.00
+
+
+User Defined Bins for cp_size
+
+
+Bins
+
+NAME    COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+sizes_0 406   1        --               T1   26     T6   16     T7   16
+sizes_1 399   1        --               T1   16     T6   8      T5   22
+sizes_2 394   1        --               T1   32     T6   4      T8   2
+sizes_3 1382  1        --               T1   26     T2   120    T3   200
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_len
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 6        0         6       100.00
+
+
+User Defined Bins for cp_len
+
+
+Excluded/Illegal bins
+
+NAME  COUNT SUBSUMED VALUES STATUS
+other 1017  --              Excluded
+
+
+Covered bins
+
+NAME    COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+len_256 2     1        --               T9   2      -    -      -    -
+len_16  253   1        --               T3   32     T4   28     T9   4
+len_8   292   1        --               T1   12     T2   30     T3   22
+len_4   359   1        --               T1   16     T2   26     T3   32
+len_2   196   1        --               T1   8      T2   14     T3   18
+len_1   462   1        --               T1   16     T2   8      T3   14
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_lock
+
+
+CATEGORY                     EXPECTED UNCOVERED COVERED PERCENT
+Automatically Generated Bins 2        0         2       100.00
+
+
+Automatically Generated Bins for cp_lock
+
+
+Bins
+
+NAME    COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+auto[0] 2573  1        { [ 0 ] }        T1   100    T2   120    T3   200
+auto[1] 8     1        { [ 1 ] }        T10  2      T11  2      T12  2
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_resp
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 4        0         4       100.00
+
+
+User Defined Bins for cp_resp
+
+
+Bins
+
+NAME   COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+decerr 4     1        --               T13  1      T14  1      T15  1
+slverr 3     1        --               T16  1      T17  1      T18  1
+exokay 4     1        --               T10  2      T11  1      T19  1
+okay   2570  1        --               T1   100    T2   120    T3   200
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_qos
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 5        0         5       100.00
+
+
+User Defined Bins for cp_qos
+
+
+Bins
+
+NAME     COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+qos15    2     1        --               T20  2      -    -      -    -
+qos12_14 2     1        --               T20  2      -    -      -    -
+qos4_11  2     1        --               T20  2      -    -      -    -
+qos1_3   2     1        --               T21  2      -    -      -    -
+qos0     2571  1        --               T1   100    T2   120    T3   200
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_prot
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 8        0         8       100.00
+
+
+User Defined Bins for cp_prot
+
+
+Bins
+
+NAME   COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+vals_0 2571  1        --               T1   100    T2   120    T3   200
+vals_1 1     1        --               T20  1      -    -      -    -
+vals_2 1     1        --               T20  1      -    -      -    -
+vals_3 2     1        --               T21  2      -    -      -    -
+vals_4 1     1        --               T20  1      -    -      -    -
+vals_5 1     1        --               T20  1      -    -      -    -
+vals_6 1     1        --               T20  1      -    -      -    -
+vals_7 1     1        --               T20  1      -    -      -    -
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_cache
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 2        0         2       100.00
+
+
+User Defined Bins for cp_cache
+
+
+Excluded/Illegal bins
+
+NAME    COUNT SUBSUMED VALUES STATUS
+c_other 4     --              Excluded
+
+
+Covered bins
+
+NAME COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+cF   6     1        --               T20  6      -    -      -    -
+c0   2571  1        --               T1   100    T2   120    T3   200
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_region
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 2        0         2       100.00
+
+
+User Defined Bins for cp_region
+
+
+Excluded/Illegal bins
+
+NAME    COUNT SUBSUMED VALUES STATUS
+r_other 4     --              Excluded
+
+
+Covered bins
+
+NAME COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+r15  6     1        --               T20  6      -    -      -    -
+r0   2571  1        --               T1   100    T2   120    T3   200
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_strb_pop
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 4        0         4       100.00
+
+
+User Defined Bins for cp_strb_pop
+
+
+Bins
+
+NAME   COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+some   399   1        --               T1   24     T6   6      T8   3
+full   641   1        --               T1   13     T2   60     T3   100
+single 204   1        --               T1   13     T6   8      T8   1
+none   3     1        --               T8   3      -    -      -    -
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_narrow
+
+
+CATEGORY                     EXPECTED UNCOVERED COVERED PERCENT
+Automatically Generated Bins 2        0         2       100.00
+
+
+Automatically Generated Bins for cp_narrow
+
+
+Bins
+
+NAME    COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+auto[0] 1382  1        { [ 0 ] }        T1   26     T2   120    T3   200
+auto[1] 1199  1        { [ 1 ] }        T1   74     T6   28     T8   2
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_start_lane
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 8        0         8       100.00
+
+
+User Defined Bins for cp_start_lane
+
+
+Bins
+
+NAME    COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+lanes_0 889   1        --               T1   26     T2   60     T3   100
+lanes_1 25    1        --               T1   2      T6   1      T7   1
+lanes_2 67    1        --               T1   5      T6   2      T7   1
+lanes_3 25    1        --               T1   3      T6   1      T7   1
+lanes_4 141   1        --               T1   10     T6   3      T7   1
+lanes_5 30    1        --               T1   2      T6   1      T7   1
+lanes_6 55    1        --               T1   1      T6   2      T7   1
+lanes_7 15    1        --               T1   1      T6   1      T7   1
+
+
+-------------------------------------------------------------------------------
+
+Summary for Cross cx_burst_size
+
+
+Samples crossed: cp_burst cp_size
+CATEGORY                           EXPECTED UNCOVERED COVERED PERCENT MISSING
+Automatically Generated Cross Bins 12       0         12      100.00
+
+
+Automatically Generated Cross Bins for cx_burst_size
+
+
+Bins
+
+cp_burst cp_size COUNT AT LEAST  TEST COUNT  TEST COUNT  TEST COUNT
+wrap     sizes_0 112   1         T22  34     T23  32     T24  18
+wrap     sizes_1 112   1         T22  30     T23  32     T24  22
+wrap     sizes_2 122   1         T22  30     T23  44     T24  20
+wrap     sizes_3 327   1         T2   36     T3   82     T4   96
+incr     sizes_0 162   1         T1   26     T6   16     T7   16
+incr     sizes_1 135   1         T1   16     T6   8      T22  28
+incr     sizes_2 124   1         T1   32     T6   4      T8   2
+incr     sizes_3 850   1         T1   26     T2   48     T3   72
+fixed    sizes_0 132   1         T5   20     T22  36     T23  30
+fixed    sizes_1 152   1         T5   22     T22  32     T23  44
+fixed    sizes_2 148   1         T5   18     T9   2      T22  34
+fixed    sizes_3 205   1         T2   36     T3   46     T5   20
+
+
+-------------------------------------------------------------------------------
+
+Summary for Cross cx_write_resp
+
+
+Samples crossed: cp_is_write cp_resp
+CATEGORY                           EXPECTED UNCOVERED COVERED PERCENT MISSING
+Automatically Generated Cross Bins 8        0         8       100.00
+
+
+Automatically Generated Cross Bins for cx_write_resp
+
+
+Bins
+
+cp_is_write cp_resp COUNT AT LEAST  TEST COUNT  TEST COUNT  TEST COUNT
+auto[0]     decerr  3     1         T14  1      T15  1      T16  1
+auto[0]     slverr  1     1         T18  1      -    -      -    -
+auto[0]     exokay  3     1         T10  1      T11  1      T19  1
+auto[0]     okay    1327  1         T1   50     T2   60     T3   100
+auto[1]     decerr  1     1         T13  1      -    -      -    -
+auto[1]     slverr  2     1         T16  1      T17  1      -    -
+auto[1]     exokay  1     1         T10  1      -    -      -    -
+auto[1]     okay    1243  1         T1   50     T2   60     T3   100
+
+
+-------------------------------------------------------------------------------
+
+Summary for Cross cx_narrow_strb
+
+
+Samples crossed: cp_narrow cp_strb_pop
+CATEGORY                           EXPECTED UNCOVERED COVERED PERCENT MISSING
+TOTAL                              7        0         7       100.00
+Automatically Generated Cross Bins 7        0         7       100.00
+User Defined Cross Bins            0        0         0
+
+
+Automatically Generated Cross Bins for cx_narrow_strb
+
+
+Bins
+
+cp_narrow cp_strb_pop COUNT AT LEAST  TEST COUNT  TEST COUNT  TEST COUNT
+auto[0]   some        3     1         T8   3      -    -      -    -
+auto[0]   full        641   1         T1   13     T2   60     T3   100
+auto[0]   single      1     1         T8   1      -    -      -    -
+auto[0]   none        2     1         T8   2      -    -      -    -
+auto[1]   some        396   1         T1   24     T6   6      T5   20
+auto[1]   single      203   1         T1   13     T6   8      T7   8
+auto[1]   none        1     1         T8   1      -    -      -    -
+
+
+User Defined Cross Bins for cx_narrow_strb
+
+
+Excluded/Illegal bins
+
+NAME        COUNT STATUS
+narrow_full 0     Excluded
+
+
+-------------------------------------------------------------------------------
+===============================================================================
+Group Instance : top.me.obj.cov
+===============================================================================
+SCORE  WEIGHT GOAL   AT LEAST AUTO BIN MAX PRINT MISSING
+100.00 1      100    1        64           64
+
+
+Group:
+
+SCORE  INSTANCES WEIGHT GOAL   AT LEAST PER INSTANCE AUTO BIN MAX PRINT MISSING COMMENT NAME
+100.00 100.00    1      100    1        1            64           64                    axi4_uvm_pkg::axi4_monitor#(32,64,4,1)::cov
+
+
+
+-------------------------------------------------------------------------------
+
+Summary for Group Instance   top.me.obj.cov
+
+
+
+CATEGORY  EXPECTED UNCOVERED COVERED PERCENT
+Variables 52       0         52      100.00
+Crosses   27       0         27      100.00
+
+
+Variables for Group Instance  top.me.obj.cov
+
+
+VARIABLE      EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST AUTO BIN MAX COMMENT
+cp_is_write   2        0         2       100.00  100  1      1        2
+cp_burst      3        0         3       100.00  100  1      1        0
+cp_size       4        0         4       100.00  100  1      1        0
+cp_len        6        0         6       100.00  100  1      1        0
+cp_lock       2        0         2       100.00  100  1      1        2
+cp_resp       4        0         4       100.00  100  1      1        0
+cp_qos        5        0         5       100.00  100  1      1        0
+cp_prot       8        0         8       100.00  100  1      1        0
+cp_cache      2        0         2       100.00  100  1      1        0
+cp_region     2        0         2       100.00  100  1      1        0
+cp_strb_pop   4        0         4       100.00  100  1      1        0
+cp_narrow     2        0         2       100.00  100  1      1        2
+cp_start_lane 8        0         8       100.00  100  1      1        0
+
+
+Crosses for Group Instance  top.me.obj.cov
+
+
+CROSS          EXPECTED UNCOVERED COVERED PERCENT GOAL WEIGHT AT LEAST PRINT MISSING COMMENT
+cx_burst_size  12       0         12      100.00  100  1      1        0
+cx_write_resp  8        0         8       100.00  100  1      1        0
+cx_narrow_strb 7        0         7       100.00  100  1      1        0
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_is_write
+
+
+CATEGORY                     EXPECTED UNCOVERED COVERED PERCENT
+Automatically Generated Bins 2        0         2       100.00
+
+
+Automatically Generated Bins for cp_is_write
+
+
+Bins
+
+NAME    COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+auto[0] 1334  1        { [ 0 ] }        T1   50     T2   60     T3   100
+auto[1] 1247  1        { [ 1 ] }        T1   50     T2   60     T3   100
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_burst
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 3        0         3       100.00
+
+
+User Defined Bins for cp_burst
+
+
+Bins
+
+NAME  COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+wrap  673   1        --               T2   36     T3   82     T4   96
+incr  1271  1        --               T1   100    T2   48     T3   72
+fixed 637   1        --               T2   36     T3   46     T5   80
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_size
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 4        0         4       100.00
+
+
+User Defined Bins for cp_size
+
+
+Bins
+
+NAME    COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+sizes_0 406   1        --               T1   26     T6   16     T7   16
+sizes_1 399   1        --               T1   16     T6   8      T5   22
+sizes_2 394   1        --               T1   32     T6   4      T8   2
+sizes_3 1382  1        --               T1   26     T2   120    T3   200
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_len
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 6        0         6       100.00
+
+
+User Defined Bins for cp_len
+
+
+Excluded/Illegal bins
+
+NAME  COUNT SUBSUMED VALUES STATUS
+other 1017  --              Excluded
+
+
+Covered bins
+
+NAME    COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+len_256 2     1        --               T9   2      -    -      -    -
+len_16  253   1        --               T3   32     T4   28     T9   4
+len_8   292   1        --               T1   12     T2   30     T3   22
+len_4   359   1        --               T1   16     T2   26     T3   32
+len_2   196   1        --               T1   8      T2   14     T3   18
+len_1   462   1        --               T1   16     T2   8      T3   14
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_lock
+
+
+CATEGORY                     EXPECTED UNCOVERED COVERED PERCENT
+Automatically Generated Bins 2        0         2       100.00
+
+
+Automatically Generated Bins for cp_lock
+
+
+Bins
+
+NAME    COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+auto[0] 2573  1        { [ 0 ] }        T1   100    T2   120    T3   200
+auto[1] 8     1        { [ 1 ] }        T10  2      T11  2      T12  2
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_resp
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 4        0         4       100.00
+
+
+User Defined Bins for cp_resp
+
+
+Bins
+
+NAME   COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+decerr 4     1        --               T13  1      T14  1      T15  1
+slverr 3     1        --               T16  1      T17  1      T18  1
+exokay 4     1        --               T10  2      T11  1      T19  1
+okay   2570  1        --               T1   100    T2   120    T3   200
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_qos
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 5        0         5       100.00
+
+
+User Defined Bins for cp_qos
+
+
+Bins
+
+NAME     COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+qos15    2     1        --               T20  2      -    -      -    -
+qos12_14 2     1        --               T20  2      -    -      -    -
+qos4_11  2     1        --               T20  2      -    -      -    -
+qos1_3   2     1        --               T21  2      -    -      -    -
+qos0     2571  1        --               T1   100    T2   120    T3   200
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_prot
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 8        0         8       100.00
+
+
+User Defined Bins for cp_prot
+
+
+Bins
+
+NAME   COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+vals_0 2571  1        --               T1   100    T2   120    T3   200
+vals_1 1     1        --               T20  1      -    -      -    -
+vals_2 1     1        --               T20  1      -    -      -    -
+vals_3 2     1        --               T21  2      -    -      -    -
+vals_4 1     1        --               T20  1      -    -      -    -
+vals_5 1     1        --               T20  1      -    -      -    -
+vals_6 1     1        --               T20  1      -    -      -    -
+vals_7 1     1        --               T20  1      -    -      -    -
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_cache
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 2        0         2       100.00
+
+
+User Defined Bins for cp_cache
+
+
+Excluded/Illegal bins
+
+NAME    COUNT SUBSUMED VALUES STATUS
+c_other 4     --              Excluded
+
+
+Covered bins
+
+NAME COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+cF   6     1        --               T20  6      -    -      -    -
+c0   2571  1        --               T1   100    T2   120    T3   200
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_region
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 2        0         2       100.00
+
+
+User Defined Bins for cp_region
+
+
+Excluded/Illegal bins
+
+NAME    COUNT SUBSUMED VALUES STATUS
+r_other 4     --              Excluded
+
+
+Covered bins
+
+NAME COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+r15  6     1        --               T20  6      -    -      -    -
+r0   2571  1        --               T1   100    T2   120    T3   200
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_strb_pop
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 4        0         4       100.00
+
+
+User Defined Bins for cp_strb_pop
+
+
+Bins
+
+NAME   COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+some   399   1        --               T1   24     T6   6      T8   3
+full   641   1        --               T1   13     T2   60     T3   100
+single 204   1        --               T1   13     T6   8      T8   1
+none   3     1        --               T8   3      -    -      -    -
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_narrow
+
+
+CATEGORY                     EXPECTED UNCOVERED COVERED PERCENT
+Automatically Generated Bins 2        0         2       100.00
+
+
+Automatically Generated Bins for cp_narrow
+
+
+Bins
+
+NAME    COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+auto[0] 1382  1        { [ 0 ] }        T1   26     T2   120    T3   200
+auto[1] 1199  1        { [ 1 ] }        T1   74     T6   28     T8   2
+
+
+-------------------------------------------------------------------------------
+
+Summary for Variable cp_start_lane
+
+
+CATEGORY          EXPECTED UNCOVERED COVERED PERCENT
+User Defined Bins 8        0         8       100.00
+
+
+User Defined Bins for cp_start_lane
+
+
+Bins
+
+NAME    COUNT AT LEAST SUBSUMED VALUES  TEST COUNT  TEST COUNT  TEST COUNT
+lanes_0 889   1        --               T1   26     T2   60     T3   100
+lanes_1 25    1        --               T1   2      T6   1      T7   1
+lanes_2 67    1        --               T1   5      T6   2      T7   1
+lanes_3 25    1        --               T1   3      T6   1      T7   1
+lanes_4 141   1        --               T1   10     T6   3      T7   1
+lanes_5 30    1        --               T1   2      T6   1      T7   1
+lanes_6 55    1        --               T1   1      T6   2      T7   1
+lanes_7 15    1        --               T1   1      T6   1      T7   1
+
+
+-------------------------------------------------------------------------------
+
+Summary for Cross cx_burst_size
+
+
+Samples crossed: cp_burst cp_size
+CATEGORY                           EXPECTED UNCOVERED COVERED PERCENT MISSING
+Automatically Generated Cross Bins 12       0         12      100.00
+
+
+Automatically Generated Cross Bins for cx_burst_size
+
+
+Bins
+
+cp_burst cp_size COUNT AT LEAST  TEST COUNT  TEST COUNT  TEST COUNT
+wrap     sizes_0 112   1         T22  34     T23  32     T24  18
+wrap     sizes_1 112   1         T22  30     T23  32     T24  22
+wrap     sizes_2 122   1         T22  30     T23  44     T24  20
+wrap     sizes_3 327   1         T2   36     T3   82     T4   96
+incr     sizes_0 162   1         T1   26     T6   16     T7   16
+incr     sizes_1 135   1         T1   16     T6   8      T22  28
+incr     sizes_2 124   1         T1   32     T6   4      T8   2
+incr     sizes_3 850   1         T1   26     T2   48     T3   72
+fixed    sizes_0 132   1         T5   20     T22  36     T23  30
+fixed    sizes_1 152   1         T5   22     T22  32     T23  44
+fixed    sizes_2 148   1         T5   18     T9   2      T22  34
+fixed    sizes_3 205   1         T2   36     T3   46     T5   20
+
+
+-------------------------------------------------------------------------------
+
+Summary for Cross cx_write_resp
+
+
+Samples crossed: cp_is_write cp_resp
+CATEGORY                           EXPECTED UNCOVERED COVERED PERCENT MISSING
+Automatically Generated Cross Bins 8        0         8       100.00
+
+
+Automatically Generated Cross Bins for cx_write_resp
+
+
+Bins
+
+cp_is_write cp_resp COUNT AT LEAST  TEST COUNT  TEST COUNT  TEST COUNT
+auto[0]     decerr  3     1         T14  1      T15  1      T16  1
+auto[0]     slverr  1     1         T18  1      -    -      -    -
+auto[0]     exokay  3     1         T10  1      T11  1      T19  1
+auto[0]     okay    1327  1         T1   50     T2   60     T3   100
+auto[1]     decerr  1     1         T13  1      -    -      -    -
+auto[1]     slverr  2     1         T16  1      T17  1      -    -
+auto[1]     exokay  1     1         T10  1      -    -      -    -
+auto[1]     okay    1243  1         T1   50     T2   60     T3   100
+
+
+-------------------------------------------------------------------------------
+
+Summary for Cross cx_narrow_strb
+
+
+Samples crossed: cp_narrow cp_strb_pop
+CATEGORY                           EXPECTED UNCOVERED COVERED PERCENT MISSING
+TOTAL                              7        0         7       100.00
+Automatically Generated Cross Bins 7        0         7       100.00
+User Defined Cross Bins            0        0         0
+
+
+Automatically Generated Cross Bins for cx_narrow_strb
+
+
+Bins
+
+cp_narrow cp_strb_pop COUNT AT LEAST  TEST COUNT  TEST COUNT  TEST COUNT
+auto[0]   some        3     1         T8   3      -    -      -    -
+auto[0]   full        641   1         T1   13     T2   60     T3   100
+auto[0]   single      1     1         T8   1      -    -      -    -
+auto[0]   none        2     1         T8   2      -    -      -    -
+auto[1]   some        396   1         T1   24     T6   6      T5   20
+auto[1]   single      203   1         T1   13     T6   8      T7   8
+auto[1]   none        1     1         T8   1      -    -      -    -
+
+
+User Defined Cross Bins for cx_narrow_strb
+
+
+Excluded/Illegal bins
+
+NAME        COUNT STATUS
+narrow_full 0     Excluded
