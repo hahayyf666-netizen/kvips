@@ -1,0 +1,37 @@
+Tests
+
+Total Coverage Summary
+SCORE   LINE            COND          TOGGLE           BRANCH        ASSERT
+ 50.72   73.41 185/252   33.33 31/93    7.81 117/1498   56.90 33/58   82.14 23/28
+
+
+Total tests in report: 1
+-------------------------------------------------------------------------------
+Data from the following tests was used to generate this report
+TEST LOCATION
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_arlock_toggle_test
+
+
+Total test records in report: 1
+-------------------------------------------------------------------------------
+TEST NO TEST LOCATION                                                                                                     TEST NAME STATUS STARTED                   FINISHED                  SIMULATION TIME
+T1      /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_arlock_toggle_test                  Nov 25 03:36:28 PM CST 26 Nov 25 03:36:29 PM CST 26 280000 ps
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_arlock_toggle_test
+Short name      T1
+Test name
+Test status
+Simulation time 280000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:28 PM CST 26
+Finished        Nov 25 03:36:29 PM CST 26
+Peak memory     102400 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_arlock_toggle_test +ntb_random_seed=1 +UVM_VERBOSI
+                TY=UVM_LOW +UVM_TIMEOUT=10000,NO +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN +UVM_TESTNAME=axi4_dut_arlock
+                _toggle_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression

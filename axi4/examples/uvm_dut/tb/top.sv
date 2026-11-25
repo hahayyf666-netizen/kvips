@@ -12,6 +12,9 @@ module top;
 
   logic aclk;
   logic areset_n;
+`ifndef VERILATOR
+  uvm_event dut_reset_request = new("dut_reset_request");
+`endif
 
   axi4_if #(ADDR_W, DATA_W, ID_W, USER_W) axi (.*);
 
@@ -35,6 +38,15 @@ module top;
     areset_n = 0;
     repeat (10) @(posedge aclk);
     areset_n = 1;
+`ifndef VERILATOR
+    forever begin
+      dut_reset_request.wait_trigger();
+      @(negedge aclk);
+      areset_n = 0;
+      repeat (2) @(negedge aclk);
+      areset_n = 1;
+    end
+`endif
   end
 
 `ifndef VERILATOR
@@ -93,6 +105,9 @@ module top;
     uvm_config_db#(virtual interface axi4_if #(ADDR_W, DATA_W, ID_W, USER_W))::set(null, "*", "vif", axi);
 `ifdef VERILATOR
     uvm_root::get().set_finish_on_completion(1'b0);
+`endif
+`ifndef VERILATOR
+    uvm_config_db#(uvm_event)::set(null, "*", "dut_reset_request", dut_reset_request);
 `endif
     run_test();
   end

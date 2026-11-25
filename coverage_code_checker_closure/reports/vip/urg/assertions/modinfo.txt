@@ -1,0 +1,381 @@
+===============================================================================
+Module : uvm_pkg
+===============================================================================
+SCORE   ASSERT
+ 33.33   33.33 1/3
+
+Source File(s) :
+
+/path/to/synopsys/vcs/O-2018.09-SP2/etc/uvm-1.2/uvm_pkg.sv
+
+Module self-instances :
+
+SCORE  ASSERT   NAME
+
+
+
+-------------------------------------------------------------------------------
+Assert Coverage for Module : uvm_pkg
+                 Total Attempted Percent Succeeded/Matched Percent
+Assertions       3     1         33.33   1                 33.33
+Cover properties 0     0                 0
+Cover sequences  0     0                 0
+Total            3     1         33.33   1                 33.33
+
+
+
+-------------------------------------------------------------------------------
+
+Assertion Details
+
+Name                                                  Attempts Real Successes Failures Incomplete
+\uvm_component_name_check_visitor::visit .unnamed$$_0 1116     1116           0        0
+\uvm_reg_map::do_read .unnamed$$_0.unnamed$$_1        0        0              0        0
+\uvm_reg_map::do_write .unnamed$$_0.unnamed$$_1       0        0              0        0
+
+
+\uvm_component_name_check_visitor::visit .unnamed$$_0
+Name  Attempts Real Successes Failures Incomplete
+Total 1116     1116           0        0
+T1    31       31             0        0
+T2    31       31             0        0
+T3    31       31             0        0
+
+
+===============================================================================
+Module : axi4_if
+===============================================================================
+SCORE   ASSERT
+ 82.14   82.14 23/28
+
+Source File(s) :
+
+/path/to/coverage_code_checker_closure/source/positive/axi4/sv/if/axi4_if.sv
+
+Module self-instances :
+
+SCORE   ASSERT        NAME
+ 82.14   82.14 23/28  top.axi
+
+
+
+-------------------------------------------------------------------------------
+Assert Coverage for Module : axi4_if
+                 Total Attempted Percent Succeeded/Matched Percent
+Assertions       28    28        100.00  23                82.14
+Cover properties 0     0                 0
+Cover sequences  0     0                 0
+Total            28    28        100.00  23                82.14
+
+
+
+-------------------------------------------------------------------------------
+
+Assertion Details
+
+Name                              Attempts Real Successes Failures Incomplete
+a_kvips_ar_burst_legal            55196    1425           0        0
+a_kvips_ar_excl_restrictions      55196    4              0        0
+a_kvips_ar_hold                   55196    83             0        0
+a_kvips_ar_len_legal              55196    1425           0        0
+a_kvips_ar_no_4kb_cross           55196    1425           0        0
+a_kvips_ar_size_legal             55196    1425           0        0
+a_kvips_ar_transaction_size_legal 55196    1425           0        0
+a_kvips_ar_wrap_addr_aligned      55196    1425           0        0
+a_kvips_ar_wrap_len_legal         55196    1425           0        0
+a_kvips_aw_burst_legal            55196    1285           0        0
+a_kvips_aw_excl_restrictions      55196    4              0        0
+a_kvips_aw_hold                   55196    34             0        1
+a_kvips_aw_len_legal              55196    1285           0        0
+a_kvips_aw_no_4kb_cross           55196    1285           0        0
+a_kvips_aw_size_legal             55196    1285           0        0
+a_kvips_aw_transaction_size_legal 55196    1285           0        0
+a_kvips_aw_wrap_addr_aligned      55196    1285           0        0
+a_kvips_aw_wrap_len_legal         55196    1285           0        0
+a_kvips_b_hold                    55196    45             0        0
+a_kvips_known_ar                  55196    0              0        0
+a_kvips_known_aw                  55196    0              0        0
+a_kvips_known_b                   55196    0              0        0
+a_kvips_known_r                   55196    0              0        0
+a_kvips_known_w                   55196    0              0        0
+a_kvips_outs_r_limit              55196    54862          0        0
+a_kvips_outs_w_limit              55196    54862          0        0
+a_kvips_r_hold                    55196    1809           0        1
+a_kvips_w_hold                    55196    5279           0        0
+
+
+a_kvips_ar_burst_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1425           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     100            0        0
+
+a_kvips_ar_excl_restrictions
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    4              0        0
+T4    33       1              0        0
+T5    39       1              0        0
+T6    87       1              0        0
+
+a_kvips_ar_hold
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    83             0        0
+T7    9709     11             0        0
+T8    4955     12             0        0
+T9    1724     50             0        0
+
+a_kvips_ar_len_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1425           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     100            0        0
+
+a_kvips_ar_no_4kb_cross
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1425           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     100            0        0
+
+a_kvips_ar_size_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1425           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     100            0        0
+
+a_kvips_ar_transaction_size_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1425           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     100            0        0
+
+a_kvips_ar_wrap_addr_aligned
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1425           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     100            0        0
+
+a_kvips_ar_wrap_len_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1425           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     100            0        0
+
+a_kvips_aw_burst_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1285           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     102            0        0
+
+a_kvips_aw_excl_restrictions
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    4              0        0
+T4    33       1              0        0
+T5    39       1              0        0
+T6    87       1              0        0
+
+a_kvips_aw_hold
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    34             0        1
+T3    6317     2              0        0
+T7    9709     6              0        0
+T8    4955     1              0        0
+T10   0        0              0        1
+
+a_kvips_aw_len_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1285           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     102            0        0
+
+a_kvips_aw_no_4kb_cross
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1285           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     102            0        0
+
+a_kvips_aw_size_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1285           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     102            0        0
+
+a_kvips_aw_transaction_size_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1285           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     102            0        0
+
+a_kvips_aw_wrap_addr_aligned
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1285           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     102            0        0
+
+a_kvips_aw_wrap_len_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1285           0        0
+T1    1265     50             0        0
+T2    1631     60             0        0
+T3    6317     102            0        0
+
+a_kvips_b_hold
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    45             0        0
+T11   4840     45             0        0
+
+a_kvips_known_ar
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    0              0        0
+
+a_kvips_known_aw
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    0              0        0
+
+a_kvips_known_b
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    0              0        0
+
+a_kvips_known_r
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    0              0        0
+
+a_kvips_known_w
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    0              0        0
+
+a_kvips_outs_r_limit
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    54862          0        0
+T1    1265     1256           0        0
+T2    1631     1622           0        0
+T3    6317     6308           0        0
+
+a_kvips_outs_w_limit
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    54862          0        0
+T1    1265     1256           0        0
+T2    1631     1622           0        0
+T3    6317     6308           0        0
+
+a_kvips_r_hold
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    1809           0        1
+T1    1265     49             0        0
+T2    1631     59             0        0
+T3    6317     6              0        0
+T8    0        0              0        1
+
+a_kvips_w_hold
+Name  Attempts Real Successes Failures Incomplete
+Total 55196    5279           0        0
+T3    6317     1347           0        0
+T7    9709     1484           0        0
+T8    4955     625            0        0
+
+
+-------------------------------------------------------------------------------
+===============================================================================
+Module Instance : top.axi
+===============================================================================
+
+Instance :
+
+SCORE   ASSERT
+ 82.14   82.14 23/28
+
+
+Instance's subtree :
+
+SCORE   ASSERT
+ 82.14   82.14 23/28
+
+
+Module :
+
+SCORE   ASSERT        NAME
+ 82.14   82.14 23/28  axi4_if
+
+
+Parent :
+
+SCORE   ASSERT         NAME
+--      --     --      top
+
+
+Subtrees :
+
+
+no children
+----------------
+
+
+-------------------------------------------------------------------------------
+Since this is the module's only instance, the coverage report is the same as for the module.
+===============================================================================
+Module : top
+===============================================================================
+SCORE   ASSERT
+--      --     --
+
+Source File(s) :
+
+/path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_back2back/tb/top.sv
+
+Module self-instances :
+
+SCORE   ASSERT         NAME
+--      --     --      top
+
+
+
+-------------------------------------------------------------------------------
+===============================================================================
+Module Instance : top
+===============================================================================
+
+Instance :
+
+SCORE   ASSERT
+--      --     --
+
+
+Instance's subtree :
+
+SCORE   ASSERT
+ 82.14   82.14 23/28
+
+
+Module :
+
+SCORE   ASSERT         NAME
+--      --     --      top
+
+
+Parent :
+
+none
+----------------
+
+
+Subtrees :
+
+SCORE   ASSERT        NAME
+ 82.14   82.14 23/28  axi
+
+
+
+-------------------------------------------------------------------------------
+Since this is the module's only instance, the coverage report is the same as for the module.

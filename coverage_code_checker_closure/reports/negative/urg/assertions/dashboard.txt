@@ -1,0 +1,26 @@
+Dashboard
+
+Date: Wed Nov 25 15:30:03 2026
+
+User: simulation
+
+Version: O-2018.09-SP2
+Command line: urg -full64 -dir /path/to/coverage_code_checker_closure/reports/negative/coverage.vdb -metric assert -format both -show ratios -show tests -report /path/to/coverage_code_checker_closure/reports/negative/urg/assertions
+Number of tests: 14
+
+-------------------------------------------------------------------------------
+Total Coverage Summary
+SCORE   ASSERT
+ 85.71   85.71 24/28
+
+
+-------------------------------------------------------------------------------
+Hierarchical coverage data for top-level instances
+SCORE   ASSERT        NAME
+ 85.71   85.71 24/28  top
+
+
+-------------------------------------------------------------------------------
+Total Module Definition Coverage Summary
+SCORE   ASSERT
+ 85.71   85.71 24/28

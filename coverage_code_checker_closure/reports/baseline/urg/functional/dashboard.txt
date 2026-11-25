@@ -1,0 +1,20 @@
+Dashboard
+
+Date: Wed Nov 25 15:03:23 2026
+
+User: simulation
+
+Version: O-2018.09-SP2
+Command line: urg -full64 -dir /path/to/coverage_code_checker_closure/reports/baseline/coverage.vdb -metric group -format both -show ratios -show tests -group maxmissing 1000 -group show_bin_values -report /path/to/coverage_code_checker_closure/reports/baseline/urg/functional
+Number of tests: 30
+
+-------------------------------------------------------------------------------
+Total Coverage Summary
+SCORE   GROUP
+ 97.73   97.73 258/264
+
+
+-------------------------------------------------------------------------------
+Total Groups Coverage Summary
+COVERED EXPECTED SCORE  COVERED EXPECTED INST SCORE WEIGHT
+258     264       97.73 258     264       97.73     1

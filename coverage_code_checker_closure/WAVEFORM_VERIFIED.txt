@@ -1,0 +1,19 @@
+axi4_dut_reset_aw_test PASS; aw: old (1, 0, 0, 0, 0), two reset cycles, new (1, 2, 1, 1, 2), reset sampled at 125000
+axi4_dut_reset_b_test PASS; b: old (1, 2, 0, 0, 0), two reset cycles, new (1, 2, 1, 1, 2), reset sampled at 195000
+axi4_dut_reset_r_test PASS; r: old (0, 0, 0, 1, 0), two reset cycles, new (1, 2, 1, 1, 2), reset sampled at 145000
+axi4_dut_arlock_toggle_test PASS; ARLOCK handshakes 0→1→0, three verified RAM OKAY responses
+axi4_dut_idle_rready_test PASS; Idle 0001 sampled at [135000, 145000, 155000], AR at 165000, clean readback after it
+w_without_aw PASS; errors=1, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+missing_wlast PASS; errors=1, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+premature_wlast PASS; errors=2, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+w_overflow PASS; errors=2, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+orphan_b PASS; errors=1, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+b_exokay_unlocked PASS; errors=1, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+orphan_r PASS; errors=1, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+missing_rlast PASS; errors=1, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+premature_rlast PASS; errors=1, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+r_overflow PASS; errors=2, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+r_exokay_unlocked PASS; errors=1, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+aw_hold_violation PASS; errors=1, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+locked_ok_control PASS; errors=0, post-reset clean AW/W/B/AR/R=1/1/1/1/1
+r_count_overlap_control PASS; errors=0, post-reset clean AW/W/B/AR/R=1/1/1/1/1

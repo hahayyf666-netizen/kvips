@@ -1,0 +1,25 @@
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Nov 25 15:30 2026
+
+ VCS Coverage Metrics Release O-2018.09-SP2_Full64 Copyright (c) 1991-2018 by Synopsys Inc.
+CHECKER_CONFIGURATION assertions=1 excl=1 known=1
+CHECKER_CASE_BEGIN r_exokay_unlocked time=20000
+Error: "/path/to/coverage_code_checker_closure/source/positive/axi4/sv/assertions/axi4_if_sva.svh", 492: top.axi: at time 35000 ps
+KVIPS_AXI4_ASSERT: RRESP=EXOKAY observed for non-exclusive read
+CHECKER_CASE_END r_exokay_unlocked time=40000
+CHECKER_RESET_CLEAR r_exokay_unlocked time=60000
+CHECKER_RECOVERY_PASS r_exokay_unlocked time=130000
+$finish called from file "/path/to/coverage_code_checker_closure/scripts/../source/added_tests/axi4_checker_only_top.sv", line 192.
+$finish at simulation time               130000
+
+---------------------------------------------------------------------------
+VCS Coverage Metrics: during simulation line, cond, branch, tgl was monitored
+---------------------------------------------------------------------------
+
+ Coverage status: End of All Coverages ...
+
+           V C S   S i m u l a t i o n   R e p o r t
+Time: 130000 ps
+CPU Time:      0.140 seconds;       Data structure size:   0.0Mb
+Wed Nov 25 15:30:02 2026

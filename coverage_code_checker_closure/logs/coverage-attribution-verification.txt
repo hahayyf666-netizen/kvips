@@ -1,0 +1,7 @@
+VERIFIED: All 1891 original code coverage points match the 30-test slice
+axi4_dut_reset_aw_test original missed points now hit: axi4_if/TOGGLE/21/1->0, top/TOGGLE/14/1->0, axi4_ram_slave/TOGGLE/12/1->0
+axi4_dut_reset_b_test original missed points now hit: axi4_if/LINE/403/line-bin 2, axi4_if/TOGGLE/21/1->0, top/TOGGLE/14/1->0, axi4_ram_slave/TOGGLE/12/1->0
+axi4_dut_reset_r_test original missed points now hit: axi4_if/LINE/406/line-bin 2, axi4_if/LINE/407/line-bin 2, axi4_if/TOGGLE/21/1->0, top/TOGGLE/14/1->0, axi4_ram_slave/TOGGLE/12/1->0
+axi4_dut_arlock_toggle_test original missed points now hit: axi4_if/TOGGLE/70/1->0, axi4_if/TOGGLE/70/0->1
+axi4_dut_idle_rready_test original missed points now hit: top/CONDITION/47/c1 v2 0001
+VERIFIED: sources, per-test coverage attribution, legacy behavior and report links

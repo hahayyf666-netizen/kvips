@@ -2316,5 +2316,8 @@ endtask
   `include "axi4_id_width_test.svh"
   `include "axi4_coverage_closure_tests.svh"
   `include "axi4_dut_fc_tests.svh"
+`ifndef VERILATOR
+  `include "axi4_dut_code_tests.svh"
+`endif
 
 endpackage

@@ -1,0 +1,1833 @@
+===============================================================================
+Module : top
+===============================================================================
+SCORE   LINE           COND        TOGGLE      BRANCH       ASSERT
+ 49.59   54.32 88/162   25.00 1/4  100.00 4/4   19.05 4/21  --     --
+
+Source File(s) :
+
+/path/to/coverage_code_checker_closure/scripts/../source/added_tests/axi4_checker_only_top.sv
+
+Module self-instances :
+
+SCORE   LINE           COND        TOGGLE      BRANCH       ASSERT         NAME
+ 49.59   54.32 88/162   25.00 1/4  100.00 4/4   19.05 4/21  --     --      top
+
+
+
+-------------------------------------------------------------------------------
+Line Coverage for Module : top
+
+             Line No.   Total   Covered  Percent
+TOTAL                      162       88    54.32
+ALWAYS             16        2        2   100.00
+INITIAL            17        2        1    50.00
+INITIAL            21        3        3   100.00
+ROUTINE            25        4        4   100.00
+ROUTINE            34        2        2   100.00
+ROUTINE            41        9        8    88.89
+ROUTINE            51        9        8    88.89
+ROUTINE            60        9        8    88.89
+ROUTINE            69        9        8    88.89
+ROUTINE            79        9        8    88.89
+ROUTINE            88        9        5    55.56
+ROUTINE           101        9        9   100.00
+ROUTINE           111        6        6   100.00
+ROUTINE           120       19        0     0.00
+ROUTINE           136        7        0     0.00
+ROUTINE           148        7        0     0.00
+INITIAL           162       47       16    34.04
+
+15
+16         2/2            always #5 aclk = ~aclk;
+           Tests:       T1  | T1
+17         1/2     ==>    initial #2500 $fatal(1, "Checker-only watchdog expired");
+           Tests:       T1
+18
+19                        initial begin
+20                          `include "kvips_wave_dump.svh"
+21         3/3              `KVIPS_MAYBE_ENABLE_WAVES_SCOPE("kvips_axi4_checker", top)
+           Tests:       T1  | T1  | T1
+KVIPS_MAYBE_ENABLE_WAVES_SCOPE("kvips_axi4_checker", top):
+21.1       1/1          if ($test$plusargs("KVIPS_WAVES")) begin
+           Tests:       T1
+21.2                        `ifdef FSDB
+21.3                          $fsdbDumpfile({"kvips_axi4_checker",".fsdb"});
+21.4                          $fsdbDumpvars(0, top);
+21.5                        `else
+21.6       1/1                $dumpfile({"kvips_axi4_checker",".vcd"});
+           Tests:       T1
+21.7       1/1                $dumpvars(0, top);
+           Tests:       T1
+21.8                        `endif
+21.9                      end
+                   ==>  MISSING_ELSE
+22                        end
+23
+24                        task automatic master_idle();
+25         1/1              {axi.awvalid, axi.wvalid, axi.bready, axi.arvalid, axi.rready} = '0;
+           Tests:       T1
+26         1/1              {axi.awid, axi.awaddr, axi.awlen, axi.awsize, axi.awburst, axi.awlock,
+           Tests:       T1
+27                           axi.awcache, axi.awprot, axi.awqos, axi.awregion, axi.awuser} = '0;
+28         1/1              {axi.arid, axi.araddr, axi.arlen, axi.arsize, axi.arburst, axi.arlock,
+           Tests:       T1
+29                           axi.arcache, axi.arprot, axi.arqos, axi.arregion, axi.aruser} = '0;
+30         1/1              {axi.wdata, axi.wstrb, axi.wlast, axi.wuser} = '0;
+           Tests:       T1
+31                        endtask
+32
+33                        task automatic responder_idle();
+34         1/1              {axi.awready, axi.wready, axi.arready, axi.bvalid, axi.rvalid} = '0;
+           Tests:       T1
+35         1/1              {axi.bid, axi.bresp, axi.buser, axi.rid, axi.rdata, axi.rresp, axi.rlast, axi.ruser} = '0;
+           Tests:       T1
+36                        endtask
+37
+38                        // Both roles set pins on the falling edge. The rising edge is observable by
+39                        // the interface's clocking block as well as its procedural checker.
+40                        task automatic aw(bit [7:0] len, bit lock_bit = 0);
+41         1/1              {axi.awid, axi.awaddr, axi.awlen, axi.awsize, axi.awburst, axi.awlock} =
+           Tests:       T1
+42                              {ID, ADDR, len, 3'd3, 2'b01, lock_bit};
+43         1/1              axi.awvalid = 1;
+           Tests:       T1
+44         2/2              @(posedge aclk);
+           Tests:       T1  | T1
+45         1/2     ==>      if (axi.awready !== 1'b1) $fatal(1, "AW not accepted");
+           Tests:       T1
+                        MISSING_ELSE
+46         2/2              @(negedge aclk);
+           Tests:       T1  | T1
+47         1/1              axi.awvalid = 0;
+           Tests:       T1
+48                        endtask
+49
+50                        task automatic w(bit last_bit);
+51         1/1              {axi.wdata, axi.wstrb, axi.wlast} = {DATA, 8'hff, last_bit};
+           Tests:       T1
+52         1/1              axi.wvalid = 1;
+           Tests:       T1
+53         2/2              @(posedge aclk);
+           Tests:       T1  | T1
+54         1/2     ==>      if (axi.wready !== 1'b1) $fatal(1, "W not accepted");
+           Tests:       T1
+                        MISSING_ELSE
+55         2/2              @(negedge aclk);
+           Tests:       T1  | T1
+56         1/1              axi.wvalid = 0;
+           Tests:       T1
+57                        endtask
+58
+59                        task automatic b(bit [3:0] id, bit [1:0] resp);
+60         1/1              {axi.bid, axi.bresp} = {id, resp};
+           Tests:       T1
+61         1/1              axi.bvalid = 1;
+           Tests:       T1
+62         2/2              @(posedge aclk);
+           Tests:       T1  | T1
+63         1/2     ==>      if (axi.bready !== 1'b1) $fatal(1, "B not accepted");
+           Tests:       T1
+                        MISSING_ELSE
+64         2/2              @(negedge aclk);
+           Tests:       T1  | T1
+65         1/1              axi.bvalid = 0;
+           Tests:       T1
+66                        endtask
+67
+68                        task automatic ar(bit [7:0] len, bit lock_bit = 0, bit [3:0] id = ID);
+69         1/1              {axi.arid, axi.araddr, axi.arlen, axi.arsize, axi.arburst, axi.arlock} =
+           Tests:       T1
+70                              {id, ADDR, len, 3'd3, 2'b01, lock_bit};
+71         1/1              axi.arvalid = 1;
+           Tests:       T1
+72         2/2              @(posedge aclk);
+           Tests:       T1  | T1
+73         1/2     ==>      if (axi.arready !== 1'b1) $fatal(1, "AR not accepted");
+           Tests:       T1
+                        MISSING_ELSE
+74         2/2              @(negedge aclk);
+           Tests:       T1  | T1
+75         1/1              axi.arvalid = 0;
+           Tests:       T1
+76                        endtask
+77
+78                        task automatic r(bit [3:0] id, bit last_bit, bit [1:0] resp = OKAY);
+79         1/1              {axi.rid, axi.rdata, axi.rlast, axi.rresp} = {id, DATA, last_bit, resp};
+           Tests:       T1
+80         1/1              axi.rvalid = 1;
+           Tests:       T1
+81         2/2              @(posedge aclk);
+           Tests:       T1  | T1
+82         1/2     ==>      if (axi.rready !== 1'b1) $fatal(1, "R not accepted");
+           Tests:       T1
+                        MISSING_ELSE
+83         2/2              @(negedge aclk);
+           Tests:       T1  | T1
+84         1/1              axi.rvalid = 0;
+           Tests:       T1
+85                        endtask
+86
+87                        task automatic check_clear();
+88         1/1              if (axi.kvips_wr_fifo.size() != 0 || axi.kvips_outs_w != 0 || axi.kvips_outs_r != 0)
+           Tests:       T1
+89         0/1     ==>        $fatal(1, "Checker retains outstanding state across epoch");
+                        MISSING_ELSE
+90         1/1              for (int i = 0; i < 16; i++) begin
+           Tests:       T1
+91         1/1                if (axi.kvips_wr_done_lock_q.exists(4'(i)) && axi.kvips_wr_done_lock_q[4'(i)].size())
+           Tests:       T1
+92         0/1     ==>          $fatal(1, "Pending B context at ID=%0d", i);
+                        MISSING_ELSE
+93         1/1                if (axi.kvips_rd_beats_q.exists(4'(i)) && axi.kvips_rd_beats_q[4'(i)].size())
+           Tests:       T1
+94         0/1     ==>          $fatal(1, "Pending R context at ID=%0d", i);
+                        MISSING_ELSE
+95         1/1                if (axi.kvips_rd_lock_q.exists(4'(i)) && axi.kvips_rd_lock_q[4'(i)].size())
+           Tests:       T1
+96         0/1     ==>          $fatal(1, "Pending R lock context at ID=%0d", i);
+                        MISSING_ELSE
+97                          end
+98                        endtask
+99
+100                       task automatic reset_epoch();
+101        1/1              areset_n = 0;
+           Tests:       T1
+102        1/1              master_idle();
+           Tests:       T1
+103        1/1              responder_idle();
+           Tests:       T1
+104        3/3              repeat (2) @(negedge aclk);
+           Tests:       T1  | T1  | T1
+                        REPEAT_FALSE
+105        1/1              check_clear();
+           Tests:       T1
+106        1/1              areset_n = 1;
+           Tests:       T1
+107        1/1              {axi.awready, axi.wready, axi.arready, axi.bready, axi.rready} = '1;
+           Tests:       T1
+108                       endtask
+109
+110                       task automatic clean_pair();
+111        1/1              aw(0);
+           Tests:       T1
+112        1/1              w(1);
+           Tests:       T1
+113        1/1              b(ID, OKAY);
+           Tests:       T1
+114        1/1              ar(0);
+           Tests:       T1
+115        1/1              r(ID, 1);
+           Tests:       T1
+116        1/1              check_clear();
+           Tests:       T1
+117                       endtask
+118
+119                       task automatic aw_hold_violation();
+120        0/1     ==>      axi.awready = 0;
+121        0/1     ==>      {axi.awid, axi.awaddr, axi.awlen, axi.awsize, axi.awburst, axi.awlock} =
+122                             {ID, ADDR, 8'd0, 3'd3, 2'b01, 1'b0};
+123        0/1     ==>      axi.awvalid = 1;
+124        0/2     ==>      @(posedge aclk);
+125        0/2     ==>      @(negedge aclk);
+126        0/1     ==>      axi.awaddr = ADDR + 8;
+127        0/2     ==>      @(negedge aclk);
+128        0/1     ==>      axi.awready = 1;
+129        0/2     ==>      @(posedge aclk);
+130        0/2     ==>      @(negedge aclk);
+131        0/1     ==>      axi.awvalid = 0;
+132        0/3     ==>      repeat (2) @(negedge aclk);
+133                       endtask
+134
+135                       task automatic locked_control();
+136        0/1     ==>      clean_pair();
+137        0/1     ==>      ar(0, 1);
+138        0/1     ==>      r(ID, 1, EXOKAY);
+139        0/1     ==>      aw(0, 1);
+140        0/1     ==>      w(1);
+141        0/1     ==>      b(ID, EXOKAY);
+142        0/1     ==>      clean_pair();
+143                       endtask
+144
+145                       // The old R completion and the new AR are both legal on this edge. Check
+146                       // the actual second-ID queue and expose the competing counter NBAs.
+147                       task automatic overlap_control();
+148        0/1     ==>      ar(0);
+149                         fork
+150        0/1     ==>        ar(0, 0, 4'd8);
+151        0/1     ==>        r(ID, 1);
+152                         join
+153        0/1     ==>      if (!axi.kvips_rd_beats_q.exists(4'd8) || axi.kvips_rd_beats_q[4'd8].size() != 1)
+154        0/1     ==>        $fatal(1, "Expected real queue entry for the second read");
+                   ==>  MISSING_ELSE
+155        0/1     ==>      $display("OVERLAP_COUNTER time=%0t id=8 queued=%0d outstanding=%0d",
+156                                  $time, axi.kvips_rd_beats_q[4'd8].size(), axi.kvips_outs_r);
+157        0/1     ==>      r(4'd8, 1);
+158                       endtask
+159
+160                       initial begin : scenario
+161                         string name;
+162        1/2     ==>      if (!$value$plusargs("SCENARIO=%s", name)) $fatal(1, "Missing SCENARIO");
+           Tests:       T1
+                        MISSING_ELSE
+163        1/1              reset_epoch();
+           Tests:       T1
+164        1/1              if (!axi.kvips_axi4_assertions_on || !axi.kvips_axi4_excl_checks_on || !axi.kvips_axi4_known_checks_on)
+           Tests:       T1
+165        0/1     ==>        $fatal(1, "Expected interface, exclusive and known-value checks enabled");
+                        MISSING_ELSE
+166        1/1              $display("CHECKER_CONFIGURATION assertions=%0d excl=%0d known=%0d",
+           Tests:       T1
+167                                  axi.kvips_axi4_assertions_on, axi.kvips_axi4_excl_checks_on, axi.kvips_axi4_known_checks_on);
+168        1/1              $display("CHECKER_CASE_BEGIN %s time=%0t", name, $time);
+           Tests:       T1
+169        1/1              case (name)
+           Tests:       T1
+170        1/1                "w_without_aw":        w(1);
+           Tests:       T1
+171        0/3     ==>        "missing_wlast":        begin aw(1); w(0); w(0); end
+172        0/2     ==>        "premature_wlast":      begin aw(1); w(1); end
+173        0/4     ==>        "w_overflow":          begin aw(1); w(0); w(0); w(0); end
+174        0/1     ==>        "orphan_b":            b(4'd12, OKAY);
+175        0/3     ==>        "b_exokay_unlocked":   begin aw(0); w(1); b(ID, EXOKAY); end
+176        0/1     ==>        "orphan_r":            r(4'd12, 1);
+177        0/3     ==>        "missing_rlast":        begin ar(1); r(ID, 0); r(ID, 0); end
+178        0/2     ==>        "premature_rlast":      begin ar(1); r(ID, 1); end
+179        0/4     ==>        "r_overflow":          begin ar(1); r(ID, 0); r(ID, 0); r(ID, 0); end
+180        0/2     ==>        "r_exokay_unlocked":   begin ar(0); r(ID, 1, EXOKAY); end
+181        0/1     ==>        "aw_hold_violation":    aw_hold_violation();
+182        0/1     ==>        "locked_ok_control":   locked_control();
+183        0/1     ==>        "r_count_overlap_control": overlap_control();
+184        0/1     ==>        default: $fatal(1, "Unknown scenario %s", name);
+185                         endcase
+186        1/1              $display("CHECKER_CASE_END %s time=%0t", name, $time);
+           Tests:       T1
+187        1/1              reset_epoch();
+           Tests:       T1
+188        1/1              $display("CHECKER_RESET_CLEAR %s time=%0t", name, $time);
+           Tests:       T1
+189        1/1              clean_pair();
+           Tests:       T1
+190        3/3              repeat (2) @(negedge aclk);
+           Tests:       T1  | T1  | T1
+                        REPEAT_FALSE
+191        1/1              $display("CHECKER_RECOVERY_PASS %s time=%0t", name, $time);
+           Tests:       T1
+192        1/1              $finish;
+           Tests:       T1
+
+-------------------------------------------------------------------------------
+Cond Coverage for Module : top
+
+               Total   Covered  Percent
+Conditions          4        1    25.00
+Logical             4        1    25.00
+Non-Logical         0        0
+Event               0        0
+
+ LINE       164
+ CONDITION_ID   1
+ EXPRESSION (((!top.axi.kvips_axi4_assertions_on)) || ((!top.axi.kvips_axi4_excl_checks_on)) || ((!top.axi.kvips_axi4_known_checks_on)))
+             ------------------1------------------    -------------------2------------------    -------------------3-------------------
+
+   ID -1- -2- -3- Status      Tests
+    1  0   0   0  Covered     T1
+    2  0   0   1  Not Covered
+    3  0   1   0  Not Covered
+    4  1   0   0  Not Covered
+
+-------------------------------------------------------------------------------
+Toggle Coverage for Module : top
+                Total Covered Percent
+Totals          2     2       100.00
+Total Bits      4     4       100.00
+Total Bits 0->1 2     2       100.00
+Total Bits 1->0 2     2       100.00
+
+
+Signals          2 2 100.00
+Signal Bits      4 4 100.00
+Signal Bits 0->1 2 2 100.00
+Signal Bits 1->0 2 2 100.00
+
+Signal Details
+         Toggle Toggle 1->0 Tests Toggle 0->1 Tests
+aclk     Yes    Yes         T1    Yes         T1
+areset_n Yes    Yes         T1    Yes         T1
+
+
+-------------------------------------------------------------------------------
+Branch Coverage for Module : top
+         Line No. Total Covered Percent
+Branches          21    4       19.05
+IF       21       2     1       50.00
+IF       162      2     1       50.00
+IF       164      2     1       50.00
+CASE     169      15    1       6.67
+
+
+21             `KVIPS_MAYBE_ENABLE_WAVES_SCOPE("kvips_axi4_checker", top)
+               -1-
+               ==>
+               MISSING_ELSE
+               ==>
+
+Branches:
+
+-1- Status      Tests
+1   Covered     T1
+0   Not Covered
+
+
+162            if (!$value$plusargs("SCENARIO=%s", name)) $fatal(1, "Missing SCENARIO");
+               -1-
+               ==>
+               MISSING_ELSE
+               ==>
+
+Branches:
+
+-1- Status      Tests
+1   Not Covered
+0   Covered     T1
+
+
+164            if (!axi.kvips_axi4_assertions_on || !axi.kvips_axi4_excl_checks_on || !axi.kvips_axi4_known_checks_on)
+               -1-
+165              $fatal(1, "Expected interface, exclusive and known-value checks enabled");
+                 ==>
+                 MISSING_ELSE
+                 ==>
+
+Branches:
+
+-1- Status      Tests
+1   Not Covered
+0   Covered     T1
+
+
+169            case (name)
+               -1-
+170              "w_without_aw":        w(1);
+                 ==>
+171              "missing_wlast":        begin aw(1); w(0); w(0); end
+                 ==>
+172              "premature_wlast":      begin aw(1); w(1); end
+                 ==>
+173              "w_overflow":          begin aw(1); w(0); w(0); w(0); end
+                 ==>
+174              "orphan_b":            b(4'd12, OKAY);
+                 ==>
+175              "b_exokay_unlocked":   begin aw(0); w(1); b(ID, EXOKAY); end
+                 ==>
+176              "orphan_r":            r(4'd12, 1);
+                 ==>
+177              "missing_rlast":        begin ar(1); r(ID, 0); r(ID, 0); end
+                 ==>
+178              "premature_rlast":      begin ar(1); r(ID, 1); end
+                 ==>
+179              "r_overflow":          begin ar(1); r(ID, 0); r(ID, 0); r(ID, 0); end
+                 ==>
+180              "r_exokay_unlocked":   begin ar(0); r(ID, 1, EXOKAY); end
+                 ==>
+181              "aw_hold_violation":    aw_hold_violation();
+                 ==>
+182              "locked_ok_control":   locked_control();
+                 ==>
+183              "r_count_overlap_control": overlap_control();
+                 ==>
+184              default: $fatal(1, "Unknown scenario %s", name);
+                 ==>
+
+Branches:
+
+-1-                        Status      Tests
+"w_without_aw"             Covered     T1
+"missing_wlast"            Not Covered
+"premature_wlast"          Not Covered
+"w_overflow"               Not Covered
+"orphan_b"                 Not Covered
+"b_exokay_unlocked"        Not Covered
+"orphan_r"                 Not Covered
+"missing_rlast"            Not Covered
+"premature_rlast"          Not Covered
+"r_overflow"               Not Covered
+"r_exokay_unlocked"        Not Covered
+"aw_hold_violation"        Not Covered
+"locked_ok_control"        Not Covered
+"r_count_overlap_control"  Not Covered
+default                    Not Covered
+
+
+-------------------------------------------------------------------------------
+===============================================================================
+Module Instance : top
+===============================================================================
+
+Instance :
+
+SCORE   LINE           COND        TOGGLE      BRANCH       ASSERT
+ 49.59   54.32 88/162   25.00 1/4  100.00 4/4   19.05 4/21  --     --
+
+
+Instance's subtree :
+
+SCORE   LINE            COND          TOGGLE          BRANCH        ASSERT
+ 50.73   64.40 161/250   46.34 19/41   26.07 158/606   41.82 23/55   75.00 21/28
+
+
+Module :
+
+SCORE   LINE           COND        TOGGLE      BRANCH       ASSERT         NAME
+ 49.59   54.32 88/162   25.00 1/4  100.00 4/4   19.05 4/21  --     --      top
+
+
+Parent :
+
+none
+----------------
+
+
+Subtrees :
+
+SCORE   LINE          COND          TOGGLE          BRANCH        ASSERT        NAME
+ 57.61   82.95 73/88   48.65 18/37   25.58 154/602   55.88 19/34   75.00 21/28  axi
+
+
+
+-------------------------------------------------------------------------------
+Since this is the module's only instance, the coverage report is the same as for the module.
+===============================================================================
+Module : axi4_if
+===============================================================================
+SCORE   LINE          COND          TOGGLE          BRANCH        ASSERT
+ 57.61   82.95 73/88   48.65 18/37   25.58 154/602   55.88 19/34   75.00 21/28
+
+Source File(s) :
+
+/path/to/coverage_code_checker_closure/source/positive/axi4/sv/if/axi4_if.sv
+
+Module self-instances :
+
+SCORE   LINE          COND          TOGGLE          BRANCH        ASSERT        NAME
+ 57.61   82.95 73/88   48.65 18/37   25.58 154/602   55.88 19/34   75.00 21/28  top.axi
+
+
+
+-------------------------------------------------------------------------------
+Line Coverage for Module : axi4_if
+
+             Line No.   Total   Covered  Percent
+TOTAL                       88       73    82.95
+INITIAL            22        8        8   100.00
+ROUTINE            40        1        1   100.00
+ROUTINE            44        1        1   100.00
+ROUTINE            48        1        1   100.00
+ROUTINE            52        1        1   100.00
+ROUTINE            64        8        7    87.50
+ROUTINE            78        4        4   100.00
+ALWAYS            401       64       50    78.12
+
+FILE: /path/to/coverage_code_checker_closure/source/positive/axi4/sv/assertions/axi4_if_sva.svh
+21                      initial begin
+22         1/1            kvips_axi4_assertions_on   = !$test$plusargs("KVIPS_AXI4_ASSERT_OFF");
+           Tests:       T1
+23         1/1            kvips_axi4_known_checks_on =  $test$plusargs("KVIPS_AXI4_ASSERT_KNOWN");
+           Tests:       T1
+24         1/1            kvips_axi4_burst_checks_on = !$test$plusargs("KVIPS_AXI4_ASSERT_BURST_OFF");
+           Tests:       T1
+25         1/1            kvips_axi4_excl_checks_on  = !$test$plusargs("KVIPS_AXI4_ASSERT_EXCL_OFF");
+           Tests:       T1
+26
+27         1/1            kvips_axi4_max_outs_w = 0;
+           Tests:       T1
+28         1/1            kvips_axi4_max_outs_r = 0;
+           Tests:       T1
+29         1/1            void'($value$plusargs("KVIPS_AXI4_ASSERT_MAX_OUTS_W=%d", kvips_axi4_max_outs_w));
+           Tests:       T1
+30         1/1            void'($value$plusargs("KVIPS_AXI4_ASSERT_MAX_OUTS_R=%d", kvips_axi4_max_outs_r));
+           Tests:       T1
+31                      end
+32
+33                      `ifdef VERILATOR
+34                        `define AXI4_CLK posedge aclk
+35                      `else
+36                        `define AXI4_CLK mon_cb
+37                      `endif
+38
+39                      function automatic longint unsigned kvips_bytes_per_beat(input logic [2:0] size);
+40         1/1            return (longint'(1) << size);
+           Tests:       T1
+41                      endfunction
+42
+43                      function automatic longint unsigned kvips_total_bytes(input logic [7:0] len, input logic [2:0] size);
+44         1/1            return (longint'(len) + 1) * kvips_bytes_per_beat(size);
+           Tests:       T1
+45                      endfunction
+46
+47                      function automatic bit kvips_transaction_size_legal(input logic [7:0] len, input logic [2:0] size);
+48         1/1            return (kvips_total_bytes(len, size) <= 4096);
+           Tests:       T1
+49                      endfunction
+50
+51                      function automatic bit kvips_wrap_len_legal(input logic [7:0] len);
+52         1/1            return (len == 8'd1) || (len == 8'd3) || (len == 8'd7) || (len == 8'd15);
+           Tests:       T1
+53                      endfunction
+54
+55                      function automatic bit kvips_crosses_4kb(
+56                        input logic [ADDR_W-1:0] addr,
+57                        input logic [7:0]        len,
+58                        input logic [2:0]        size,
+59                        input logic [1:0]        burst
+60                      );
+61                        longint unsigned start_b;
+62                        longint unsigned end_b;
+63                        longint unsigned total;
+64         2/2            if (burst == 2'b00) return 1'b0; // FIXED does not advance address
+           Tests:       T1  | T1
+                        MISSING_ELSE
+65         1/2     ==>    if (burst == 2'b10) return 1'b0; // WRAP wraps within container, never crosses 4KB
+           Tests:       T1
+                        MISSING_ELSE
+66         1/1            total   = kvips_total_bytes(len, size);
+           Tests:       T1
+67         1/1            start_b = {1'b0, addr};  // zero-extend to avoid sign issues
+           Tests:       T1
+68         1/1            end_b   = (total == 0) ? start_b : (start_b + total - 1);
+           Tests:       T1
+69         1/1            return ((start_b >> 12) != (end_b >> 12));
+           Tests:       T1
+70                      endfunction
+71
+72                      function automatic bit kvips_wrap_addr_aligned(
+73                        input logic [ADDR_W-1:0] addr,
+74                        input logic [7:0]        len,
+75                        input logic [2:0]        size
+76                      );
+77                        longint unsigned container;
+78         1/1            container = kvips_total_bytes(len, size);
+           Tests:       T1
+79         2/2            if (container == 0) return 1'b1;
+           Tests:       T1  | T1
+                        MISSING_ELSE
+80         1/1            return (({1'b0, addr} % kvips_bytes_per_beat(size)) == 0);
+           Tests:       T1
+81                      endfunction
+82
+83                      // VALID/payload stability while stalled (VALID && !READY)
+84                      property kvips_p_aw_hold;
+85                        @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on)
+86                      `ifdef VERILATOR
+87                          (awvalid && !awready)
+88                            |=> (awvalid &&
+89                                 $stable({awid, awaddr, awlen, awsize, awburst, awlock, awcache, awprot, awqos, awregion, awuser}));
+90                      `else
+91                          (mon_cb.awvalid && !mon_cb.awready)
+92                            |=> (mon_cb.awvalid &&
+93                                 $stable({mon_cb.awid, mon_cb.awaddr, mon_cb.awlen, mon_cb.awsize, mon_cb.awburst, mon_cb.awlock, mon_cb.awcache, mon_cb.awprot, mon_cb.awqos, mon_cb.awregion, mon_cb.awuser}));
+94                      `endif
+95                      endproperty
+96                      a_kvips_aw_hold: assert property (kvips_p_aw_hold);
+97
+98                      property kvips_p_w_hold;
+99                        @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on)
+100                     `ifdef VERILATOR
+101                         (wvalid && !wready)
+102                           |=> (wvalid && $stable({wdata, wstrb, wlast, wuser}));
+103                     `else
+104                         (mon_cb.wvalid && !mon_cb.wready)
+105                           |=> (mon_cb.wvalid && $stable({mon_cb.wdata, mon_cb.wstrb, mon_cb.wlast, mon_cb.wuser}));
+106                     `endif
+107                     endproperty
+108                     a_kvips_w_hold: assert property (kvips_p_w_hold);
+109
+110                     property kvips_p_b_hold;
+111                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on)
+112                     `ifdef VERILATOR
+113                         (bvalid && !bready)
+114                           |=> (bvalid && $stable({bid, bresp, buser}));
+115                     `else
+116                         (mon_cb.bvalid && !mon_cb.bready)
+117                           |=> (mon_cb.bvalid && $stable({mon_cb.bid, mon_cb.bresp, mon_cb.buser}));
+118                     `endif
+119                     endproperty
+120                     a_kvips_b_hold: assert property (kvips_p_b_hold);
+121
+122                     property kvips_p_ar_hold;
+123                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on)
+124                     `ifdef VERILATOR
+125                         (arvalid && !arready)
+126                           |=> (arvalid &&
+127                                $stable({arid, araddr, arlen, arsize, arburst, arlock, arcache, arprot, arqos, arregion, aruser}));
+128                     `else
+129                         (mon_cb.arvalid && !mon_cb.arready)
+130                           |=> (mon_cb.arvalid &&
+131                                $stable({mon_cb.arid, mon_cb.araddr, mon_cb.arlen, mon_cb.arsize, mon_cb.arburst, mon_cb.arlock, mon_cb.arcache, mon_cb.arprot, mon_cb.arqos, mon_cb.arregion, mon_cb.aruser}));
+132                     `endif
+133                     endproperty
+134                     a_kvips_ar_hold: assert property (kvips_p_ar_hold);
+135
+136                     property kvips_p_r_hold;
+137                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on)
+138                     `ifdef VERILATOR
+139                         (rvalid && !rready)
+140                           |=> (rvalid && $stable({rid, rdata, rresp, rlast, ruser}));
+141                     `else
+142                         (mon_cb.rvalid && !mon_cb.rready)
+143                           |=> (mon_cb.rvalid && $stable({mon_cb.rid, mon_cb.rdata, mon_cb.rresp, mon_cb.rlast, mon_cb.ruser}));
+144                     `endif
+145                     endproperty
+146                     a_kvips_r_hold: assert property (kvips_p_r_hold);
+147
+148                     // Basic legality checks: SIZE vs DATA_W
+149                     property kvips_p_aw_size_legal;
+150                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on)
+151                     `ifdef VERILATOR
+152                         awvalid |-> ((1 << awsize) <= STRB_W);
+153                     `else
+154                         mon_cb.awvalid |-> ((1 << mon_cb.awsize) <= STRB_W);
+155                     `endif
+156                     endproperty
+157                     a_kvips_aw_size_legal: assert property (kvips_p_aw_size_legal);
+158
+159                     property kvips_p_ar_size_legal;
+160                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on)
+161                     `ifdef VERILATOR
+162                         arvalid |-> ((1 << arsize) <= STRB_W);
+163                     `else
+164                         mon_cb.arvalid |-> ((1 << mon_cb.arsize) <= STRB_W);
+165                     `endif
+166                     endproperty
+167                     a_kvips_ar_size_legal: assert property (kvips_p_ar_size_legal);
+168
+169                     // Burst legality checks (AMBA4 AXI4 basics)
+170                     property kvips_p_aw_burst_legal;
+171                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_burst_checks_on)
+172                     `ifdef VERILATOR
+173                         awvalid |-> (awburst inside {2'b00,2'b01,2'b10});
+174                     `else
+175                         mon_cb.awvalid |-> (mon_cb.awburst inside {2'b00,2'b01,2'b10});
+176                     `endif
+177                     endproperty
+178                     a_kvips_aw_burst_legal: assert property (kvips_p_aw_burst_legal);
+179
+180                     property kvips_p_ar_burst_legal;
+181                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_burst_checks_on)
+182                     `ifdef VERILATOR
+183                         arvalid |-> (arburst inside {2'b00,2'b01,2'b10});
+184                     `else
+185                         mon_cb.arvalid |-> (mon_cb.arburst inside {2'b00,2'b01,2'b10});
+186                     `endif
+187                     endproperty
+188                     a_kvips_ar_burst_legal: assert property (kvips_p_ar_burst_legal);
+189
+190                     property kvips_p_aw_len_legal;
+191                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_burst_checks_on)
+192                     `ifdef VERILATOR
+193                         awvalid |-> ((awburst == 2'b01) ? (awlen <= 8'd255) : (awlen <= 8'd15));
+194                     `else
+195                         mon_cb.awvalid |-> ((mon_cb.awburst == 2'b01) ? (mon_cb.awlen <= 8'd255) : (mon_cb.awlen <= 8'd15));
+196                     `endif
+197                     endproperty
+198                     a_kvips_aw_len_legal: assert property (kvips_p_aw_len_legal);
+199
+200                     property kvips_p_ar_len_legal;
+201                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_burst_checks_on)
+202                     `ifdef VERILATOR
+203                         arvalid |-> ((arburst == 2'b01) ? (arlen <= 8'd255) : (arlen <= 8'd15));
+204                     `else
+205                         mon_cb.arvalid |-> ((mon_cb.arburst == 2'b01) ? (mon_cb.arlen <= 8'd255) : (mon_cb.arlen <= 8'd15));
+206                     `endif
+207                     endproperty
+208                     a_kvips_ar_len_legal: assert property (kvips_p_ar_len_legal);
+209
+210                     property kvips_p_aw_transaction_size_legal;
+211                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_burst_checks_on)
+212                     `ifdef VERILATOR
+213                         awvalid |-> kvips_transaction_size_legal(awlen, awsize);
+214                     `else
+215                         mon_cb.awvalid |-> kvips_transaction_size_legal(mon_cb.awlen, mon_cb.awsize);
+216                     `endif
+217                     endproperty
+218                     a_kvips_aw_transaction_size_legal: assert property (kvips_p_aw_transaction_size_legal);
+219
+220                     property kvips_p_ar_transaction_size_legal;
+221                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_burst_checks_on)
+222                     `ifdef VERILATOR
+223                         arvalid |-> kvips_transaction_size_legal(arlen, arsize);
+224                     `else
+225                         mon_cb.arvalid |-> kvips_transaction_size_legal(mon_cb.arlen, mon_cb.arsize);
+226                     `endif
+227                     endproperty
+228                     a_kvips_ar_transaction_size_legal: assert property (kvips_p_ar_transaction_size_legal);
+229
+230                     property kvips_p_aw_wrap_len_legal;
+231                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_burst_checks_on)
+232                     `ifdef VERILATOR
+233                         awvalid |-> ((awburst == 2'b10) ? kvips_wrap_len_legal(awlen) : 1'b1);
+234                     `else
+235                         mon_cb.awvalid |-> ((mon_cb.awburst == 2'b10) ? kvips_wrap_len_legal(mon_cb.awlen) : 1'b1);
+236                     `endif
+237                     endproperty
+238                     a_kvips_aw_wrap_len_legal: assert property (kvips_p_aw_wrap_len_legal);
+239
+240                     property kvips_p_ar_wrap_len_legal;
+241                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_burst_checks_on)
+242                     `ifdef VERILATOR
+243                         arvalid |-> ((arburst == 2'b10) ? kvips_wrap_len_legal(arlen) : 1'b1);
+244                     `else
+245                         mon_cb.arvalid |-> ((mon_cb.arburst == 2'b10) ? kvips_wrap_len_legal(mon_cb.arlen) : 1'b1);
+246                     `endif
+247                     endproperty
+248                     a_kvips_ar_wrap_len_legal: assert property (kvips_p_ar_wrap_len_legal);
+249
+250                     property kvips_p_aw_wrap_addr_aligned;
+251                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_burst_checks_on)
+252                     `ifdef VERILATOR
+253                         awvalid |-> ((awburst == 2'b10) ? kvips_wrap_addr_aligned(awaddr, awlen, awsize) : 1'b1);
+254                     `else
+255                         mon_cb.awvalid |-> ((mon_cb.awburst == 2'b10) ? kvips_wrap_addr_aligned(mon_cb.awaddr, mon_cb.awlen, mon_cb.awsize) : 1'b1);
+256                     `endif
+257                     endproperty
+258                     a_kvips_aw_wrap_addr_aligned: assert property (kvips_p_aw_wrap_addr_aligned);
+259
+260                     property kvips_p_ar_wrap_addr_aligned;
+261                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_burst_checks_on)
+262                     `ifdef VERILATOR
+263                         arvalid |-> ((arburst == 2'b10) ? kvips_wrap_addr_aligned(araddr, arlen, arsize) : 1'b1);
+264                     `else
+265                         mon_cb.arvalid |-> ((mon_cb.arburst == 2'b10) ? kvips_wrap_addr_aligned(mon_cb.araddr, mon_cb.arlen, mon_cb.arsize) : 1'b1);
+266                     `endif
+267                     endproperty
+268                     a_kvips_ar_wrap_addr_aligned: assert property (kvips_p_ar_wrap_addr_aligned);
+269
+270                     property kvips_p_aw_no_4kb_cross;
+271                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_burst_checks_on)
+272                     `ifdef VERILATOR
+273                         awvalid |-> (!kvips_crosses_4kb(awaddr, awlen, awsize, awburst));
+274                     `else
+275                         mon_cb.awvalid |-> (!kvips_crosses_4kb(mon_cb.awaddr, mon_cb.awlen, mon_cb.awsize, mon_cb.awburst));
+276                     `endif
+277                     endproperty
+278                     a_kvips_aw_no_4kb_cross: assert property (kvips_p_aw_no_4kb_cross);
+279
+280                     property kvips_p_ar_no_4kb_cross;
+281                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_burst_checks_on)
+282                     `ifdef VERILATOR
+283                         arvalid |-> (!kvips_crosses_4kb(araddr, arlen, arsize, arburst));
+284                     `else
+285                         mon_cb.arvalid |-> (!kvips_crosses_4kb(mon_cb.araddr, mon_cb.arlen, mon_cb.arsize, mon_cb.arburst));
+286                     `endif
+287                     endproperty
+288                     a_kvips_ar_no_4kb_cross: assert property (kvips_p_ar_no_4kb_cross);
+289
+290                     // Exclusive access restrictions (AXI4, conservative checks)
+291                     property kvips_p_aw_excl_restrictions;
+292                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_excl_checks_on)
+293                     `ifdef VERILATOR
+294                         (awvalid && awlock) |->
+295                           (awburst == 2'b01) &&
+296                           (awlen <= 8'd15) &&
+297                           (kvips_total_bytes(awlen, awsize) <= 128) &&
+298                           ((longint'(awaddr) % kvips_bytes_per_beat(awsize)) == 0) &&
+299                           (!kvips_crosses_4kb(awaddr, awlen, awsize, awburst));
+300                     `else
+301                         (mon_cb.awvalid && mon_cb.awlock) |->
+302                           (mon_cb.awburst == 2'b01) &&
+303                           (mon_cb.awlen <= 8'd15) &&
+304                           (kvips_total_bytes(mon_cb.awlen, mon_cb.awsize) <= 128) &&
+305                           ((longint'(mon_cb.awaddr) % kvips_bytes_per_beat(mon_cb.awsize)) == 0) &&
+306                           (!kvips_crosses_4kb(mon_cb.awaddr, mon_cb.awlen, mon_cb.awsize, mon_cb.awburst));
+307                     `endif
+308                     endproperty
+309                     a_kvips_aw_excl_restrictions: assert property (kvips_p_aw_excl_restrictions);
+310
+311                     property kvips_p_ar_excl_restrictions;
+312                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_excl_checks_on)
+313                     `ifdef VERILATOR
+314                         (arvalid && arlock) |->
+315                           (arburst == 2'b01) &&
+316                           (arlen <= 8'd15) &&
+317                           (kvips_total_bytes(arlen, arsize) <= 128) &&
+318                           ((longint'(araddr) % kvips_bytes_per_beat(arsize)) == 0) &&
+319                           (!kvips_crosses_4kb(araddr, arlen, arsize, arburst));
+320                     `else
+321                         (mon_cb.arvalid && mon_cb.arlock) |->
+322                           (mon_cb.arburst == 2'b01) &&
+323                           (mon_cb.arlen <= 8'd15) &&
+324                           (kvips_total_bytes(mon_cb.arlen, mon_cb.arsize) <= 128) &&
+325                           ((longint'(mon_cb.araddr) % kvips_bytes_per_beat(mon_cb.arsize)) == 0) &&
+326                           (!kvips_crosses_4kb(mon_cb.araddr, mon_cb.arlen, mon_cb.arsize, mon_cb.arburst));
+327                     `endif
+328                     endproperty
+329                     a_kvips_ar_excl_restrictions: assert property (kvips_p_ar_excl_restrictions);
+330
+331                     // Optional X/Z checks
+332                     property kvips_p_known_aw;
+333                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_known_checks_on)
+334                     `ifdef VERILATOR
+335                         awvalid |-> (!$isunknown({awid, awaddr, awlen, awsize, awburst}));
+336                     `else
+337                         mon_cb.awvalid |-> (!$isunknown({mon_cb.awid, mon_cb.awaddr, mon_cb.awlen, mon_cb.awsize, mon_cb.awburst}));
+338                     `endif
+339                     endproperty
+340                     a_kvips_known_aw: assert property (kvips_p_known_aw);
+341
+342                     property kvips_p_known_w;
+343                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_known_checks_on)
+344                     `ifdef VERILATOR
+345                         wvalid |-> (!$isunknown({wdata, wstrb, wlast}));
+346                     `else
+347                         mon_cb.wvalid |-> (!$isunknown({mon_cb.wdata, mon_cb.wstrb, mon_cb.wlast}));
+348                     `endif
+349                     endproperty
+350                     a_kvips_known_w: assert property (kvips_p_known_w);
+351
+352                     property kvips_p_known_ar;
+353                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_known_checks_on)
+354                     `ifdef VERILATOR
+355                         arvalid |-> (!$isunknown({arid, araddr, arlen, arsize, arburst}));
+356                     `else
+357                         mon_cb.arvalid |-> (!$isunknown({mon_cb.arid, mon_cb.araddr, mon_cb.arlen, mon_cb.arsize, mon_cb.arburst}));
+358                     `endif
+359                     endproperty
+360                     a_kvips_known_ar: assert property (kvips_p_known_ar);
+361
+362                     property kvips_p_known_r;
+363                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_known_checks_on)
+364                     `ifdef VERILATOR
+365                         rvalid |-> (!$isunknown({rid, rdata, rlast, rresp}));
+366                     `else
+367                         mon_cb.rvalid |-> (!$isunknown({mon_cb.rid, mon_cb.rdata, mon_cb.rlast, mon_cb.rresp}));
+368                     `endif
+369                     endproperty
+370                     a_kvips_known_r: assert property (kvips_p_known_r);
+371
+372                     property kvips_p_known_b;
+373                       @(`AXI4_CLK) disable iff (!areset_n || !kvips_axi4_assertions_on || !kvips_axi4_known_checks_on)
+374                     `ifdef VERILATOR
+375                         bvalid |-> (!$isunknown({bid, bresp}));
+376                     `else
+377                         mon_cb.bvalid |-> (!$isunknown({mon_cb.bid, mon_cb.bresp}));
+378                     `endif
+379                     endproperty
+380                     a_kvips_known_b: assert property (kvips_p_known_b);
+381
+382                     // -----------------------------------------------------------------------------
+383                     // Stateful protocol checks (portable "compliance" starter set)
+384                     // -----------------------------------------------------------------------------
+385
+386                     typedef struct packed {
+387                       logic [ID_W-1:0] id;
+388                       int unsigned     beats_left;
+389                       bit              lock;
+390                     } kvips_wr_ctx_t;
+391
+392                     kvips_wr_ctx_t kvips_wr_fifo[$];
+393                     bit kvips_wr_done_lock_q[logic [ID_W-1:0]][$];
+394                     int unsigned kvips_outs_w;
+395
+396                     int unsigned kvips_rd_beats_q[logic [ID_W-1:0]][$];
+397                     bit kvips_rd_lock_q[logic [ID_W-1:0]][$];
+398                     int unsigned kvips_outs_r;
+399
+400                     always_ff @(posedge aclk) begin
+401        1/1            if (!areset_n || !kvips_axi4_assertions_on) begin
+           Tests:       T1
+402        1/1              kvips_wr_fifo.delete();
+           Tests:       T1
+403        1/2     ==>      foreach (kvips_wr_done_lock_q[id]) kvips_wr_done_lock_q[id].delete();
+           Tests:       T1
+404        1/1              kvips_outs_w <= 0;
+           Tests:       T1
+405
+406        1/2     ==>      foreach (kvips_rd_beats_q[id]) kvips_rd_beats_q[id].delete();
+           Tests:       T1
+407        1/2     ==>      foreach (kvips_rd_lock_q[id])  kvips_rd_lock_q[id].delete();
+           Tests:       T1
+408        1/1              kvips_outs_r <= 0;
+           Tests:       T1
+409                       end else begin
+410                         // -----------------
+411                         // AW -> W tracking (W has no ID; must follow AW order)
+412                         // -----------------
+413        1/1              if (awvalid && awready) begin
+           Tests:       T1
+414                           kvips_wr_ctx_t ctx;
+415        1/1                ctx.id = awid;
+           Tests:       T1
+416        1/1                ctx.beats_left = int'(awlen) + 1;
+           Tests:       T1
+417        1/1                ctx.lock = awlock;
+           Tests:       T1
+418        1/1                kvips_wr_fifo.push_back(ctx);
+           Tests:       T1
+419        1/1                kvips_outs_w <= kvips_outs_w + 1;
+           Tests:       T1
+420                         end
+                        MISSING_ELSE
+421
+422        1/1              if (wvalid && wready) begin
+           Tests:       T1
+423        1/1                if (kvips_wr_fifo.size() == 0) begin
+           Tests:       T1
+424        1/1                  $error("KVIPS_AXI4_ASSERT: W beat seen with no outstanding AW");
+           Tests:       T1
+425                           end else begin
+426                             kvips_wr_ctx_t ctx;
+427        1/1                  ctx = kvips_wr_fifo[0];
+           Tests:       T1
+428        1/1                  if (ctx.beats_left == 0) begin
+           Tests:       T1
+429        0/1     ==>            $error("KVIPS_AXI4_ASSERT: W beat overflow (beats_left==0)");
+430                             end else begin
+431        1/1                    if ((ctx.beats_left == 1) && !wlast) begin
+           Tests:       T1
+432        0/1     ==>              $error("KVIPS_AXI4_ASSERT: Missing WLAST on final W beat");
+433                               end
+                        MISSING_ELSE
+434        1/1                    if ((ctx.beats_left != 1) && wlast) begin
+           Tests:       T1
+435        0/1     ==>              $error("KVIPS_AXI4_ASSERT: Unexpected WLAST before final W beat");
+436                               end
+                        MISSING_ELSE
+437        1/1                    ctx.beats_left--;
+           Tests:       T1
+438        1/1                    kvips_wr_fifo[0] = ctx;
+           Tests:       T1
+439                             end
+440        1/1                  if (wlast) begin
+           Tests:       T1
+441                               // Require the FIFO front to complete.
+442        1/1                    if (kvips_wr_fifo[0].beats_left != 0) begin
+           Tests:       T1
+443        0/1     ==>              $error("KVIPS_AXI4_ASSERT: WLAST asserted but beats_left != 0 after decrement");
+444                               end
+                        MISSING_ELSE
+445                               // Mark this write as "data complete" for BID matching.
+446        1/1                    kvips_wr_done_lock_q[kvips_wr_fifo[0].id].push_back(kvips_wr_fifo[0].lock);
+           Tests:       T1
+447        1/1                    void'(kvips_wr_fifo.pop_front());
+           Tests:       T1
+448                             end
+                   ==>  MISSING_ELSE
+449                           end
+450                         end
+                        MISSING_ELSE
+451
+452                         // -----------------
+453                         // B must only come after WLAST for the matching ID
+454                         // -----------------
+455        1/1              if (bvalid && bready) begin
+           Tests:       T1
+456        1/1                if (!(kvips_wr_done_lock_q.exists(bid)) || (kvips_wr_done_lock_q[bid].size() == 0)) begin
+           Tests:       T1
+457        0/1     ==>          $error("KVIPS_AXI4_ASSERT: B seen with BID having no completed write data");
+458                           end else begin
+459                             bit lock_seen;
+460        1/1                  lock_seen = kvips_wr_done_lock_q[bid].pop_front();
+           Tests:       T1
+461        1/1                  if ((bresp == KVIPS_AXI4_RESP_EXOKAY) && !lock_seen) begin
+           Tests:       T1
+462        0/1     ==>            $error("KVIPS_AXI4_ASSERT: BRESP=EXOKAY observed for non-exclusive write");
+463                             end
+                        MISSING_ELSE
+464                           end
+465        2/2                if (kvips_outs_w != 0) kvips_outs_w <= kvips_outs_w - 1;
+           Tests:       T1  | T1
+                   ==>  MISSING_ELSE
+466                         end
+                        MISSING_ELSE
+467
+468                         // -----------------
+469                         // AR -> R tracking (per-ID)
+470                         // -----------------
+471        1/1              if (arvalid && arready) begin
+           Tests:       T1
+472        1/1                kvips_rd_beats_q[arid].push_back(int'(arlen) + 1);
+           Tests:       T1
+473        1/1                kvips_rd_lock_q[arid].push_back(arlock);
+           Tests:       T1
+474        1/1                kvips_outs_r <= kvips_outs_r + 1;
+           Tests:       T1
+475                         end
+                        MISSING_ELSE
+476
+477        1/1              if (rvalid && rready) begin
+           Tests:       T1
+478        1/1                if (!(kvips_rd_beats_q.exists(rid)) || (kvips_rd_beats_q[rid].size() == 0)) begin
+           Tests:       T1
+479        0/1     ==>          $error("KVIPS_AXI4_ASSERT: R beat seen with no outstanding AR for RID");
+480                           end else begin
+481                             int unsigned beats_left;
+482                             bit lock_seen;
+483        1/1                  beats_left = kvips_rd_beats_q[rid][0];
+           Tests:       T1
+484        1/1                  lock_seen  = kvips_rd_lock_q[rid][0];
+           Tests:       T1
+485        1/1                  if ((beats_left == 1) && !rlast) begin
+           Tests:       T1
+486        0/1     ==>            $error("KVIPS_AXI4_ASSERT: Missing RLAST on final R beat");
+487                             end
+                        MISSING_ELSE
+488        1/1                  if ((beats_left != 1) && rlast) begin
+           Tests:       T1
+489        0/1     ==>            $error("KVIPS_AXI4_ASSERT: Unexpected RLAST before final R beat");
+490                             end
+                        MISSING_ELSE
+491        1/1                  if (kvips_axi4_excl_checks_on && (rresp == KVIPS_AXI4_RESP_EXOKAY) && !lock_seen) begin
+           Tests:       T1
+492        0/1     ==>            $error("KVIPS_AXI4_ASSERT: RRESP=EXOKAY observed for non-exclusive read");
+493                             end
+                        MISSING_ELSE
+494        1/1                  if (beats_left == 0) begin
+           Tests:       T1
+495        0/1     ==>            $error("KVIPS_AXI4_ASSERT: R beat overflow (beats_left==0)");
+496                             end else begin
+497        1/1                    kvips_rd_beats_q[rid][0] = beats_left - 1;
+           Tests:       T1
+498                             end
+499        1/1                  if (rlast) begin
+           Tests:       T1
+500        1/1                    void'(kvips_rd_beats_q[rid].pop_front());
+           Tests:       T1
+501        1/1                    void'(kvips_rd_lock_q[rid].pop_front());
+           Tests:       T1
+502        2/2                    if (kvips_outs_r != 0) kvips_outs_r <= kvips_outs_r - 1;
+           Tests:       T1  | T1
+                   ==>  MISSING_ELSE
+503                             end
+                   ==>  MISSING_ELSE
+504                           end
+505                         end
+                        MISSING_ELSE
+
+-------------------------------------------------------------------------------
+Cond Coverage for Module : axi4_if
+
+               Total   Covered  Percent
+Conditions         37       18    48.65
+Logical            37       18    48.65
+Non-Logical         0        0
+Event               0        0
+
+ LINE       401
+ CONDITION_ID   1
+ EXPRESSION (((!areset_n)) || ((!kvips_axi4_assertions_on)))
+             ------1------    --------------2--------------
+
+   ID -1- -2- Status      Tests
+    1  0   0  Covered     T1
+    2  0   1  Not Covered
+    3  1   0  Covered     T1
+
+ LINE       413
+ CONDITION_ID   2
+ EXPRESSION (awvalid && awready)
+             ---1---    ---2---
+
+   ID -1- -2- Status      Tests
+    1  0   1  Covered     T1
+    2  1   0  Not Covered
+    3  1   1  Covered     T1
+
+ LINE       422
+ CONDITION_ID   3
+ EXPRESSION (wvalid && wready)
+             ---1--    ---2--
+
+   ID -1- -2- Status      Tests
+    1  0   1  Covered     T1
+    2  1   0  Not Covered
+    3  1   1  Covered     T1
+
+ LINE       431
+ CONDITION_ID   4
+ EXPRESSION ((ctx.beats_left == 1) && ((!wlast)))
+             ----------1----------    -----2----
+
+   ID -1- -2- Status      Tests
+    1  0   1  Not Covered
+    2  1   0  Covered     T1
+    3  1   1  Not Covered
+
+ LINE       434
+ CONDITION_ID   5
+ EXPRESSION ((ctx.beats_left != 1) && wlast)
+             ----------1----------    --2--
+
+   ID -1- -2- Status      Tests
+    1  0   1  Covered     T1
+    2  1   0  Not Covered
+    3  1   1  Not Covered
+
+ LINE       455
+ CONDITION_ID   6
+ EXPRESSION (bvalid && bready)
+             ---1--    ---2--
+
+   ID -1- -2- Status      Tests
+    1  0   1  Covered     T1
+    2  1   0  Not Covered
+    3  1   1  Covered     T1
+
+ LINE       461
+ CONDITION_ID   7
+ EXPRESSION ((bresp == KVIPS_AXI4_RESP_EXOKAY) && ((!lock_seen)))
+             ----------------1----------------    -------2------
+
+   ID -1- -2- Status      Tests
+    1  0   1  Covered     T1
+    2  1   0  Not Covered
+    3  1   1  Not Covered
+
+ LINE       471
+ CONDITION_ID   8
+ EXPRESSION (arvalid && arready)
+             ---1---    ---2---
+
+   ID -1- -2- Status      Tests
+    1  0   1  Covered     T1
+    2  1   0  Not Covered
+    3  1   1  Covered     T1
+
+ LINE       477
+ CONDITION_ID   9
+ EXPRESSION (rvalid && rready)
+             ---1--    ---2--
+
+   ID -1- -2- Status      Tests
+    1  0   1  Covered     T1
+    2  1   0  Not Covered
+    3  1   1  Covered     T1
+
+ LINE       485
+ CONDITION_ID   10
+ EXPRESSION ((beats_left == 1) && ((!rlast)))
+             --------1--------    -----2----
+
+   ID -1- -2- Status      Tests
+    1  0   1  Not Covered
+    2  1   0  Covered     T1
+    3  1   1  Not Covered
+
+ LINE       488
+ CONDITION_ID   11
+ EXPRESSION ((beats_left != 1) && rlast)
+             --------1--------    --2--
+
+   ID -1- -2- Status      Tests
+    1  0   1  Covered     T1
+    2  1   0  Not Covered
+    3  1   1  Not Covered
+
+ LINE       491
+ CONDITION_ID   12
+ EXPRESSION (kvips_axi4_excl_checks_on && (rresp == KVIPS_AXI4_RESP_EXOKAY) && ((!lock_seen)))
+             ------------1------------    ----------------2----------------    -------3------
+
+   ID -1- -2- -3- Status      Tests
+    1  0   1   1  Not Covered
+    2  1   0   1  Covered     T1
+    3  1   1   0  Not Covered
+    4  1   1   1  Not Covered
+
+-------------------------------------------------------------------------------
+Toggle Coverage for Module : axi4_if
+                Total Covered Percent
+Totals          50    14      28.00
+Total Bits      602   154     25.58
+Total Bits 0->1 301   104     34.55
+Total Bits 1->0 301   50      16.61
+
+
+Ports          2 2 100.00
+Port Bits      4 4 100.00
+Port Bits 0->1 2 2 100.00
+Port Bits 1->0 2 2 100.00
+
+
+Signals          48  12  25.00
+Signal Bits      598 150 25.08
+Signal Bits 0->1 299 102 34.11
+Signal Bits 1->0 299 48  16.05
+
+Port Details
+         Toggle Toggle 1->0 Tests Toggle 0->1 Tests Direction
+aclk     Yes    Yes         T1    Yes         T1    INPUT
+areset_n Yes    Yes         T1    Yes         T1    INPUT
+
+Signal Details
+                           Toggle Toggle 1->0 Tests Toggle 0->1 Tests
+awid[2:0]                  No     No                Yes         T1
+awid[3]                    No     No                No
+awaddr[7:0]                No     No                No
+awaddr[8]                  No     No                Yes         T1
+awaddr[31:9]               No     No                No
+awlen[7:0]                 No     No                No
+awsize[1:0]                No     No                Yes         T1
+awsize[2]                  No     No                No
+awburst[0]                 No     No                Yes         T1
+awburst[1]                 No     No                No
+awlock                     No     No                No
+awcache[3:0]               No     No                No
+awprot[2:0]                No     No                No
+awqos[3:0]                 No     No                No
+awregion[3:0]              No     No                No
+awuser                     No     No                No
+awvalid                    Yes    Yes         T1    Yes         T1
+awready                    Yes    Yes         T1    Yes         T1
+wdata[0]                   No     No                No
+wdata[1]                   Yes    Yes         T1    Yes         T1
+wdata[2]                   No     No                No
+wdata[4:3]                 Yes    Yes         T1    Yes         T1
+wdata[7:5]                 No     No                No
+wdata[8]                   Yes    Yes         T1    Yes         T1
+wdata[10:9]                No     No                No
+wdata[15:11]               Yes    Yes         T1    Yes         T1
+wdata[16]                  No     No                No
+wdata[21:17]               Yes    Yes         T1    Yes         T1
+wdata[22]                  No     No                No
+wdata[23]                  Yes    Yes         T1    Yes         T1
+wdata[27:24]               No     No                No
+wdata[28]                  Yes    Yes         T1    Yes         T1
+wdata[31:29]               No     No                No
+wdata[32]                  Yes    Yes         T1    Yes         T1
+wdata[33]                  No     No                No
+wdata[34]                  Yes    Yes         T1    Yes         T1
+wdata[35]                  No     No                No
+wdata[36]                  Yes    Yes         T1    Yes         T1
+wdata[37]                  No     No                No
+wdata[38]                  Yes    Yes         T1    Yes         T1
+wdata[41:39]               No     No                No
+wdata[43:42]               Yes    Yes         T1    Yes         T1
+wdata[47:44]               No     No                No
+wdata[48]                  Yes    Yes         T1    Yes         T1
+wdata[53:49]               No     No                No
+wdata[55:54]               Yes    Yes         T1    Yes         T1
+wdata[56]                  No     No                No
+wdata[57]                  Yes    Yes         T1    Yes         T1
+wdata[58]                  No     No                No
+wdata[59]                  Yes    Yes         T1    Yes         T1
+wdata[60]                  No     No                No
+wdata[62:61]               Yes    Yes         T1    Yes         T1
+wdata[63]                  No     No                No
+wstrb[7:0]                 Yes    Yes         T1    Yes         T1
+wlast                      Yes    Yes         T1    Yes         T1
+wuser                      No     No                No
+wvalid                     Yes    Yes         T1    Yes         T1
+wready                     Yes    Yes         T1    Yes         T1
+bid[2:0]                   No     No                Yes         T1
+bid[3]                     No     No                No
+bresp[1:0]                 No     No                No
+buser                      No     No                No
+bvalid                     Yes    Yes         T1    Yes         T1
+bready                     Yes    Yes         T1    Yes         T1
+arid[2:0]                  No     No                Yes         T1
+arid[3]                    No     No                No
+araddr[7:0]                No     No                No
+araddr[8]                  No     No                Yes         T1
+araddr[31:9]               No     No                No
+arlen[7:0]                 No     No                No
+arsize[1:0]                No     No                Yes         T1
+arsize[2]                  No     No                No
+arburst[0]                 No     No                Yes         T1
+arburst[1]                 No     No                No
+arlock                     No     No                No
+arcache[3:0]               No     No                No
+arprot[2:0]                No     No                No
+arqos[3:0]                 No     No                No
+arregion[3:0]              No     No                No
+aruser                     No     No                No
+arvalid                    Yes    Yes         T1    Yes         T1
+arready                    Yes    Yes         T1    Yes         T1
+rid[2:0]                   No     No                Yes         T1
+rid[3]                     No     No                No
+rdata[0]                   No     No                No
+rdata[1]                   No     No                Yes         T1
+rdata[2]                   No     No                No
+rdata[4:3]                 No     No                Yes         T1
+rdata[7:5]                 No     No                No
+rdata[8]                   No     No                Yes         T1
+rdata[10:9]                No     No                No
+rdata[15:11]               No     No                Yes         T1
+rdata[16]                  No     No                No
+rdata[21:17]               No     No                Yes         T1
+rdata[22]                  No     No                No
+rdata[23]                  No     No                Yes         T1
+rdata[27:24]               No     No                No
+rdata[28]                  No     No                Yes         T1
+rdata[31:29]               No     No                No
+rdata[32]                  No     No                Yes         T1
+rdata[33]                  No     No                No
+rdata[34]                  No     No                Yes         T1
+rdata[35]                  No     No                No
+rdata[36]                  No     No                Yes         T1
+rdata[37]                  No     No                No
+rdata[38]                  No     No                Yes         T1
+rdata[41:39]               No     No                No
+rdata[43:42]               No     No                Yes         T1
+rdata[47:44]               No     No                No
+rdata[48]                  No     No                Yes         T1
+rdata[53:49]               No     No                No
+rdata[55:54]               No     No                Yes         T1
+rdata[56]                  No     No                No
+rdata[57]                  No     No                Yes         T1
+rdata[58]                  No     No                No
+rdata[59]                  No     No                Yes         T1
+rdata[60]                  No     No                No
+rdata[62:61]               No     No                Yes         T1
+rdata[63]                  No     No                No
+rresp[1:0]                 No     No                No
+rlast                      No     No                Yes         T1
+ruser                      No     No                No
+rvalid                     Yes    Yes         T1    Yes         T1
+rready                     Yes    Yes         T1    Yes         T1
+kvips_axi4_assertions_on   No     No                Yes         T1
+kvips_axi4_known_checks_on No     No                Yes         T1
+kvips_axi4_burst_checks_on No     No                Yes         T1
+kvips_axi4_excl_checks_on  No     No                Yes         T1
+
+
+-------------------------------------------------------------------------------
+Branch Coverage for Module : axi4_if
+         Line No. Total Covered Percent
+Branches          34    19      55.88
+IF       401      34    19      55.88
+
+
+401          if (!areset_n || !kvips_axi4_assertions_on) begin
+             -1-
+402            kvips_wr_fifo.delete();
+               ==>
+403            foreach (kvips_wr_done_lock_q[id]) kvips_wr_done_lock_q[id].delete();
+404            kvips_outs_w <= 0;
+405
+406            foreach (kvips_rd_beats_q[id]) kvips_rd_beats_q[id].delete();
+407            foreach (kvips_rd_lock_q[id])  kvips_rd_lock_q[id].delete();
+408            kvips_outs_r <= 0;
+409          end else begin
+410            // -----------------
+411            // AW -> W tracking (W has no ID; must follow AW order)
+412            // -----------------
+413            if (awvalid && awready) begin
+               -2-
+414              kvips_wr_ctx_t ctx;
+415              ctx.id = awid;
+                 ==>
+416              ctx.beats_left = int'(awlen) + 1;
+417              ctx.lock = awlock;
+418              kvips_wr_fifo.push_back(ctx);
+419              kvips_outs_w <= kvips_outs_w + 1;
+420            end
+               MISSING_ELSE
+               ==>
+421
+422            if (wvalid && wready) begin
+               -3-
+423              if (kvips_wr_fifo.size() == 0) begin
+                 -4-
+424                $error("KVIPS_AXI4_ASSERT: W beat seen with no outstanding AW");
+                   ==>
+425              end else begin
+426                kvips_wr_ctx_t ctx;
+427                ctx = kvips_wr_fifo[0];
+428                if (ctx.beats_left == 0) begin
+                   -5-
+429                  $error("KVIPS_AXI4_ASSERT: W beat overflow (beats_left==0)");
+                     ==>
+430                end else begin
+431                  if ((ctx.beats_left == 1) && !wlast) begin
+                     -6-
+432                    $error("KVIPS_AXI4_ASSERT: Missing WLAST on final W beat");
+                       ==>
+433                  end
+                     MISSING_ELSE
+                     ==>
+434                  if ((ctx.beats_left != 1) && wlast) begin
+                     -7-
+435                    $error("KVIPS_AXI4_ASSERT: Unexpected WLAST before final W beat");
+                       ==>
+436                  end
+                     MISSING_ELSE
+                     ==>
+437                  ctx.beats_left--;
+438                  kvips_wr_fifo[0] = ctx;
+439                end
+440                if (wlast) begin
+                   -8-
+441                  // Require the FIFO front to complete.
+442                  if (kvips_wr_fifo[0].beats_left != 0) begin
+                     -9-
+443                    $error("KVIPS_AXI4_ASSERT: WLAST asserted but beats_left != 0 after decrement");
+                       ==>
+444                  end
+                     MISSING_ELSE
+                     ==>
+445                  // Mark this write as "data complete" for BID matching.
+446                  kvips_wr_done_lock_q[kvips_wr_fifo[0].id].push_back(kvips_wr_fifo[0].lock);
+447                  void'(kvips_wr_fifo.pop_front());
+448                end
+                   MISSING_ELSE
+                   ==>
+449              end
+450            end
+               MISSING_ELSE
+               ==>
+451
+452            // -----------------
+453            // B must only come after WLAST for the matching ID
+454            // -----------------
+455            if (bvalid && bready) begin
+               -10-
+456              if (!(kvips_wr_done_lock_q.exists(bid)) || (kvips_wr_done_lock_q[bid].size() == 0)) begin
+                 -11-
+457                $error("KVIPS_AXI4_ASSERT: B seen with BID having no completed write data");
+                   ==>
+458              end else begin
+459                bit lock_seen;
+460                lock_seen = kvips_wr_done_lock_q[bid].pop_front();
+461                if ((bresp == KVIPS_AXI4_RESP_EXOKAY) && !lock_seen) begin
+                   -12-
+462                  $error("KVIPS_AXI4_ASSERT: BRESP=EXOKAY observed for non-exclusive write");
+                     ==>
+463                end
+                   MISSING_ELSE
+                   ==>
+464              end
+465              if (kvips_outs_w != 0) kvips_outs_w <= kvips_outs_w - 1;
+                 -13-
+                 ==>
+                 MISSING_ELSE
+                 ==>
+466            end
+               MISSING_ELSE
+               ==>
+467
+468            // -----------------
+469            // AR -> R tracking (per-ID)
+470            // -----------------
+471            if (arvalid && arready) begin
+               -14-
+472              kvips_rd_beats_q[arid].push_back(int'(arlen) + 1);
+                 ==>
+473              kvips_rd_lock_q[arid].push_back(arlock);
+474              kvips_outs_r <= kvips_outs_r + 1;
+475            end
+               MISSING_ELSE
+               ==>
+476
+477            if (rvalid && rready) begin
+               -15-
+478              if (!(kvips_rd_beats_q.exists(rid)) || (kvips_rd_beats_q[rid].size() == 0)) begin
+                 -16-
+479                $error("KVIPS_AXI4_ASSERT: R beat seen with no outstanding AR for RID");
+                   ==>
+480              end else begin
+481                int unsigned beats_left;
+482                bit lock_seen;
+483                beats_left = kvips_rd_beats_q[rid][0];
+484                lock_seen  = kvips_rd_lock_q[rid][0];
+485                if ((beats_left == 1) && !rlast) begin
+                   -17-
+486                  $error("KVIPS_AXI4_ASSERT: Missing RLAST on final R beat");
+                     ==>
+487                end
+                   MISSING_ELSE
+                   ==>
+488                if ((beats_left != 1) && rlast) begin
+                   -18-
+489                  $error("KVIPS_AXI4_ASSERT: Unexpected RLAST before final R beat");
+                     ==>
+490                end
+                   MISSING_ELSE
+                   ==>
+491                if (kvips_axi4_excl_checks_on && (rresp == KVIPS_AXI4_RESP_EXOKAY) && !lock_seen) begin
+                   -19-
+492                  $error("KVIPS_AXI4_ASSERT: RRESP=EXOKAY observed for non-exclusive read");
+                     ==>
+493                end
+                   MISSING_ELSE
+                   ==>
+494                if (beats_left == 0) begin
+                   -20-
+495                  $error("KVIPS_AXI4_ASSERT: R beat overflow (beats_left==0)");
+                     ==>
+496                end else begin
+497                  kvips_rd_beats_q[rid][0] = beats_left - 1;
+                     ==>
+498                end
+499                if (rlast) begin
+                   -21-
+500                  void'(kvips_rd_beats_q[rid].pop_front());
+501                  void'(kvips_rd_lock_q[rid].pop_front());
+502                  if (kvips_outs_r != 0) kvips_outs_r <= kvips_outs_r - 1;
+                     -22-
+                     ==>
+                     MISSING_ELSE
+                     ==>
+503                end
+                   MISSING_ELSE
+                   ==>
+504              end
+505            end
+               MISSING_ELSE
+               ==>
+
+Branches:
+
+-1- -2- -3- -4- -5- -6- -7- -8- -9- -10- -11- -12- -13- -14- -15- -16- -17- -18- -19- -20- -21- -22- Status      Tests
+1   -   -   -   -   -   -   -   -   -    -    -    -    -    -    -    -    -    -    -    -    -    Covered     T1
+0   1   -   -   -   -   -   -   -   -    -    -    -    -    -    -    -    -    -    -    -    -    Covered     T1
+0   0   -   -   -   -   -   -   -   -    -    -    -    -    -    -    -    -    -    -    -    -    Covered     T1
+0   -   1   1   -   -   -   -   -   -    -    -    -    -    -    -    -    -    -    -    -    -    Covered     T1
+0   -   1   0   1   -   -   -   -   -    -    -    -    -    -    -    -    -    -    -    -    -    Not Covered
+0   -   1   0   0   1   -   -   -   -    -    -    -    -    -    -    -    -    -    -    -    -    Not Covered
+0   -   1   0   0   0   -   -   -   -    -    -    -    -    -    -    -    -    -    -    -    -    Covered     T1
+0   -   1   0   0   -   1   -   -   -    -    -    -    -    -    -    -    -    -    -    -    -    Not Covered
+0   -   1   0   0   -   0   -   -   -    -    -    -    -    -    -    -    -    -    -    -    -    Covered     T1
+0   -   1   0   -   -   -   1   1   -    -    -    -    -    -    -    -    -    -    -    -    -    Not Covered
+0   -   1   0   -   -   -   1   0   -    -    -    -    -    -    -    -    -    -    -    -    -    Covered     T1
+0   -   1   0   -   -   -   0   -   -    -    -    -    -    -    -    -    -    -    -    -    -    Not Covered
+0   -   0   -   -   -   -   -   -   -    -    -    -    -    -    -    -    -    -    -    -    -    Covered     T1
+0   -   -   -   -   -   -   -   -   1    1    -    -    -    -    -    -    -    -    -    -    -    Not Covered
+0   -   -   -   -   -   -   -   -   1    0    1    -    -    -    -    -    -    -    -    -    -    Not Covered
+0   -   -   -   -   -   -   -   -   1    0    0    -    -    -    -    -    -    -    -    -    -    Covered     T1
+0   -   -   -   -   -   -   -   -   1    -    -    1    -    -    -    -    -    -    -    -    -    Covered     T1
+0   -   -   -   -   -   -   -   -   1    -    -    0    -    -    -    -    -    -    -    -    -    Not Covered
+0   -   -   -   -   -   -   -   -   0    -    -    -    -    -    -    -    -    -    -    -    -    Covered     T1
+0   -   -   -   -   -   -   -   -   -    -    -    -    1    -    -    -    -    -    -    -    -    Covered     T1
+0   -   -   -   -   -   -   -   -   -    -    -    -    0    -    -    -    -    -    -    -    -    Covered     T1
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    1    1    -    -    -    -    -    -    Not Covered
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    1    0    1    -    -    -    -    -    Not Covered
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    1    0    0    -    -    -    -    -    Covered     T1
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    1    0    -    1    -    -    -    -    Not Covered
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    1    0    -    0    -    -    -    -    Covered     T1
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    1    0    -    -    1    -    -    -    Not Covered
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    1    0    -    -    0    -    -    -    Covered     T1
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    1    0    -    -    -    1    -    -    Not Covered
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    1    0    -    -    -    0    -    -    Covered     T1
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    1    0    -    -    -    -    1    1    Covered     T1
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    1    0    -    -    -    -    1    0    Not Covered
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    1    0    -    -    -    -    0    -    Not Covered
+0   -   -   -   -   -   -   -   -   -    -    -    -    -    0    -    -    -    -    -    -    -    Covered     T1
+
+
+-------------------------------------------------------------------------------
+Assert Coverage for Module : axi4_if
+                 Total Attempted Percent Succeeded/Matched Percent
+Assertions       28    28        100.00  21                75.00
+Cover properties 0     0                 0
+Cover sequences  0     0                 0
+Total            28    28        100.00  21                75.00
+
+
+
+-------------------------------------------------------------------------------
+
+Assertion Details
+
+Name                              Attempts Real Successes Failures Incomplete
+a_kvips_ar_burst_legal            12       1              0        0
+a_kvips_ar_excl_restrictions      12       0              0        0
+a_kvips_ar_hold                   12       0              0        0
+a_kvips_ar_len_legal              12       1              0        0
+a_kvips_ar_no_4kb_cross           12       1              0        0
+a_kvips_ar_size_legal             12       1              0        0
+a_kvips_ar_transaction_size_legal 12       1              0        0
+a_kvips_ar_wrap_addr_aligned      12       1              0        0
+a_kvips_ar_wrap_len_legal         12       1              0        0
+a_kvips_aw_burst_legal            12       1              0        0
+a_kvips_aw_excl_restrictions      12       0              0        0
+a_kvips_aw_hold                   12       0              0        0
+a_kvips_aw_len_legal              12       1              0        0
+a_kvips_aw_no_4kb_cross           12       1              0        0
+a_kvips_aw_size_legal             12       1              0        0
+a_kvips_aw_transaction_size_legal 12       1              0        0
+a_kvips_aw_wrap_addr_aligned      12       1              0        0
+a_kvips_aw_wrap_len_legal         12       1              0        0
+a_kvips_b_hold                    12       0              0        0
+a_kvips_known_ar                  12       1              0        0
+a_kvips_known_aw                  12       1              0        0
+a_kvips_known_b                   12       1              0        0
+a_kvips_known_r                   12       1              0        0
+a_kvips_known_w                   12       1              0        0
+a_kvips_outs_r_limit              12       8              0        0
+a_kvips_outs_w_limit              12       8              0        0
+a_kvips_r_hold                    12       0              0        0
+a_kvips_w_hold                    12       0              0        0
+
+
+a_kvips_ar_burst_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_ar_excl_restrictions
+Name  Attempts Real Successes Failures Incomplete
+Total 12       0              0        0
+
+a_kvips_ar_hold
+Name  Attempts Real Successes Failures Incomplete
+Total 12       0              0        0
+
+a_kvips_ar_len_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_ar_no_4kb_cross
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_ar_size_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_ar_transaction_size_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_ar_wrap_addr_aligned
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_ar_wrap_len_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_aw_burst_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_aw_excl_restrictions
+Name  Attempts Real Successes Failures Incomplete
+Total 12       0              0        0
+
+a_kvips_aw_hold
+Name  Attempts Real Successes Failures Incomplete
+Total 12       0              0        0
+
+a_kvips_aw_len_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_aw_no_4kb_cross
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_aw_size_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_aw_transaction_size_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_aw_wrap_addr_aligned
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_aw_wrap_len_legal
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_b_hold
+Name  Attempts Real Successes Failures Incomplete
+Total 12       0              0        0
+
+a_kvips_known_ar
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_known_aw
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_known_b
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_known_r
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_known_w
+Name  Attempts Real Successes Failures Incomplete
+Total 12       1              0        0
+T1    12       1              0        0
+
+a_kvips_outs_r_limit
+Name  Attempts Real Successes Failures Incomplete
+Total 12       8              0        0
+T1    12       8              0        0
+
+a_kvips_outs_w_limit
+Name  Attempts Real Successes Failures Incomplete
+Total 12       8              0        0
+T1    12       8              0        0
+
+a_kvips_r_hold
+Name  Attempts Real Successes Failures Incomplete
+Total 12       0              0        0
+
+a_kvips_w_hold
+Name  Attempts Real Successes Failures Incomplete
+Total 12       0              0        0
+
+
+-------------------------------------------------------------------------------
+===============================================================================
+Module Instance : top.axi
+===============================================================================
+
+Instance :
+
+SCORE   LINE          COND          TOGGLE          BRANCH        ASSERT
+ 57.61   82.95 73/88   48.65 18/37   25.58 154/602   55.88 19/34   75.00 21/28
+
+
+Instance's subtree :
+
+SCORE   LINE          COND          TOGGLE          BRANCH        ASSERT
+ 57.61   82.95 73/88   48.65 18/37   25.58 154/602   55.88 19/34   75.00 21/28
+
+
+Module :
+
+SCORE   LINE          COND          TOGGLE          BRANCH        ASSERT        NAME
+ 57.61   82.95 73/88   48.65 18/37   25.58 154/602   55.88 19/34   75.00 21/28  axi4_if
+
+
+Parent :
+
+SCORE   LINE           COND        TOGGLE      BRANCH       ASSERT         NAME
+ 49.59   54.32 88/162   25.00 1/4  100.00 4/4   19.05 4/21  --     --      top
+
+
+Subtrees :
+
+
+no children
+----------------
+
+
+-------------------------------------------------------------------------------
+Since this is the module's only instance, the coverage report is the same as for the module.

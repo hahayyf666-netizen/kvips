@@ -1,0 +1,90 @@
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Nov 25 15:29 2026
+UVM_INFO /path/to/synopsys/vcs/O-2018.09-SP2/etc/uvm-1.2/base/uvm_root.svh(402) @ 0: reporter [UVM/RELNOTES]
+----------------------------------------------------------------
+UVM-1.2.Synopsys
+(C) 2007-2014 Mentor Graphics Corporation
+(C) 2007-2014 Cadence Design Systems, Inc.
+(C) 2006-2014 Synopsys, Inc.
+(C) 2011-2013 Cypress Semiconductor Corp.
+(C) 2013-2014 NVIDIA Corporation
+----------------------------------------------------------------
+
+  ***********       IMPORTANT RELEASE NOTES         ************
+
+  You are using a version of the UVM library that has been compiled
+  with `UVM_NO_DEPRECATED undefined.
+  See http://www.eda.org/svdb/view.php?id=3313 for more details.
+
+  You are using a version of the UVM library that has been compiled
+  with `UVM_OBJECT_DO_NOT_NEED_CONSTRUCTOR undefined.
+  See http://www.eda.org/svdb/view.php?id=3770 for more details.
+
+      (Specify +UVM_NO_RELNOTES to turn off this notice)
+
+
+ VCS Coverage Metrics Release O-2018.09-SP2_Full64 Copyright (c) 1991-2018 by Synopsys Inc.
+UVM_INFO @ 0: reporter [RNTST] Running test axi4_dut_code_lock_test...
+UVM_INFO @ 0: reporter [TIMOUTSET] '+UVM_TIMEOUT=10000,NO' provided on the command line is being applied.
+
+Note-[FCICIO] Instance coverage is ON
+/path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh, 55
+tb_pkg, "tb_pkg::axi4_dut_func_cov::cov_ram_enhanced"
+  Instance coverage is set (option.per_instance = 1) for covergroup
+  'tb_pkg::axi4_dut_func_cov::cov_ram_enhanced'
+
+  Covergroup Instance: top.me.obj.enhanced_cov.cov_ram_enhanced
+  Design hierarchy: tb_pkg
+
+
+Note-[FCICIO] Instance coverage is ON
+/path/to/coverage_code_checker_closure/source/positive/axi4/sv/uvm/axi4_monitor.svh, 111
+axi4_uvm_pkg, "axi4_uvm_pkg::axi4_monitor#(32,64,4,1)::cov"
+  Instance coverage is set (option.per_instance = 1) for covergroup
+  'axi4_uvm_pkg::axi4_monitor#(32,64,4,1)::cov'
+
+  Covergroup Instance: top.me.obj.cov
+  Design hierarchy: axi4_uvm_pkg
+
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 125000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 0 1 0 3 0 0 0 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 125000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 125000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 1 1 0 3 0 0 3 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 125000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 1 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 125000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 2 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 165000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 0 1 0 3 0 0 0 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 165000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 3 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 165000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 2 1 0 3 0 0 0 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 165000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 4 1 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 205000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 0 1 0 3 0 0 0 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 205000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 3 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 205000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 2 1 0 3 0 0 0 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 205000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 4 1 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 235000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 0 1 0 3 0 0 0 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 235000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 235000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 1 1 0 3 0 0 3 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 235000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 1 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 235000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 2 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 265000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 0 1 0 3 0 0 0 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 265000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 265000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 1 1 0 3 0 0 3 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 265000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 1 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 265000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 2 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 305000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 0 1 0 3 0 0 0 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 305000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 3 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 305000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 2 1 0 3 0 0 0 0 0 0 0
+UVM_INFO /path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_func_cov.svh(132) @ 305000: uvm_test_top.ram_fcov [FCOV_SAMPLE] 3 1 0 3 0 0 0 0 4 1 0
+UVM_ERROR /path/to/coverage_code_checker_closure/source/positive/axi4/sv/uvm/axi4_scoreboard.svh(244) @ 305000: uvm_test_top.sb [AXI4_SCB] READ MISMATCH addr=0x240 beat=0 exp=0xa3e44263141703a got=0x73180e2b6630abce
+Fatal: "/path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/tb_pkg.sv", 79276: tb_pkg: at time 310000 ps
+Scoreboard totals: enable=1 wr=3 rd=3 errors=1 uninit=0 mismatches=1
+$finish called from file "/path/to/coverage_code_checker_closure/source/positive/axi4/examples/uvm_dut/tb/axi4_dut_code_tests.svh", line 30.
+$finish at simulation time               310000
+
+---------------------------------------------------------------------------
+VCS Coverage Metrics: during simulation line, cond, branch, tgl was monitored
+---------------------------------------------------------------------------
+
+ Coverage status: End of All Coverages ...
+
+           V C S   S i m u l a t i o n   R e p o r t
+Time: 310000 ps

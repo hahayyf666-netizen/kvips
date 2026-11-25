@@ -1,0 +1,5 @@
+axi4_dut_reset_aw_test
+axi4_dut_reset_b_test
+axi4_dut_reset_r_test
+axi4_dut_arlock_toggle_test
+axi4_dut_idle_rready_test

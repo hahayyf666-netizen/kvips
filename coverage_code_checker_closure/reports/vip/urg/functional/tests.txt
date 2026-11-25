@@ -1,0 +1,736 @@
+Tests
+
+Total Coverage Summary
+SCORE   GROUP
+100.00  100.00 79/79
+
+
+Total tests in report: 36
+-------------------------------------------------------------------------------
+Data from the following tests was used to generate this report
+TEST LOCATION
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_burst_types_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_backpressure_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_lane_sweep_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_strobe_patterns_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_unaligned_byte_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_fixed_narrow_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_wrap_burst_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_corner_case_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_randomized_features_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_pipelined_outstanding_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_pipelined_rready_backpressure_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_exclusive_basic_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_exclusive_fail_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_error_write_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_error_read_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_incr_256beat_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_exclusive_illegal_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_delay_stress_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_concurrent_rw_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_reorder_bready_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_same_id_pipeline_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_per_beat_rresp_delay_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_reset_recovery_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_region_decode_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_error_rate_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_phase_control_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_ordered_rw_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_range_aware_order_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_exclusive_cross_id_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_nonpipelined_reset_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_timeout_recovery_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_sideband_policy_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_slverr_write_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_slverr_read_test
+/path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_sideband_coverage_test
+
+
+Total test records in report: 36
+-------------------------------------------------------------------------------
+TEST NO TEST LOCATION                                                                                                                TEST NAME STATUS STARTED                   FINISHED                  SIMULATION TIME
+T1      /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_test                                                Nov 25 03:30:14 PM CST 26 Nov 25 03:30:14 PM CST 26 12650000 ps
+T2      /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_burst_types_test                                    Nov 25 03:30:14 PM CST 26 Nov 25 03:30:14 PM CST 26 16310000 ps
+T3      /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_backpressure_test                                   Nov 25 03:30:14 PM CST 26 Nov 25 03:30:14 PM CST 26 63170000 ps
+T6      /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_lane_sweep_test                                     Nov 25 03:30:14 PM CST 26 Nov 25 03:30:15 PM CST 26 1760000 ps
+T8      /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_strobe_patterns_test                                Nov 25 03:30:15 PM CST 26 Nov 25 03:30:15 PM CST 26 1050000 ps
+T7      /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_unaligned_byte_test                                 Nov 25 03:30:15 PM CST 26 Nov 25 03:30:15 PM CST 26 990000 ps
+T5      /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_fixed_narrow_test                                   Nov 25 03:30:15 PM CST 26 Nov 25 03:30:15 PM CST 26 14510000 ps
+T4      /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_wrap_burst_test                                     Nov 25 03:30:15 PM CST 26 Nov 25 03:30:15 PM CST 26 19150000 ps
+T9      /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_corner_case_test                                    Nov 25 03:30:16 PM CST 26 Nov 25 03:30:16 PM CST 26 12230000 ps
+T22     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_randomized_features_test                            Nov 25 03:30:16 PM CST 26 Nov 25 03:30:16 PM CST 26 85150000 ps
+T23     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_pipelined_outstanding_test                          Nov 25 03:30:16 PM CST 26 Nov 25 03:30:16 PM CST 26 97095000 ps
+T24     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_pipelined_rready_backpressure_test                  Nov 25 03:30:16 PM CST 26 Nov 25 03:30:17 PM CST 26 49555000 ps
+T10     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_exclusive_basic_test                                Nov 25 03:30:17 PM CST 26 Nov 25 03:30:17 PM CST 26 330000 ps
+T11     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_exclusive_fail_test                                 Nov 25 03:30:17 PM CST 26 Nov 25 03:30:17 PM CST 26 390000 ps
+T13     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_error_write_test                                    Nov 25 03:30:17 PM CST 26 Nov 25 03:30:17 PM CST 26 270000 ps
+T14     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_error_read_test                                     Nov 25 03:30:17 PM CST 26 Nov 25 03:30:18 PM CST 26 220000 ps
+T25     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_incr_256beat_test                                   Nov 25 03:30:18 PM CST 26 Nov 25 03:30:18 PM CST 26 26770000 ps
+T12     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_exclusive_illegal_test                              Nov 25 03:30:18 PM CST 26 Nov 25 03:30:18 PM CST 26 870000 ps
+T26     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_delay_stress_test                                   Nov 25 03:30:18 PM CST 26 Nov 25 03:30:18 PM CST 26 58170000 ps
+T27     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_concurrent_rw_test                                  Nov 25 03:30:19 PM CST 26 Nov 25 03:30:19 PM CST 26 17245000 ps
+T28     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_reorder_bready_test                                 Nov 25 03:30:19 PM CST 26 Nov 25 03:30:19 PM CST 26 48405000 ps
+T29     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_same_id_pipeline_test                               Nov 25 03:30:19 PM CST 26 Nov 25 03:30:20 PM CST 26 5885000 ps
+T30     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_per_beat_rresp_delay_test                           Nov 25 03:30:20 PM CST 26 Nov 25 03:30:20 PM CST 26 8810000 ps
+T31     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_reset_recovery_test                                 Nov 25 03:30:20 PM CST 26 Nov 25 03:30:21 PM CST 26 1555000 ps
+T15     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_region_decode_test                                  Nov 25 03:30:21 PM CST 26 Nov 25 03:30:21 PM CST 26 220000 ps
+T16     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_error_rate_test                                     Nov 25 03:30:21 PM CST 26 Nov 25 03:30:21 PM CST 26 220000 ps
+T32     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_phase_control_test                                  Nov 25 03:30:21 PM CST 26 Nov 25 03:30:21 PM CST 26 360000 ps
+T33     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_ordered_rw_test                                     Nov 25 03:30:21 PM CST 26 Nov 25 03:30:22 PM CST 26 2595000 ps
+T34     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_range_aware_order_test                              Nov 25 03:30:22 PM CST 26 Nov 25 03:30:22 PM CST 26 3665000 ps
+T19     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_exclusive_cross_id_test                             Nov 25 03:30:22 PM CST 26 Nov 25 03:30:22 PM CST 26 390000 ps
+T35     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_nonpipelined_reset_test                             Nov 25 03:30:22 PM CST 26 Nov 25 03:30:22 PM CST 26 470000 ps
+T36     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_timeout_recovery_test                               Nov 25 03:30:22 PM CST 26 Nov 25 03:30:23 PM CST 26 180000 ps
+T21     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_sideband_policy_test                                Nov 25 03:30:23 PM CST 26 Nov 25 03:30:23 PM CST 26 220000 ps
+T17     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_slverr_write_test                                   Nov 25 03:30:23 PM CST 26 Nov 25 03:30:23 PM CST 26 330000 ps
+T18     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_slverr_read_test                                    Nov 25 03:30:23 PM CST 26 Nov 25 03:30:23 PM CST 26 340000 ps
+T20     /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_sideband_coverage_test                              Nov 25 03:30:23 PM CST 26 Nov 25 03:30:24 PM CST 26 470000 ps
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_test
+Short name      T1
+Test name
+Test status
+Simulation time 12650000 ps
+CPU time        0.24 seconds
+Started         Nov 25 03:30:14 PM CST 26
+Finished        Nov 25 03:30:14 PM CST 26
+Peak memory     103028 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +VIP_COV +VIP_S
+                TATS +UVM_TESTNAME=axi4_b2b_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_burst_types_test
+Short name      T2
+Test name
+Test status
+Simulation time 16310000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:30:14 PM CST 26
+Finished        Nov 25 03:30:14 PM CST 26
+Peak memory     102932 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_burst_types_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +VI
+                P_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_burst_types_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_backpressure_test
+Short name      T3
+Test name
+Test status
+Simulation time 63170000 ps
+CPU time        0.23 seconds
+Started         Nov 25 03:30:14 PM CST 26
+Finished        Nov 25 03:30:14 PM CST 26
+Peak memory     104280 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_backpressure_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +V
+                IP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_backpressure_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_lane_sweep_test
+Short name      T6
+Test name
+Test status
+Simulation time 1760000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:30:14 PM CST 26
+Finished        Nov 25 03:30:15 PM CST 26
+Peak memory     102848 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_lane_sweep_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +VIP
+                _COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_lane_sweep_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_strobe_patterns_test
+Short name      T8
+Test name
+Test status
+Simulation time 1050000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:30:15 PM CST 26
+Finished        Nov 25 03:30:15 PM CST 26
+Peak memory     102900 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_strobe_patterns_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                 +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_strobe_patterns_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_unaligned_byte_test
+Short name      T7
+Test name
+Test status
+Simulation time 990000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:30:15 PM CST 26
+Finished        Nov 25 03:30:15 PM CST 26
+Peak memory     103412 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_unaligned_byte_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_unaligned_byte_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_fixed_narrow_test
+Short name      T5
+Test name
+Test status
+Simulation time 14510000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:30:15 PM CST 26
+Finished        Nov 25 03:30:15 PM CST 26
+Peak memory     102892 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_fixed_narrow_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +V
+                IP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_fixed_narrow_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_wrap_burst_test
+Short name      T4
+Test name
+Test status
+Simulation time 19150000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:30:15 PM CST 26
+Finished        Nov 25 03:30:15 PM CST 26
+Peak memory     102988 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_wrap_burst_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +VIP
+                _COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_wrap_burst_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_corner_case_test
+Short name      T9
+Test name
+Test status
+Simulation time 12230000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:30:16 PM CST 26
+Finished        Nov 25 03:30:16 PM CST 26
+Peak memory     103444 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_corner_case_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +VI
+                P_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_corner_case_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_randomized_features_test
+Short name      T22
+Test name
+Test status
+Simulation time 85150000 ps
+CPU time        0.25 seconds
+Started         Nov 25 03:30:16 PM CST 26
+Finished        Nov 25 03:30:16 PM CST 26
+Peak memory     104284 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_randomized_features_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM
+                _LOW +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_randomized_features_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_pipelined_outstanding_test
+Short name      T23
+Test name
+Test status
+Simulation time 97095000 ps
+CPU time        0.29 seconds
+Started         Nov 25 03:30:16 PM CST 26
+Finished        Nov 25 03:30:16 PM CST 26
+Peak memory     106764 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_pipelined_outstanding_test +ntb_random_seed=1 +UVM_VERBOSITY=U
+                VM_LOW +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_pipelined_outstanding_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_pipelined_rready_backpressure_test
+Short name      T24
+Test name
+Test status
+Simulation time 49555000 ps
+CPU time        0.25 seconds
+Started         Nov 25 03:30:16 PM CST 26
+Finished        Nov 25 03:30:17 PM CST 26
+Peak memory     105492 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_pipelined_rready_backpressure_test +ntb_random_seed=1 +UVM_VER
+                BOSITY=UVM_LOW +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_pipelined_rready_backpressure_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_exclusive_basic_test
+Short name      T10
+Test name
+Test status
+Simulation time 330000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:30:17 PM CST 26
+Finished        Nov 25 03:30:17 PM CST 26
+Peak memory     103368 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_exclusive_basic_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                 +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_exclusive_basic_test +KVIPS_AXI4_TRACE +KVIPS_WAVES
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_exclusive_fail_test
+Short name      T11
+Test name
+Test status
+Simulation time 390000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:30:17 PM CST 26
+Finished        Nov 25 03:30:17 PM CST 26
+Peak memory     103500 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_exclusive_fail_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_exclusive_fail_test +KVIPS_AXI4_TRACE +KVIPS_WAVES
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_error_write_test
+Short name      T13
+Test name
+Test status
+Simulation time 270000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:30:17 PM CST 26
+Finished        Nov 25 03:30:17 PM CST 26
+Peak memory     103216 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_error_write_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +VI
+                P_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_error_write_test +KVIPS_AXI4_TRACE
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_error_read_test
+Short name      T14
+Test name
+Test status
+Simulation time 220000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:30:17 PM CST 26
+Finished        Nov 25 03:30:18 PM CST 26
+Peak memory     103088 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_error_read_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +VIP
+                _COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_error_read_test +KVIPS_AXI4_TRACE
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_incr_256beat_test
+Short name      T25
+Test name
+Test status
+Simulation time 26770000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:30:18 PM CST 26
+Finished        Nov 25 03:30:18 PM CST 26
+Peak memory     103076 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_incr_256beat_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +V
+                IP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_incr_256beat_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_exclusive_illegal_test
+Short name      T12
+Test name
+Test status
+Simulation time 870000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:30:18 PM CST 26
+Finished        Nov 25 03:30:18 PM CST 26
+Peak memory     103124 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_exclusive_illegal_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_L
+                OW +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_exclusive_illegal_test +KVIPS_AXI4_TRACE
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_delay_stress_test
+Short name      T26
+Test name
+Test status
+Simulation time 58170000 ps
+CPU time        0.23 seconds
+Started         Nov 25 03:30:18 PM CST 26
+Finished        Nov 25 03:30:18 PM CST 26
+Peak memory     104232 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_delay_stress_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +V
+                IP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_delay_stress_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_concurrent_rw_test
+Short name      T27
+Test name
+Test status
+Simulation time 17245000 ps
+CPU time        0.34 seconds
+Started         Nov 25 03:30:19 PM CST 26
+Finished        Nov 25 03:30:19 PM CST 26
+Peak memory     106144 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_concurrent_rw_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +
+                VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_concurrent_rw_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_reorder_bready_test
+Short name      T28
+Test name
+Test status
+Simulation time 48405000 ps
+CPU time        0.27 seconds
+Started         Nov 25 03:30:19 PM CST 26
+Finished        Nov 25 03:30:19 PM CST 26
+Peak memory     105600 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_reorder_bready_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_reorder_bready_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_same_id_pipeline_test
+Short name      T29
+Test name
+Test status
+Simulation time 5885000 ps
+CPU time        0.25 seconds
+Started         Nov 25 03:30:19 PM CST 26
+Finished        Nov 25 03:30:20 PM CST 26
+Peak memory     104348 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_same_id_pipeline_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LO
+                W +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_same_id_pipeline_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_per_beat_rresp_delay_test
+Short name      T30
+Test name
+Test status
+Simulation time 8810000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:30:20 PM CST 26
+Finished        Nov 25 03:30:20 PM CST 26
+Peak memory     102896 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_per_beat_rresp_delay_test +ntb_random_seed=1 +UVM_VERBOSITY=UV
+                M_LOW +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_per_beat_rresp_delay_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_reset_recovery_test
+Short name      T31
+Test name
+Test status
+Simulation time 1555000 ps
+CPU time        0.23 seconds
+Started         Nov 25 03:30:20 PM CST 26
+Finished        Nov 25 03:30:21 PM CST 26
+Peak memory     104432 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_reset_recovery_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_reset_recovery_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_region_decode_test
+Short name      T15
+Test name
+Test status
+Simulation time 220000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:30:21 PM CST 26
+Finished        Nov 25 03:30:21 PM CST 26
+Peak memory     102824 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_region_decode_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +
+                VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_region_decode_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_error_rate_test
+Short name      T16
+Test name
+Test status
+Simulation time 220000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:30:21 PM CST 26
+Finished        Nov 25 03:30:21 PM CST 26
+Peak memory     103316 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_error_rate_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +VIP
+                _COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_error_rate_test +KVIPS_AXI4_TRACE +KVIPS_WAVES
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_phase_control_test
+Short name      T32
+Test name
+Test status
+Simulation time 360000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:30:21 PM CST 26
+Finished        Nov 25 03:30:21 PM CST 26
+Peak memory     104176 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_phase_control_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +
+                VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_phase_control_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_ordered_rw_test
+Short name      T33
+Test name
+Test status
+Simulation time 2595000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:30:21 PM CST 26
+Finished        Nov 25 03:30:22 PM CST 26
+Peak memory     103188 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_ordered_rw_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +VIP
+                _COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_ordered_rw_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_range_aware_order_test
+Short name      T34
+Test name
+Test status
+Simulation time 3665000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:30:22 PM CST 26
+Finished        Nov 25 03:30:22 PM CST 26
+Peak memory     106260 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_range_aware_order_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_L
+                OW +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_range_aware_order_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_exclusive_cross_id_test
+Short name      T19
+Test name
+Test status
+Simulation time 390000 ps
+CPU time        0.24 seconds
+Started         Nov 25 03:30:22 PM CST 26
+Finished        Nov 25 03:30:22 PM CST 26
+Peak memory     103252 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_exclusive_cross_id_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_
+                LOW +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_exclusive_cross_id_test +KVIPS_AXI4_TRACE
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_nonpipelined_reset_test
+Short name      T35
+Test name
+Test status
+Simulation time 470000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:30:22 PM CST 26
+Finished        Nov 25 03:30:22 PM CST 26
+Peak memory     102836 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_nonpipelined_reset_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_
+                LOW +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_nonpipelined_reset_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_timeout_recovery_test
+Short name      T36
+Test name
+Test status
+Simulation time 180000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:30:22 PM CST 26
+Finished        Nov 25 03:30:23 PM CST 26
+Peak memory     102604 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_timeout_recovery_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LO
+                W +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_timeout_recovery_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_sideband_policy_test
+Short name      T21
+Test name
+Test status
+Simulation time 220000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:30:23 PM CST 26
+Finished        Nov 25 03:30:23 PM CST 26
+Peak memory     102936 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_sideband_policy_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                 +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_sideband_policy_test
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_slverr_write_test
+Short name      T17
+Test name
+Test status
+Simulation time 330000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:30:23 PM CST 26
+Finished        Nov 25 03:30:23 PM CST 26
+Peak memory     103372 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_slverr_write_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +V
+                IP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_slverr_write_test +KVIPS_AXI4_TRACE +KVIPS_WAVES
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_slverr_read_test
+Short name      T18
+Test name
+Test status
+Simulation time 340000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:30:23 PM CST 26
+Finished        Nov 25 03:30:23 PM CST 26
+Peak memory     103336 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_slverr_read_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW +VI
+                P_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_slverr_read_test +KVIPS_AXI4_TRACE +KVIPS_WAVES
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/vip/coverage/axi4_b2b_sideband_coverage_test
+Short name      T20
+Test name
+Test status
+Simulation time 470000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:30:23 PM CST 26
+Finished        Nov 25 03:30:24 PM CST 26
+Peak memory     103412 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/vip/build/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/guest/icdv
+                _project/kvips/coverage_code_checker_closure/reports/vip/coverage.vdb -cm_name axi4_b2b_sideband_coverage_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_L
+                OW +VIP_COV +VIP_STATS +UVM_TESTNAME=axi4_b2b_sideband_coverage_test +KVIPS_AXI4_TRACE +KVIPS_WAVES
+Directory       /path/to/coverage_code_checker_closure/reports/vip/tests

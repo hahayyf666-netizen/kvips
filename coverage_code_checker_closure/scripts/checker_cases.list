@@ -1,0 +1,14 @@
+w_without_aw
+missing_wlast
+premature_wlast
+w_overflow
+orphan_b
+b_exokay_unlocked
+orphan_r
+missing_rlast
+premature_rlast
+r_overflow
+r_exokay_unlocked
+aw_hold_violation
+locked_ok_control
+r_count_overlap_control

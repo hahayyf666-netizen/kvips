@@ -1,0 +1,37 @@
+Tests
+
+Total Coverage Summary
+SCORE   LINE            COND          TOGGLE           BRANCH        ASSERT
+ 58.76   81.35 205/252   49.46 46/93   10.01 150/1498   67.24 39/58   85.71 24/28
+
+
+Total tests in report: 1
+-------------------------------------------------------------------------------
+Data from the following tests was used to generate this report
+TEST LOCATION
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_reset_aw_test
+
+
+Total test records in report: 1
+-------------------------------------------------------------------------------
+TEST NO TEST LOCATION                                                                                                TEST NAME STATUS STARTED                   FINISHED                  SIMULATION TIME
+T1      /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_reset_aw_test                  Nov 25 03:36:28 PM CST 26 Nov 25 03:36:28 PM CST 26 360000 ps
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_reset_aw_test
+Short name      T1
+Test name
+Test status
+Simulation time 360000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:36:28 PM CST 26
+Finished        Nov 25 03:36:28 PM CST 26
+Peak memory     102400 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_reset_aw_test +ntb_random_seed=1 +UVM_VERBOSITY=UV
+                M_LOW +UVM_TIMEOUT=10000,NO +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN +UVM_TESTNAME=axi4_dut_reset_aw_te
+                st
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression

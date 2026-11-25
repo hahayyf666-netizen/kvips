@@ -1,0 +1,26 @@
+Dashboard
+
+Date: Wed Nov 25 15:30:03 2026
+
+User: simulation
+
+Version: O-2018.09-SP2
+Command line: urg -full64 -dir /path/to/coverage_code_checker_closure/reports/negative/coverage.vdb -metric line+cond+tgl+branch -format both -show ratios -show tests -report /path/to/coverage_code_checker_closure/reports/negative/urg/code -cond ids
+Number of tests: 14
+
+-------------------------------------------------------------------------------
+Total Coverage Summary
+SCORE   LINE            COND          TOGGLE          BRANCH
+ 75.60   94.00 235/250   78.05 32/41   37.62 228/606   92.73 51/55
+
+
+-------------------------------------------------------------------------------
+Hierarchical coverage data for top-level instances
+SCORE   LINE            COND          TOGGLE          BRANCH        NAME
+ 75.60   94.00 235/250   78.05 32/41   37.62 228/606   92.73 51/55  top
+
+
+-------------------------------------------------------------------------------
+Total Module Definition Coverage Summary
+SCORE   LINE            COND          TOGGLE          BRANCH
+ 75.60   94.00 235/250   78.05 32/41   37.62 228/606   92.73 51/55

@@ -1,0 +1,296 @@
+Tests
+
+Total Coverage Summary
+SCORE   ASSERT
+ 85.71   85.71 24/28
+
+
+Total tests in report: 14
+-------------------------------------------------------------------------------
+Data from the following tests was used to generate this report
+TEST LOCATION
+/path/to/coverage_code_checker_closure/reports/negative/coverage/w_without_aw
+/path/to/coverage_code_checker_closure/reports/negative/coverage/missing_wlast
+/path/to/coverage_code_checker_closure/reports/negative/coverage/premature_wlast
+/path/to/coverage_code_checker_closure/reports/negative/coverage/w_overflow
+/path/to/coverage_code_checker_closure/reports/negative/coverage/orphan_b
+/path/to/coverage_code_checker_closure/reports/negative/coverage/b_exokay_unlocked
+/path/to/coverage_code_checker_closure/reports/negative/coverage/orphan_r
+/path/to/coverage_code_checker_closure/reports/negative/coverage/missing_rlast
+/path/to/coverage_code_checker_closure/reports/negative/coverage/premature_rlast
+/path/to/coverage_code_checker_closure/reports/negative/coverage/r_overflow
+/path/to/coverage_code_checker_closure/reports/negative/coverage/r_exokay_unlocked
+/path/to/coverage_code_checker_closure/reports/negative/coverage/aw_hold_violation
+/path/to/coverage_code_checker_closure/reports/negative/coverage/locked_ok_control
+/path/to/coverage_code_checker_closure/reports/negative/coverage/r_count_overlap_control
+
+
+Total test records in report: 14
+-------------------------------------------------------------------------------
+TEST NO TEST LOCATION                                                                                                 TEST NAME STATUS       STARTED                   FINISHED                  SIMULATION TIME
+T1      /path/to/coverage_code_checker_closure/reports/negative/coverage/w_without_aw                      $error(fail) Nov 25 03:30:00 PM CST 26 Nov 25 03:30:00 PM CST 26 120000 ps
+T2      /path/to/coverage_code_checker_closure/reports/negative/coverage/missing_wlast                     $error(fail) Nov 25 03:30:00 PM CST 26 Nov 25 03:30:00 PM CST 26 140000 ps
+T3      /path/to/coverage_code_checker_closure/reports/negative/coverage/premature_wlast                   $error(fail) Nov 25 03:30:00 PM CST 26 Nov 25 03:30:01 PM CST 26 130000 ps
+T6      /path/to/coverage_code_checker_closure/reports/negative/coverage/w_overflow                        $error(fail) Nov 25 03:30:01 PM CST 26 Nov 25 03:30:01 PM CST 26 150000 ps
+T7      /path/to/coverage_code_checker_closure/reports/negative/coverage/orphan_b                          $error(fail) Nov 25 03:30:01 PM CST 26 Nov 25 03:30:01 PM CST 26 120000 ps
+T8      /path/to/coverage_code_checker_closure/reports/negative/coverage/b_exokay_unlocked                 $error(fail) Nov 25 03:30:01 PM CST 26 Nov 25 03:30:01 PM CST 26 140000 ps
+T9      /path/to/coverage_code_checker_closure/reports/negative/coverage/orphan_r                          $error(fail) Nov 25 03:30:01 PM CST 26 Nov 25 03:30:01 PM CST 26 120000 ps
+T10     /path/to/coverage_code_checker_closure/reports/negative/coverage/missing_rlast                     $error(fail) Nov 25 03:30:01 PM CST 26 Nov 25 03:30:02 PM CST 26 140000 ps
+T11     /path/to/coverage_code_checker_closure/reports/negative/coverage/premature_rlast                   $error(fail) Nov 25 03:30:02 PM CST 26 Nov 25 03:30:02 PM CST 26 130000 ps
+T12     /path/to/coverage_code_checker_closure/reports/negative/coverage/r_overflow                        $error(fail) Nov 25 03:30:02 PM CST 26 Nov 25 03:30:02 PM CST 26 150000 ps
+T13     /path/to/coverage_code_checker_closure/reports/negative/coverage/r_exokay_unlocked                 $error(fail) Nov 25 03:30:02 PM CST 26 Nov 25 03:30:02 PM CST 26 130000 ps
+T5      /path/to/coverage_code_checker_closure/reports/negative/coverage/aw_hold_violation                 unknown      Nov 25 03:30:02 PM CST 26 Nov 25 03:30:02 PM CST 26 160000 ps
+T4      /path/to/coverage_code_checker_closure/reports/negative/coverage/locked_ok_control                 unknown      Nov 25 03:30:02 PM CST 26 Nov 25 03:30:02 PM CST 26 260000 ps
+T14     /path/to/coverage_code_checker_closure/reports/negative/coverage/r_count_overlap_control           unknown      Nov 25 03:30:03 PM CST 26 Nov 25 03:30:03 PM CST 26 140000 ps
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/w_without_aw
+Short name      T1
+Test name
+Test status     $error(fail)
+Simulation time 120000 ps
+CPU time        0.15 seconds
+Started         Nov 25 03:30:00 PM CST 26
+Finished        Nov 25 03:30:00 PM CST 26
+Peak memory     77736 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name w_without_aw +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNOWN +K
+                VIPS_WAVES +SCENARIO=w_without_aw
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/missing_wlast
+Short name      T2
+Test name
+Test status     $error(fail)
+Simulation time 140000 ps
+CPU time        0.15 seconds
+Started         Nov 25 03:30:00 PM CST 26
+Finished        Nov 25 03:30:00 PM CST 26
+Peak memory     77740 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name missing_wlast +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNOWN +
+                KVIPS_WAVES +SCENARIO=missing_wlast
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/premature_wlast
+Short name      T3
+Test name
+Test status     $error(fail)
+Simulation time 130000 ps
+CPU time        0.16 seconds
+Started         Nov 25 03:30:00 PM CST 26
+Finished        Nov 25 03:30:01 PM CST 26
+Peak memory     77752 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name premature_wlast +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNOWN
+                 +KVIPS_WAVES +SCENARIO=premature_wlast
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/w_overflow
+Short name      T6
+Test name
+Test status     $error(fail)
+Simulation time 150000 ps
+CPU time        0.15 seconds
+Started         Nov 25 03:30:01 PM CST 26
+Finished        Nov 25 03:30:01 PM CST 26
+Peak memory     77744 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name w_overflow +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNOWN +KVI
+                PS_WAVES +SCENARIO=w_overflow
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/orphan_b
+Short name      T7
+Test name
+Test status     $error(fail)
+Simulation time 120000 ps
+CPU time        0.15 seconds
+Started         Nov 25 03:30:01 PM CST 26
+Finished        Nov 25 03:30:01 PM CST 26
+Peak memory     77772 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name orphan_b +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNOWN +KVIPS
+                _WAVES +SCENARIO=orphan_b
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/b_exokay_unlocked
+Short name      T8
+Test name
+Test status     $error(fail)
+Simulation time 140000 ps
+CPU time        0.15 seconds
+Started         Nov 25 03:30:01 PM CST 26
+Finished        Nov 25 03:30:01 PM CST 26
+Peak memory     77764 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name b_exokay_unlocked +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNO
+                WN +KVIPS_WAVES +SCENARIO=b_exokay_unlocked
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/orphan_r
+Short name      T9
+Test name
+Test status     $error(fail)
+Simulation time 120000 ps
+CPU time        0.14 seconds
+Started         Nov 25 03:30:01 PM CST 26
+Finished        Nov 25 03:30:01 PM CST 26
+Peak memory     77740 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name orphan_r +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNOWN +KVIPS
+                _WAVES +SCENARIO=orphan_r
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/missing_rlast
+Short name      T10
+Test name
+Test status     $error(fail)
+Simulation time 140000 ps
+CPU time        0.15 seconds
+Started         Nov 25 03:30:01 PM CST 26
+Finished        Nov 25 03:30:02 PM CST 26
+Peak memory     77784 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name missing_rlast +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNOWN +
+                KVIPS_WAVES +SCENARIO=missing_rlast
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/premature_rlast
+Short name      T11
+Test name
+Test status     $error(fail)
+Simulation time 130000 ps
+CPU time        0.16 seconds
+Started         Nov 25 03:30:02 PM CST 26
+Finished        Nov 25 03:30:02 PM CST 26
+Peak memory     77752 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name premature_rlast +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNOWN
+                 +KVIPS_WAVES +SCENARIO=premature_rlast
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/r_overflow
+Short name      T12
+Test name
+Test status     $error(fail)
+Simulation time 150000 ps
+CPU time        0.15 seconds
+Started         Nov 25 03:30:02 PM CST 26
+Finished        Nov 25 03:30:02 PM CST 26
+Peak memory     77788 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name r_overflow +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNOWN +KVI
+                PS_WAVES +SCENARIO=r_overflow
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/r_exokay_unlocked
+Short name      T13
+Test name
+Test status     $error(fail)
+Simulation time 130000 ps
+CPU time        0.14 seconds
+Started         Nov 25 03:30:02 PM CST 26
+Finished        Nov 25 03:30:02 PM CST 26
+Peak memory     77768 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name r_exokay_unlocked +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNO
+                WN +KVIPS_WAVES +SCENARIO=r_exokay_unlocked
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/aw_hold_violation
+Short name      T5
+Test name
+Test status     unknown
+Simulation time 160000 ps
+CPU time        0.15 seconds
+Started         Nov 25 03:30:02 PM CST 26
+Finished        Nov 25 03:30:02 PM CST 26
+Peak memory     77784 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name aw_hold_violation +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNO
+                WN +KVIPS_WAVES +SCENARIO=aw_hold_violation
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/locked_ok_control
+Short name      T4
+Test name
+Test status     unknown
+Simulation time 260000 ps
+CPU time        0.14 seconds
+Started         Nov 25 03:30:02 PM CST 26
+Finished        Nov 25 03:30:02 PM CST 26
+Peak memory     77760 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name locked_ok_control +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNO
+                WN +KVIPS_WAVES +SCENARIO=locked_ok_control
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/r_count_overlap_control
+Short name      T14
+Test name
+Test status     unknown
+Simulation time 140000 ps
+CPU time        0.17 seconds
+Started         Nov 25 03:30:03 PM CST 26
+Finished        Nov 25 03:30:03 PM CST 26
+Peak memory     77776 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name r_count_overlap_control +ntb_random_seed=1 +KVIPS_AXI4_ASSE
+                RT_KNOWN +KVIPS_WAVES +SCENARIO=r_count_overlap_control
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression

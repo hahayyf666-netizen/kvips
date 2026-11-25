@@ -1,0 +1,721 @@
+Tests
+
+Total Coverage Summary
+SCORE   LINE            COND          TOGGLE            BRANCH        ASSERT
+ 89.67   94.44 238/252   82.80 77/93   98.80 1480/1498   75.86 44/58   96.43 27/28
+
+
+Total tests in report: 35
+-------------------------------------------------------------------------------
+Data from the following tests was used to generate this report
+TEST LOCATION
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_smoke_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_burst_mix_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_narrow_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_wrap_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_strobe_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_unaligned_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_boundary_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_pipeline_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_error_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_delay_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_ral_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_wrap_alignment_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fixed_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_incr_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_narrow_directed_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_4kb_boundary_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_lane_sweep_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_burst_size_cross_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_len_256_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_sideband_coverage_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_lock_coverage_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_unaligned_incr_e2e_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_id_width_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_closure_toggle_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_closure_random_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_closure_bready_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fc_size_lane_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fc_wstrb_beat_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fc_rresp_beat_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fc_backpressure_burst_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_reset_aw_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_reset_b_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_reset_r_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_arlock_toggle_test
+/path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_idle_rready_test
+
+
+Total test records in report: 35
+-------------------------------------------------------------------------------
+TEST NO TEST LOCATION                                                                                                             TEST NAME STATUS STARTED                   FINISHED                  SIMULATION TIME
+T1      /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_smoke_test                                  Nov 25 03:36:19 PM CST 26 Nov 25 03:36:19 PM CST 26 9925000 ps
+T2      /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_burst_mix_test                              Nov 25 03:36:19 PM CST 26 Nov 25 03:36:20 PM CST 26 21385000 ps
+T3      /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_narrow_test                                 Nov 25 03:36:20 PM CST 26 Nov 25 03:36:20 PM CST 26 10775000 ps
+T6      /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_wrap_test                                   Nov 25 03:36:20 PM CST 26 Nov 25 03:36:20 PM CST 26 11705000 ps
+T18     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_strobe_test                                 Nov 25 03:36:20 PM CST 26 Nov 25 03:36:20 PM CST 26 1685000 ps
+T16     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_unaligned_test                              Nov 25 03:36:20 PM CST 26 Nov 25 03:36:21 PM CST 26 1625000 ps
+T4      /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_boundary_test                               Nov 25 03:36:21 PM CST 26 Nov 25 03:36:21 PM CST 26 17425000 ps
+T10     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_pipeline_test                               Nov 25 03:36:21 PM CST 26 Nov 25 03:36:21 PM CST 26 6605000 ps
+T22     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_error_test                                  Nov 25 03:36:21 PM CST 26 Nov 25 03:36:21 PM CST 26 535000 ps
+T5      /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_delay_test                                  Nov 25 03:36:21 PM CST 26 Nov 25 03:36:22 PM CST 26 12145000 ps
+T29     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_ral_test                                    Nov 25 03:36:22 PM CST 26 Nov 25 03:36:22 PM CST 26 965000 ps
+T7      /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_wrap_alignment_test                         Nov 25 03:36:22 PM CST 26 Nov 25 03:36:22 PM CST 26 1635000 ps
+T30     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fixed_test                                  Nov 25 03:36:22 PM CST 26 Nov 25 03:36:22 PM CST 26 1635000 ps
+T31     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_incr_test                                   Nov 25 03:36:22 PM CST 26 Nov 25 03:36:23 PM CST 26 1635000 ps
+T19     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_narrow_directed_test                        Nov 25 03:36:23 PM CST 26 Nov 25 03:36:23 PM CST 26 2885000 ps
+T32     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_4kb_boundary_test                           Nov 25 03:36:23 PM CST 26 Nov 25 03:36:23 PM CST 26 1555000 ps
+T17     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_lane_sweep_test                             Nov 25 03:36:23 PM CST 26 Nov 25 03:36:23 PM CST 26 2185000 ps
+T33     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_burst_size_cross_test                       Nov 25 03:36:23 PM CST 26 Nov 25 03:36:24 PM CST 26 2885000 ps
+T34     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_len_256_test                                Nov 25 03:36:24 PM CST 26 Nov 25 03:36:24 PM CST 26 11715000 ps
+T21     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_sideband_coverage_test                      Nov 25 03:36:24 PM CST 26 Nov 25 03:36:24 PM CST 26 1625000 ps
+T27     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_lock_coverage_test                          Nov 25 03:36:24 PM CST 26 Nov 25 03:36:24 PM CST 26 855000 ps
+T35     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_unaligned_incr_e2e_test                     Nov 25 03:36:24 PM CST 26 Nov 25 03:36:25 PM CST 26 475000 ps
+T14     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_id_width_test                               Nov 25 03:36:25 PM CST 26 Nov 25 03:36:25 PM CST 26 755000 ps
+T20     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_closure_toggle_test                         Nov 25 03:36:25 PM CST 26 Nov 25 03:36:25 PM CST 26 20895000 ps
+T15     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_closure_random_test                         Nov 25 03:36:25 PM CST 26 Nov 25 03:36:26 PM CST 26 386725000 ps
+T11     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_closure_bready_test                         Nov 25 03:36:26 PM CST 26 Nov 25 03:36:26 PM CST 26 17750000 ps
+T25     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fc_size_lane_test                           Nov 25 03:36:26 PM CST 26 Nov 25 03:36:26 PM CST 26 7190000 ps
+T26     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fc_wstrb_beat_test                          Nov 25 03:36:26 PM CST 26 Nov 25 03:36:27 PM CST 26 1200000 ps
+T24     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fc_rresp_beat_test                          Nov 25 03:36:27 PM CST 26 Nov 25 03:36:27 PM CST 26 610000 ps
+T12     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fc_backpressure_burst_test                  Nov 25 03:36:27 PM CST 26 Nov 25 03:36:27 PM CST 26 4820000 ps
+T13     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_reset_aw_test                               Nov 25 03:36:28 PM CST 26 Nov 25 03:36:28 PM CST 26 360000 ps
+T8      /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_reset_b_test                                Nov 25 03:36:28 PM CST 26 Nov 25 03:36:28 PM CST 26 430000 ps
+T9      /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_reset_r_test                                Nov 25 03:36:28 PM CST 26 Nov 25 03:36:28 PM CST 26 380000 ps
+T23     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_arlock_toggle_test                          Nov 25 03:36:28 PM CST 26 Nov 25 03:36:29 PM CST 26 280000 ps
+T28     /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_idle_rready_test                            Nov 25 03:36:29 PM CST 26 Nov 25 03:36:29 PM CST 26 220000 ps
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_smoke_test
+Short name      T1
+Test name
+Test status
+Simulation time 9925000 ps
+CPU time        0.23 seconds
+Started         Nov 25 03:36:19 PM CST 26
+Finished        Nov 25 03:36:19 PM CST 26
+Peak memory     103940 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_smoke_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_L
+                OW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_smoke_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_burst_mix_test
+Short name      T2
+Test name
+Test status
+Simulation time 21385000 ps
+CPU time        0.23 seconds
+Started         Nov 25 03:36:19 PM CST 26
+Finished        Nov 25 03:36:20 PM CST 26
+Peak memory     104048 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_burst_mix_test +ntb_random_seed=1 +UVM_VERBOSITY=U
+                VM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_burst_mix_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_narrow_test
+Short name      T3
+Test name
+Test status
+Simulation time 10775000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:36:20 PM CST 26
+Finished        Nov 25 03:36:20 PM CST 26
+Peak memory     103956 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_narrow_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_
+                LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_narrow_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_wrap_test
+Short name      T6
+Test name
+Test status
+Simulation time 11705000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:36:20 PM CST 26
+Finished        Nov 25 03:36:20 PM CST 26
+Peak memory     102936 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_wrap_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LO
+                W +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_wrap_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_strobe_test
+Short name      T18
+Test name
+Test status
+Simulation time 1685000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:36:20 PM CST 26
+Finished        Nov 25 03:36:20 PM CST 26
+Peak memory     102832 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_strobe_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_
+                LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_strobe_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_unaligned_test
+Short name      T16
+Test name
+Test status
+Simulation time 1625000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:20 PM CST 26
+Finished        Nov 25 03:36:21 PM CST 26
+Peak memory     102792 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_unaligned_test +ntb_random_seed=1 +UVM_VERBOSITY=U
+                VM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_unaligned_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_boundary_test
+Short name      T4
+Test name
+Test status
+Simulation time 17425000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:36:21 PM CST 26
+Finished        Nov 25 03:36:21 PM CST 26
+Peak memory     102904 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_boundary_test +ntb_random_seed=1 +UVM_VERBOSITY=UV
+                M_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_boundary_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_pipeline_test
+Short name      T10
+Test name
+Test status
+Simulation time 6605000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:21 PM CST 26
+Finished        Nov 25 03:36:21 PM CST 26
+Peak memory     104280 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_pipeline_test +ntb_random_seed=1 +UVM_VERBOSITY=UV
+                M_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_pipeline_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_error_test
+Short name      T22
+Test name
+Test status
+Simulation time 535000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:21 PM CST 26
+Finished        Nov 25 03:36:21 PM CST 26
+Peak memory     102676 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_error_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_L
+                OW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_error_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_delay_test
+Short name      T5
+Test name
+Test status
+Simulation time 12145000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:36:21 PM CST 26
+Finished        Nov 25 03:36:22 PM CST 26
+Peak memory     104152 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_delay_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_L
+                OW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_delay_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_ral_test
+Short name      T29
+Test name
+Test status
+Simulation time 965000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:22 PM CST 26
+Finished        Nov 25 03:36:22 PM CST 26
+Peak memory     102896 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_ral_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LOW
+                 +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_ral_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_wrap_alignment_test
+Short name      T7
+Test name
+Test status
+Simulation time 1635000 ps
+CPU time        0.29 seconds
+Started         Nov 25 03:36:22 PM CST 26
+Finished        Nov 25 03:36:22 PM CST 26
+Peak memory     116732 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_wrap_alignment_test +ntb_random_seed=1 +UVM_VERBOS
+                ITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_wrap_alignment_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fixed_test
+Short name      T30
+Test name
+Test status
+Simulation time 1635000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:36:22 PM CST 26
+Finished        Nov 25 03:36:22 PM CST 26
+Peak memory     102788 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_fixed_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_L
+                OW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_fixed_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_incr_test
+Short name      T31
+Test name
+Test status
+Simulation time 1635000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:22 PM CST 26
+Finished        Nov 25 03:36:23 PM CST 26
+Peak memory     102800 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_incr_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM_LO
+                W +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_incr_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_narrow_directed_test
+Short name      T19
+Test name
+Test status
+Simulation time 2885000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:23 PM CST 26
+Finished        Nov 25 03:36:23 PM CST 26
+Peak memory     102848 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_narrow_directed_test +ntb_random_seed=1 +UVM_VERBO
+                SITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_narrow_directed_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_4kb_boundary_test
+Short name      T32
+Test name
+Test status
+Simulation time 1555000 ps
+CPU time        0.25 seconds
+Started         Nov 25 03:36:23 PM CST 26
+Finished        Nov 25 03:36:23 PM CST 26
+Peak memory     116732 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_4kb_boundary_test +ntb_random_seed=1 +UVM_VERBOSIT
+                Y=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_4kb_boundary_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_lane_sweep_test
+Short name      T17
+Test name
+Test status
+Simulation time 2185000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:36:23 PM CST 26
+Finished        Nov 25 03:36:23 PM CST 26
+Peak memory     102856 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_lane_sweep_test +ntb_random_seed=1 +UVM_VERBOSITY=
+                UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_lane_sweep_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_burst_size_cross_test
+Short name      T33
+Test name
+Test status
+Simulation time 2885000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:23 PM CST 26
+Finished        Nov 25 03:36:24 PM CST 26
+Peak memory     102852 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_burst_size_cross_test +ntb_random_seed=1 +UVM_VERB
+                OSITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_burst_size_cross_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_len_256_test
+Short name      T34
+Test name
+Test status
+Simulation time 11715000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:36:24 PM CST 26
+Finished        Nov 25 03:36:24 PM CST 26
+Peak memory     102980 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_len_256_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM
+                _LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_len_256_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_sideband_coverage_test
+Short name      T21
+Test name
+Test status
+Simulation time 1625000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:36:24 PM CST 26
+Finished        Nov 25 03:36:24 PM CST 26
+Peak memory     102808 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_sideband_coverage_test +ntb_random_seed=1 +UVM_VER
+                BOSITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_sideband_coverage_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_lock_coverage_test
+Short name      T27
+Test name
+Test status
+Simulation time 855000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:36:24 PM CST 26
+Finished        Nov 25 03:36:24 PM CST 26
+Peak memory     102792 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_lock_coverage_test +ntb_random_seed=1 +UVM_VERBOSI
+                TY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_lock_coverage_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_unaligned_incr_e2e_test
+Short name      T35
+Test name
+Test status
+Simulation time 475000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:36:24 PM CST 26
+Finished        Nov 25 03:36:25 PM CST 26
+Peak memory     102796 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_unaligned_incr_e2e_test +ntb_random_seed=1 +UVM_VE
+                RBOSITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_unaligned_incr_e2e_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_id_width_test
+Short name      T14
+Test name
+Test status
+Simulation time 755000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:25 PM CST 26
+Finished        Nov 25 03:36:25 PM CST 26
+Peak memory     102812 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_id_width_test +ntb_random_seed=1 +UVM_VERBOSITY=UV
+                M_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_id_width_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_closure_toggle_test
+Short name      T20
+Test name
+Test status
+Simulation time 20895000 ps
+CPU time        0.24 seconds
+Started         Nov 25 03:36:25 PM CST 26
+Finished        Nov 25 03:36:25 PM CST 26
+Peak memory     105084 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_closure_toggle_test +ntb_random_seed=1 +UVM_VERBOS
+                ITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_closure_toggle_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_closure_random_test
+Short name      T15
+Test name
+Test status
+Simulation time 386725000 ps
+CPU time        0.61 seconds
+Started         Nov 25 03:36:25 PM CST 26
+Finished        Nov 25 03:36:26 PM CST 26
+Peak memory     108356 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_closure_random_test +ntb_random_seed=1 +UVM_VERBOS
+                ITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_closure_random_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_closure_bready_test
+Short name      T11
+Test name
+Test status
+Simulation time 17750000 ps
+CPU time        0.25 seconds
+Started         Nov 25 03:36:26 PM CST 26
+Finished        Nov 25 03:36:26 PM CST 26
+Peak memory     105896 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_closure_bready_test +ntb_random_seed=1 +UVM_VERBOS
+                ITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_closure_bready_test +DUT_DEBUG +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KN
+                OWN
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fc_size_lane_test
+Short name      T25
+Test name
+Test status
+Simulation time 7190000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:36:26 PM CST 26
+Finished        Nov 25 03:36:26 PM CST 26
+Peak memory     104308 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_fc_size_lane_test +ntb_random_seed=1 +UVM_VERBOSIT
+                Y=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_fc_size_lane_test +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fc_wstrb_beat_test
+Short name      T26
+Test name
+Test status
+Simulation time 1200000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:26 PM CST 26
+Finished        Nov 25 03:36:27 PM CST 26
+Peak memory     103132 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_fc_wstrb_beat_test +ntb_random_seed=1 +UVM_VERBOSI
+                TY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_fc_wstrb_beat_test +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fc_rresp_beat_test
+Short name      T24
+Test name
+Test status
+Simulation time 610000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:27 PM CST 26
+Finished        Nov 25 03:36:27 PM CST 26
+Peak memory     103064 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_fc_rresp_beat_test +ntb_random_seed=1 +UVM_VERBOSI
+                TY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_fc_rresp_beat_test +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_fc_backpressure_burst_test
+Short name      T12
+Test name
+Test status
+Simulation time 4820000 ps
+CPU time        0.22 seconds
+Started         Nov 25 03:36:27 PM CST 26
+Finished        Nov 25 03:36:27 PM CST 26
+Peak memory     102836 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_fc_backpressure_burst_test +ntb_random_seed=1 +UVM
+                _VERBOSITY=UVM_LOW +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +UVM_TESTNAME=axi4_dut_fc_backpressure_burst_test +KVIPS_WAVES +KVIPS_AXI4_ASSERT
+                _KNOWN
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_reset_aw_test
+Short name      T13
+Test name
+Test status
+Simulation time 360000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:36:28 PM CST 26
+Finished        Nov 25 03:36:28 PM CST 26
+Peak memory     102400 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_reset_aw_test +ntb_random_seed=1 +UVM_VERBOSITY=UV
+                M_LOW +UVM_TIMEOUT=10000,NO +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN +UVM_TESTNAME=axi4_dut_reset_aw_te
+                st
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_reset_b_test
+Short name      T8
+Test name
+Test status
+Simulation time 430000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:28 PM CST 26
+Finished        Nov 25 03:36:28 PM CST 26
+Peak memory     102416 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_reset_b_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM
+                _LOW +UVM_TIMEOUT=10000,NO +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN +UVM_TESTNAME=axi4_dut_reset_b_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_reset_r_test
+Short name      T9
+Test name
+Test status
+Simulation time 380000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:28 PM CST 26
+Finished        Nov 25 03:36:28 PM CST 26
+Peak memory     102416 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_reset_r_test +ntb_random_seed=1 +UVM_VERBOSITY=UVM
+                _LOW +UVM_TIMEOUT=10000,NO +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN +UVM_TESTNAME=axi4_dut_reset_r_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_arlock_toggle_test
+Short name      T23
+Test name
+Test status
+Simulation time 280000 ps
+CPU time        0.21 seconds
+Started         Nov 25 03:36:28 PM CST 26
+Finished        Nov 25 03:36:29 PM CST 26
+Peak memory     102400 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_arlock_toggle_test +ntb_random_seed=1 +UVM_VERBOSI
+                TY=UVM_LOW +UVM_TIMEOUT=10000,NO +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN +UVM_TESTNAME=axi4_dut_arlock
+                _toggle_test
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/positive/coverage/axi4_dut_idle_rready_test
+Short name      T28
+Test name
+Test status
+Simulation time 220000 ps
+CPU time        0.2 seconds
+Started         Nov 25 03:36:29 PM CST 26
+Finished        Nov 25 03:36:29 PM CST 26
+Peak memory     102396 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/positive/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/positive/coverage.vdb -cm_name axi4_dut_idle_rready_test +ntb_random_seed=1 +UVM_VERBOSITY
+                =UVM_LOW +UVM_TIMEOUT=10000,NO +KVIPS_AXI4_COV=1 +DUT_FCOV_EXT=1 +DUT_FCOV_TRACE +KVIPS_WAVES +KVIPS_AXI4_ASSERT_KNOWN +UVM_TESTNAME=axi4_dut_idle_rre
+                ady_test +DUT_DEBUG
+Directory       /path/to/coverage_code_checker_closure/reports/positive/regression

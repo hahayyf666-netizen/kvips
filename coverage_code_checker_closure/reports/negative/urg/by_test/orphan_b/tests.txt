@@ -1,0 +1,36 @@
+Tests
+
+Total Coverage Summary
+SCORE   LINE            COND          TOGGLE          BRANCH        ASSERT
+ 49.93   64.40 161/250   46.34 19/41   20.30 123/606   43.64 24/55   75.00 21/28
+
+
+Total tests in report: 1
+-------------------------------------------------------------------------------
+Data from the following tests was used to generate this report
+TEST LOCATION
+/path/to/coverage_code_checker_closure/reports/negative/coverage/orphan_b
+
+
+Total test records in report: 1
+-------------------------------------------------------------------------------
+TEST NO TEST LOCATION                                                                                  TEST NAME STATUS       STARTED                   FINISHED                  SIMULATION TIME
+T1      /path/to/coverage_code_checker_closure/reports/negative/coverage/orphan_b           $error(fail) Nov 25 03:30:01 PM CST 26 Nov 25 03:30:01 PM CST 26 120000 ps
+
+
+-------------------------------------------------------------------------------
+Test location   /path/to/coverage_code_checker_closure/reports/negative/coverage/orphan_b
+Short name      T1
+Test name
+Test status     $error(fail)
+Simulation time 120000 ps
+CPU time        0.15 seconds
+Started         Nov 25 03:30:01 PM CST 26
+Finished        Nov 25 03:30:01 PM CST 26
+Peak memory     77772 kb
+Host            localhost.localdomain
+User            ICer
+Command         /path/to/coverage_code_checker_closure/reports/negative/compile/simv -exitstatus -cm line+cond+tgl+branch+assert -cm_dir /path/to/coverage_code_checker_closure
+                /reports/negative/coverage.vdb -cm_name orphan_b +ntb_random_seed=1 +KVIPS_AXI4_ASSERT_KNOWN +KVIPS
+                _WAVES +SCENARIO=orphan_b
+Directory       /path/to/coverage_code_checker_closure/reports/negative/regression

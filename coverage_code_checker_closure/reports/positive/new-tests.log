@@ -1,0 +1,33 @@
+SIM_RC axi4_dut_reset_aw_test 0
+RESET_CONTEXT stage=pending_aw time=110000 sva_aw=1 sva_b=0 sva_r_beats=0 sva_r_lock=0 outs_w=1 outs_r=0 chk_aw=1 chk_b=0 chk_r=0 chk_strbs=0 mon_b=0 mon_r=0 fc_w_active=1 fc_r_active=0
+CODE_SCOREBOARD time=110000 writes=0 reads=0 wr_errors=0 uninit=0 mismatches=0
+RESET_CONTEXT stage=reset_sampled time=126000 sva_aw=0 sva_b=0 sva_r_beats=0 sva_r_lock=0 outs_w=0 outs_r=0 chk_aw=0 chk_b=0 chk_r=0 chk_strbs=0 mon_b=0 mon_r=0 fc_w_active=0 fc_r_active=0
+RESET_CONTEXT stage=released time=180000 sva_aw=0 sva_b=0 sva_r_beats=0 sva_r_lock=0 outs_w=0 outs_r=0 chk_aw=0 chk_b=0 chk_r=0 chk_strbs=0 mon_b=0 mon_r=0 fc_w_active=0 fc_r_active=0
+CODE_SCOREBOARD time=180000 writes=0 reads=0 wr_errors=0 uninit=0 mismatches=0
+RESET_CONTEXT stage=recovered time=330000 sva_aw=0 sva_b=0 sva_r_beats=0 sva_r_lock=0 outs_w=0 outs_r=0 chk_aw=0 chk_b=0 chk_r=0 chk_strbs=2 mon_b=0 mon_r=0 fc_w_active=0 fc_r_active=0
+CODE_SCOREBOARD time=330000 writes=1 reads=1 wr_errors=0 uninit=0 mismatches=0
+CODE_SCENARIO_PASS axi4_dut_reset_aw_test
+SIM_RC axi4_dut_reset_b_test 0
+RESET_CONTEXT stage=pending_b time=180000 sva_aw=0 sva_b=1 sva_r_beats=0 sva_r_lock=0 outs_w=1 outs_r=0 chk_aw=0 chk_b=1 chk_r=0 chk_strbs=2 mon_b=1 mon_r=0 fc_w_active=1 fc_r_active=0
+CODE_SCOREBOARD time=180000 writes=0 reads=0 wr_errors=0 uninit=0 mismatches=0
+RESET_CONTEXT stage=reset_sampled time=196000 sva_aw=0 sva_b=0 sva_r_beats=0 sva_r_lock=0 outs_w=0 outs_r=0 chk_aw=0 chk_b=0 chk_r=0 chk_strbs=0 mon_b=0 mon_r=0 fc_w_active=0 fc_r_active=0
+RESET_CONTEXT stage=released time=250000 sva_aw=0 sva_b=0 sva_r_beats=0 sva_r_lock=0 outs_w=0 outs_r=0 chk_aw=0 chk_b=0 chk_r=0 chk_strbs=0 mon_b=0 mon_r=0 fc_w_active=0 fc_r_active=0
+CODE_SCOREBOARD time=250000 writes=0 reads=0 wr_errors=0 uninit=0 mismatches=0
+RESET_CONTEXT stage=recovered time=400000 sva_aw=0 sva_b=0 sva_r_beats=0 sva_r_lock=0 outs_w=0 outs_r=0 chk_aw=0 chk_b=0 chk_r=0 chk_strbs=2 mon_b=0 mon_r=0 fc_w_active=0 fc_r_active=0
+CODE_SCOREBOARD time=400000 writes=1 reads=1 wr_errors=0 uninit=0 mismatches=0
+CODE_SCENARIO_PASS axi4_dut_reset_b_test
+SIM_RC axi4_dut_reset_r_test 0
+RESET_CONTEXT stage=pending_r time=130000 sva_aw=0 sva_b=0 sva_r_beats=1 sva_r_lock=1 outs_w=0 outs_r=1 chk_aw=0 chk_b=0 chk_r=1 chk_strbs=0 mon_b=0 mon_r=1 fc_w_active=0 fc_r_active=1
+CODE_SCOREBOARD time=130000 writes=0 reads=0 wr_errors=0 uninit=0 mismatches=0
+RESET_CONTEXT stage=reset_sampled time=146000 sva_aw=0 sva_b=0 sva_r_beats=0 sva_r_lock=0 outs_w=0 outs_r=0 chk_aw=0 chk_b=0 chk_r=0 chk_strbs=0 mon_b=0 mon_r=0 fc_w_active=0 fc_r_active=0
+RESET_CONTEXT stage=released time=200000 sva_aw=0 sva_b=0 sva_r_beats=0 sva_r_lock=0 outs_w=0 outs_r=0 chk_aw=0 chk_b=0 chk_r=0 chk_strbs=0 mon_b=0 mon_r=0 fc_w_active=0 fc_r_active=0
+CODE_SCOREBOARD time=200000 writes=0 reads=0 wr_errors=0 uninit=0 mismatches=0
+RESET_CONTEXT stage=recovered time=350000 sva_aw=0 sva_b=0 sva_r_beats=0 sva_r_lock=0 outs_w=0 outs_r=0 chk_aw=0 chk_b=0 chk_r=0 chk_strbs=2 mon_b=0 mon_r=0 fc_w_active=0 fc_r_active=0
+CODE_SCOREBOARD time=350000 writes=1 reads=1 wr_errors=0 uninit=0 mismatches=0
+CODE_SCENARIO_PASS axi4_dut_reset_r_test
+SIM_RC axi4_dut_arlock_toggle_test 0
+CODE_SCOREBOARD time=250000 writes=1 reads=3 wr_errors=0 uninit=0 mismatches=0
+CODE_SCENARIO_PASS axi4_dut_arlock_toggle_test
+SIM_RC axi4_dut_idle_rready_test 0
+CODE_SCOREBOARD time=190000 writes=1 reads=1 wr_errors=0 uninit=0 mismatches=0
+CODE_SCENARIO_PASS axi4_dut_idle_rready_test

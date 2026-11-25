@@ -1,0 +1,279 @@
+--- a/axi4/examples/uvm_dut/tb/top.sv
++++ b/axi4/examples/uvm_dut/tb/top.sv
+@@ -12,6 +12,9 @@
+ 
+   logic aclk;
+   logic areset_n;
++`ifndef VERILATOR
++  uvm_event dut_reset_request = new("dut_reset_request");
++`endif
+ 
+   axi4_if #(ADDR_W, DATA_W, ID_W, USER_W) axi (.*);
+ 
+@@ -35,6 +38,15 @@
+     areset_n = 0;
+     repeat (10) @(posedge aclk);
+     areset_n = 1;
++`ifndef VERILATOR
++    forever begin
++      dut_reset_request.wait_trigger();
++      @(negedge aclk);
++      areset_n = 0;
++      repeat (2) @(negedge aclk);
++      areset_n = 1;
++    end
++`endif
+   end
+ 
+ `ifndef VERILATOR
+@@ -94,6 +106,9 @@
+ `ifdef VERILATOR
+     uvm_root::get().set_finish_on_completion(1'b0);
+ `endif
++`ifndef VERILATOR
++    uvm_config_db#(uvm_event)::set(null, "*", "dut_reset_request", dut_reset_request);
++`endif
+     run_test();
+   end
+ endmodule
+--- a/axi4/examples/uvm_dut/tb/tb_pkg.sv
++++ b/axi4/examples/uvm_dut/tb/tb_pkg.sv
+@@ -2316,5 +2316,8 @@
+   `include "axi4_id_width_test.svh"
+   `include "axi4_coverage_closure_tests.svh"
+   `include "axi4_dut_fc_tests.svh"
++`ifndef VERILATOR
++  `include "axi4_dut_code_tests.svh"
++`endif
+ 
+ endpackage
+--- /dev/null
++++ b/axi4/examples/uvm_dut/tb/axi4_dut_code_tests.svh
+@@ -0,0 +1,227 @@
++class axi4_dut_code_base_test extends axi4_dut_fc_backpressure_burst_test;
++  function new(string name, uvm_component parent);
++    super.new(name, parent);
++  endfunction
++
++  virtual task exercise();
++    $fatal(1, "No code coverage scenario selected");
++  endtask
++
++  virtual task run_phase(uvm_phase phase);
++    phase.raise_objection(this);
++    {vif.awvalid, vif.arvalid, vif.wvalid, vif.bready, vif.rready} = '0;
++    {vif.awlock, vif.awcache, vif.awprot, vif.awqos, vif.awregion, vif.awuser} = '0;
++    {vif.arlock, vif.arcache, vif.arprot, vif.arqos, vif.arregion, vif.aruser} = '0;
++    vif.wuser = '0;
++    wait (vif.areset_n === 1'b1);
++    @(negedge vif.aclk);
++    if (!vif.kvips_axi4_assertions_on || !vif.kvips_axi4_excl_checks_on)
++      $fatal(1, "Expected interface and exclusive checks enabled");
++    exercise();
++    repeat (3) @(negedge vif.aclk);
++    phase.drop_objection(this);
++  endtask
++
++  task check_scoreboard(int writes, int reads);
++    bit enabled;
++    longint unsigned wr, wr_errors, rd, uninit, mismatches;
++    sb.get_summary(enabled, wr, wr_errors, rd, uninit, mismatches);
++    if (!enabled || wr != writes || rd != reads || wr_errors || uninit || mismatches)
++      $fatal(1, "Scoreboard totals: enable=%0d wr=%0d rd=%0d errors=%0d uninit=%0d mismatches=%0d",
++             enabled, wr, rd, wr_errors, uninit, mismatches);
++    if (enhanced_cov == null || enhanced_cov.matched_writes != writes || enhanced_cov.matched_reads != reads)
++      $fatal(1, "Enhanced coverage did not match the expected Monitor completions");
++    $display("CODE_SCOREBOARD time=%0t writes=%0d reads=%0d wr_errors=%0d uninit=%0d mismatches=%0d",
++             $time, wr, rd, wr_errors, uninit, mismatches);
++  endtask
++endclass
++
++class axi4_dut_reset_base_test extends axi4_dut_code_base_test;
++  localparam bit [3:0] REUSED_ID = 4'd7;
++  localparam bit [31:0] OLD_ADDR = 32'h100;
++  localparam bit [31:0] NEW_ADDR = 32'h200;
++  localparam bit [63:0] NEW_DATA = 64'h59eb_f00d_4bc3_027a;
++
++  function new(string name, uvm_component parent);
++    super.new(name, parent);
++  endfunction
++
++  virtual task create_pending();
++    $fatal(1, "No pending transaction selected");
++  endtask
++
++  function void check_context(string stage, int aw, int b, int r, int strb_count = 0);
++    axi4_protocol_checker#(32, 64, 4, 1) checker_h = env.agents[0].protocol_checker;
++    axi4_monitor#(32, 64, 4, 1) monitor_h = env.agents[0].monitor;
++    int sva_b = 0, sva_r = 0, sva_rl = 0;
++    int chk_b = 0, chk_r = 0, mon_b = 0, mon_r = 0;
++    if (checker_h == null || monitor_h == null || enhanced_cov == null)
++      $fatal(1, "The Monitor, class Checker and enhanced functional coverage must be active");
++    if (vif.kvips_wr_done_lock_q.exists(REUSED_ID)) sva_b = vif.kvips_wr_done_lock_q[REUSED_ID].size();
++    if (vif.kvips_rd_beats_q.exists(REUSED_ID)) sva_r = vif.kvips_rd_beats_q[REUSED_ID].size();
++    if (vif.kvips_rd_lock_q.exists(REUSED_ID)) sva_rl = vif.kvips_rd_lock_q[REUSED_ID].size();
++    if (checker_h.wr_done.exists(REUSED_ID)) chk_b = checker_h.wr_done[REUSED_ID].size();
++    if (checker_h.rd_q.exists(REUSED_ID)) chk_r = checker_h.rd_q[REUSED_ID].size();
++    if (monitor_h.wr_wait_b.exists(REUSED_ID)) mon_b = monitor_h.wr_wait_b[REUSED_ID].size();
++    if (monitor_h.rd_q.exists(REUSED_ID)) mon_r = monitor_h.rd_q[REUSED_ID].size();
++    if (vif.kvips_wr_fifo.size() != aw || sva_b != b || sva_r != r || sva_rl != r ||
++        vif.kvips_outs_w != aw+b || vif.kvips_outs_r != r ||
++        checker_h.aw_q.size() != aw || chk_b != b || chk_r != r ||
++        checker_h.early_w_bursts.size() || checker_h.early_w_strbs.size() ||
++        checker_h.w_strbs.size() != strb_count || checker_h.w_active || checker_h.w_beats ||
++        monitor_h.aw_q.size() || mon_b != b || mon_r != r ||
++        (enhanced_cov.active[1] != null) != (aw+b != 0) ||
++        (enhanced_cov.active[0] != null) != (r != 0) ||
++        enhanced_cov.completed[0] != null || enhanced_cov.completed[1] != null ||
++        enhanced_cov.published[0] != null || enhanced_cov.published[1] != null)
++      $fatal(1, "Unexpected in-flight context at %s (expected AW=%0d B=%0d R=%0d)",
++             stage, aw, b, r);
++    $display("RESET_CONTEXT stage=%s time=%0t sva_aw=%0d sva_b=%0d sva_r_beats=%0d sva_r_lock=%0d outs_w=%0d outs_r=%0d chk_aw=%0d chk_b=%0d chk_r=%0d chk_strbs=%0d mon_b=%0d mon_r=%0d fc_w_active=%0d fc_r_active=%0d",
++             stage, $time, vif.kvips_wr_fifo.size(), sva_b, sva_r, sva_rl,
++             vif.kvips_outs_w, vif.kvips_outs_r, checker_h.aw_q.size(), chk_b, chk_r, checker_h.w_strbs.size(),
++             mon_b, mon_r, enhanced_cov.active[1] != null, enhanced_cov.active[0] != null);
++  endfunction
++
++  task exercise();
++    uvm_event request;
++    if (!uvm_config_db#(uvm_event)::get(this, "", "dut_reset_request", request) || request == null)
++      $fatal(1, "Missing reset request event");
++    create_pending();
++    check_scoreboard(0, 0);
++    request.trigger();
++    @(negedge vif.areset_n);
++    @(posedge vif.aclk);
++    #1ns;
++    check_context("reset_sampled", 0, 0, 0);
++    if (vif.bvalid !== 1'b0 || vif.rvalid !== 1'b0)
++      $fatal(1, "BVALID or RVALID remained set during reset");
++    wait (vif.areset_n === 1'b1);
++    @(negedge vif.aclk);
++    vif.bready = 1;
++    vif.rready = 1;
++    repeat (3) begin
++      @(posedge vif.aclk);
++      if (vif.bvalid !== 1'b0 || vif.rvalid !== 1'b0)
++        $fatal(1, "Response from the aborted epoch");
++    end
++    @(negedge vif.aclk);
++    vif.bready = 0;
++    vif.rready = 0;
++    check_context("released", 0, 0, 0);
++    check_scoreboard(0, 0);
++
++    // Reuse the ID with different address/data. Initialize the readback only
++    // after reset so the test is independent of memory retention.
++    issue_addr(1, NEW_ADDR, REUSED_ID, 1, AXI4_BURST_INCR);
++    write_beats(2, NEW_DATA, 0);
++    complete_b(REUSED_ID, 1);
++    issue_addr(0, NEW_ADDR, REUSED_ID, 1, AXI4_BURST_INCR);
++    complete_r(REUSED_ID, 2, NEW_DATA, 1);
++    check_context("recovered", 0, 0, 0, 2);
++    check_scoreboard(1, 1);
++    $display("CODE_SCENARIO_PASS %s", get_type_name());
++  endtask
++endclass
++
++class axi4_dut_reset_aw_test extends axi4_dut_reset_base_test;
++  function new(string name, uvm_component parent);
++    super.new(name, parent);
++  endfunction
++  `uvm_component_utils(axi4_dut_reset_aw_test)
++
++  task create_pending();
++    issue_addr(1, OLD_ADDR, REUSED_ID, 1, AXI4_BURST_INCR);
++    check_context("pending_aw", 1, 0, 0);
++  endtask
++endclass
++
++class axi4_dut_reset_b_test extends axi4_dut_reset_base_test;
++  function new(string name, uvm_component parent);
++    super.new(name, parent);
++  endfunction
++  `uvm_component_utils(axi4_dut_reset_b_test)
++
++  task create_pending();
++    issue_addr(1, OLD_ADDR, REUSED_ID, 1, AXI4_BURST_INCR);
++    write_beats(2, 64'h0123_4567_89ab_cdef, 0);
++    wait (vif.bvalid === 1'b1);
++    repeat (2) @(negedge vif.aclk);
++    if (vif.bvalid !== 1'b1 || vif.bready !== 1'b0 || vif.bid !== REUSED_ID)
++      $fatal(1, "Expected old B response to be stalled");
++    check_context("pending_b", 0, 1, 0, 2);
++  endtask
++endclass
++
++class axi4_dut_reset_r_test extends axi4_dut_reset_base_test;
++  function new(string name, uvm_component parent);
++    super.new(name, parent);
++  endfunction
++  `uvm_component_utils(axi4_dut_reset_r_test)
++
++  task create_pending();
++    issue_addr(0, OLD_ADDR, REUSED_ID, 1, AXI4_BURST_INCR);
++    wait (vif.rvalid === 1'b1);
++    repeat (2) @(negedge vif.aclk);
++    if (vif.rvalid !== 1'b1 || vif.rready !== 1'b0 || vif.rid !== REUSED_ID || vif.rlast !== 1'b0)
++      $fatal(1, "Expected old first R beat to be stalled");
++    check_context("pending_r", 0, 0, 1);
++  endtask
++endclass
++
++class axi4_dut_arlock_toggle_test extends axi4_dut_code_base_test;
++  `uvm_component_utils(axi4_dut_arlock_toggle_test)
++  function new(string name, uvm_component parent);
++    super.new(name, parent);
++  endfunction
++
++  task exercise();
++    localparam bit [31:0] ADDR = 32'h240;
++    localparam bit [3:0] ID = 4'd6;
++    localparam bit [63:0] INITIAL_DATA = 64'h0a3e_4426_3141_703a;
++    issue_addr(1, ADDR, ID, 0, AXI4_BURST_INCR);
++    write_beats(1, INITIAL_DATA, 0);
++    complete_b(ID, 0);
++    issue_addr(0, ADDR, ID, 0, AXI4_BURST_INCR);
++    complete_r(ID, 1, INITIAL_DATA, 1);
++
++    vif.arlock = 1;
++    issue_addr(0, ADDR, ID, 0, AXI4_BURST_INCR);
++    complete_r(ID, 1, INITIAL_DATA, 1);
++
++    vif.arlock = 0;
++    issue_addr(0, ADDR, ID, 0, AXI4_BURST_INCR);
++    complete_r(ID, 1, INITIAL_DATA, 1);
++
++    check_scoreboard(1, 3);
++    $display("CODE_SCENARIO_PASS %s", get_type_name());
++  endtask
++endclass
++
++class axi4_dut_idle_rready_test extends axi4_dut_code_base_test;
++  `uvm_component_utils(axi4_dut_idle_rready_test)
++  function new(string name, uvm_component parent);
++    super.new(name, parent);
++  endfunction
++
++  task exercise();
++    localparam bit [31:0] ADDR = 32'h260;
++    localparam bit [3:0] ID = 4'd2;
++    localparam bit [63:0] DATA = 64'hcafe_1834_baba_67e1;
++    issue_addr(1, ADDR, ID, 0, AXI4_BURST_INCR);
++    write_beats(1, DATA, 0);
++    complete_b(ID, 0);
++
++    vif.rready = 1;
++    repeat (3) begin
++      @(posedge vif.aclk);
++      if (vif.arvalid !== 1'b0 || vif.rvalid !== 1'b0 || vif.rready !== 1'b1)
++        $fatal(1, "Expected idle-high RREADY before read request");
++    end
++    @(negedge vif.aclk);
++    issue_addr(0, ADDR, ID, 0, AXI4_BURST_INCR);
++    complete_r(ID, 1, DATA, 0);
++
++    check_scoreboard(1, 1);
++    $display("CODE_SCENARIO_PASS %s", get_type_name());
++  endtask
++endclass

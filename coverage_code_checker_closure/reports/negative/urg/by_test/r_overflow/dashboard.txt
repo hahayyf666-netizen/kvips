@@ -1,0 +1,26 @@
+Dashboard
+
+Date: Wed Nov 25 15:30:05 2026
+
+User: simulation
+
+Version: O-2018.09-SP2
+Command line: urg -full64 -dir /path/to/coverage_code_checker_closure/reports/negative/coverage.vdb -tests /path/to/coverage_code_checker_closure/reports/negative/urg/by_test/r_overflow.list -metric line+cond+tgl+branch+assert -format both -show ratios -show tests -cond ids -report /path/to/coverage_code_checker_closure/reports/negative/urg/by_test/r_overflow
+Number of tests: 1
+
+-------------------------------------------------------------------------------
+Total Coverage Summary
+SCORE   LINE            COND          TOGGLE          BRANCH        ASSERT
+ 53.50   66.80 167/250   53.66 22/41   26.57 161/606   45.45 25/55   75.00 21/28
+
+
+-------------------------------------------------------------------------------
+Hierarchical coverage data for top-level instances
+SCORE   LINE            COND          TOGGLE          BRANCH        ASSERT        NAME
+ 53.50   66.80 167/250   53.66 22/41   26.57 161/606   45.45 25/55   75.00 21/28  top
+
+
+-------------------------------------------------------------------------------
+Total Module Definition Coverage Summary
+SCORE   LINE            COND          TOGGLE          BRANCH        ASSERT
+ 53.50   66.80 167/250   53.66 22/41   26.57 161/606   45.45 25/55   75.00 21/28
