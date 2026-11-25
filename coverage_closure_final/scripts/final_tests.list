@@ -1,0 +1,3 @@
+axi4_dut_closure_toggle_test
+axi4_dut_closure_random_test
+axi4_dut_closure_bready_test

@@ -1,3 +1,4 @@
++incdir+axi4/examples/uvm_dut/tb
 +incdir+common/sv
 +incdir+axi4/sv/uvm
 +incdir+axi4/sv/assertions

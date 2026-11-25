@@ -1,0 +1,27 @@
+Dashboard
+
+Date: Tue Nov 24 23:45:29 2026
+
+User: ICer
+
+Version: O-2018.09-SP2
+Command line: urg -full64 -dir /home/ICer/icdv_project/kvips/coverage_closure_final/reports/baseline/coverage.vdb -metric line+cond+tgl+branch -format both -show ratios -cond ids -report /home/ICer/icdv_project/kvips/coverage_closure_final/reports/baseline/urg/code
+Number of tests: 23
+
+-------------------------------------------------------------------------------
+Total Coverage Summary 
+SCORE   LINE            COND          TOGGLE            BRANCH       
+ 71.75   84.30 204/242   55.91 52/93   74.37 1114/1498   72.41 42/58 
+
+
+-------------------------------------------------------------------------------
+Hierarchical coverage data for top-level instances 
+SCORE   LINE            COND          TOGGLE            BRANCH        NAME 
+ 71.75   84.30 204/242   55.91 52/93   74.37 1114/1498   72.41 42/58  top  
+
+
+-------------------------------------------------------------------------------
+Total Module Definition Coverage Summary 
+SCORE   LINE            COND          TOGGLE            BRANCH       
+ 71.75   84.30 204/242   55.91 52/93   74.37 1114/1498   72.41 42/58 
+

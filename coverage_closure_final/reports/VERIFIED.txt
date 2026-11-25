@@ -1,0 +1,7 @@
+Baseline VCS: 23/23 PASS
+Final VCS: 26/26 PASS
+Early-W before/after checker gates: PASS
+Paired code scopes, attribution and WREADY strict exclusion: generated
+Historical covergroup scope: checksum mismatch; no external group exclusions applied
+Initial URG short-name probe: retained under reports/final/urg/attribution-name-probe
+Initial group-only report flag probe: retained under reports/exclusion-review

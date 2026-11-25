@@ -1,0 +1,2 @@
+kvips_axi4_dut.vcd handshakes=64 stalled_responses=0 stalled_cycles=0 max_run=0 hold_errors=0
+with_random_bready.vcd handshakes=64 stalled_responses=30 stalled_cycles=154 max_run=19 hold_errors=0

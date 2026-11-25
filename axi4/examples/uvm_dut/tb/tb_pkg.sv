@@ -448,6 +448,7 @@ package tb_pkg;
       env_cfg.agent_cfgs[0].master_rready_random = 1'b1;
       env_cfg.agent_cfgs[0].master_rready_low_min = 3;
       env_cfg.agent_cfgs[0].master_rready_low_max = 5;
+      env_cfg.agent_cfgs[0].stats_enable = 1'b1;
     endfunction
     task run_phase(uvm_phase phase);
       axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
@@ -499,6 +500,7 @@ package tb_pkg;
       env_cfg.agent_cfgs[0].master_bready_random = 1'b1;
       env_cfg.agent_cfgs[0].master_bready_low_min = 1;
       env_cfg.agent_cfgs[0].master_bready_low_max = 3;
+      env_cfg.agent_cfgs[0].stats_enable = 1'b1;
     endfunction
     task run_phase(uvm_phase phase);
       axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
@@ -1696,139 +1698,387 @@ endtask
 
 
 
-  // Independent AXI4 Burst Address Reference Test.
-  class axi4_dut_addr_ref_test extends uvm_test;
+  // Only the independent address test uses these inputs. All arithmetic on
+  // addresses and limits is wide enough for the exclusive limit 0x1_0000_0000.
+  typedef struct packed {
+    longint unsigned start_addr;
+    int unsigned size;
+    int unsigned len;
+    axi4_burst_e burst;
+  } axi4_addr_ref_input_t;
 
+  class axi4_addr_ref_random;
+    rand bit [31:0] start_addr;
+    rand int unsigned size;
+    rand int unsigned len;
+    rand axi4_burst_e burst;
+    rand bit bias_page_end;
+
+    constraint legal_c {
+      solve burst before len;
+      solve burst, size, len, bias_page_end before start_addr;
+      burst inside {AXI4_BURST_FIXED, AXI4_BURST_INCR, AXI4_BURST_WRAP};
+      size inside {[0:3]}; // At most 8 bytes on the 64-bit bus.
+      len inside {[0:255]};
+      bias_page_end dist {0 := 3, 1 := 1};
+
+      if (burst == AXI4_BURST_FIXED) {
+        len <= 15;
+        // Repeated transfers address the same SIZE-aligned window.
+        if (bias_page_end)
+          (((int'(start_addr[11:0]) >> size) + 1) << size) >= 4081;
+      }
+      if (burst == AXI4_BURST_INCR) {
+        // The interval starts at the aligned address, even if beat 0 is
+        // unaligned. The exclusive end may equal 4096 within this page.
+        (((int'(start_addr[11:0]) >> size) + len + 1) << size) <= 4096;
+        if (bias_page_end)
+          (((int'(start_addr[11:0]) >> size) + len + 1) << size) >= 4081;
+      }
+      if (burst == AXI4_BURST_WRAP) {
+        len inside {1, 3, 7, 15};
+        (int'(start_addr[11:0]) & ((1 << size) - 1)) == 0;
+        // Every allowed wrap span divides 4 KiB. A span-aligned window
+        // stays in the page; the start only needs beat alignment.
+        if (bias_page_end)
+          int'(start_addr[11:0]) >= 4096 - ((len + 1) << size);
+      }
+    }
+  endclass
+
+  // Pure address checks: no agent, scoreboard, sequences, or DUT transfers.
+  class axi4_dut_addr_ref_test extends uvm_test;
     `uvm_component_utils(axi4_dut_addr_ref_test)
+
+    localparam int unsigned DATA_W = 64;
+    localparam longint unsigned MAX_ADDR = 64'hffff_ffff;
+    typedef enum int {GOLDEN_CASE, DIRECTED_CASE, RANDOM_CASE} case_kind_e;
+
+    int unsigned seed = 1;
+    int unsigned transactions[3];
+    int unsigned beats_checked[3];
+    int unsigned comparisons;
+    int unsigned mismatches;
+    int unsigned property_errors;
+    int unsigned input_errors;
+    int unsigned randomize_errors;
+
+    // First dimension separates random stimulus from Golden/directed cases.
+    int unsigned burst_size_hits[2][3][4];
+    int unsigned burst_len_hits[2][3][3];
+    int unsigned page_hits[2][3][3];
+    int unsigned incr_align_hits[2][4][2];
+    int unsigned incr_end_align_hits[2][4][2];
+    int unsigned incr_max_hits[2][4];
+    int unsigned wrap_len_hits[2][4][4];
+    int unsigned wrap_roll_hits[2][4];
 
     function new(string name = "axi4_dut_addr_ref_test",
                  uvm_component parent = null);
       super.new(name, parent);
     endfunction
 
-    task automatic check_case(
-        input string name,
-        input longint unsigned start_addr,
-        input int unsigned size,
-        input int unsigned len,
-        input axi4_burst_e burst,
-        input int unsigned data_w,
-        input longint unsigned golden[]
-    );
+    function automatic string stimulus_info(
+        string name, axi4_addr_ref_input_t req, int beat);
+      return $sformatf(
+        "case=%s seed=%0d AWADDR=0x%08h AWSIZE=%0d AWLEN=%0d AWBURST=%s(%0d) beat=%0d",
+        name, seed, req.start_addr, req.size, req.len, req.burst.name(), req.burst, beat);
+    endfunction
 
-      longint unsigned ref_addr;
-      longint unsigned common_addr;
-      int unsigned common_diff;
-
-      common_diff = 0;
-
-      `uvm_info("ADDR_REF",
-        $sformatf("Checking %s", name), UVM_LOW)
-
-      for (int unsigned i = 0; i <= len; i++) begin
-
-        if (!tb_expected_beat_addr(
-              start_addr, size, len, burst,
-              i, data_w, ref_addr)) begin
-
-          `uvm_error("ADDR_REF",
-            $sformatf("%s Beat %0d: reference rejected inputs",
-                      name, i))
-          continue;
+    // Validate the accessible byte window before either model is called.
+    // This checks legality/range, without predicting the sequence of beats.
+    function automatic string request_window(
+        input axi4_addr_ref_input_t req,
+        output longint unsigned step, lower, limit);
+      longint unsigned span;
+      if ($isunknown(req) || req.start_addr > MAX_ADDR || req.size > 3 || req.len > 255)
+        return "unknown or out-of-range 32-bit AXI4 address/size/length";
+      step = 64'd1 << req.size;
+      span = (longint'(req.len) + 1) * step;
+      lower = req.start_addr & ~(step - 1);
+      case (req.burst)
+        AXI4_BURST_FIXED: begin
+          if (req.len > 15 || span > 4096)
+            return "FIXED requires at most 16 beats and 4096 bytes";
+          limit = lower + step;
         end
-
-        // Check independent reference against manual golden address.
-        if (ref_addr !== golden[i]) begin
-          `uvm_error("ADDR_REF",
-            $sformatf(
-              "%s Beat %0d: REF=0x%0h GOLDEN=0x%0h",
-              name, i, ref_addr, golden[i]))
+        AXI4_BURST_INCR: limit = lower + span;
+        AXI4_BURST_WRAP: begin
+          if (!(req.len inside {1, 3, 7, 15}) || lower != req.start_addr)
+            return "WRAP requires 2/4/8/16 beats and beat-aligned AWADDR";
+          lower = req.start_addr & ~(span - 1);
+          limit = lower + span;
         end
+        default: return "reserved AWBURST";
+      endcase
+      if (limit - 1 > MAX_ADDR)
+        return "burst byte window overflows 32-bit address space";
+      if ((lower >> 12) != ((limit - 1) >> 12))
+        return "burst byte window crosses a 4 KiB page";
+      return "";
+    endfunction
 
-        // Compare existing project function against golden address.
-        common_addr = axi4_beat_addr(
-            start_addr, size, len, burst, i
-        );
+    function automatic void compare_address(
+        string rule, string stimulus, longint unsigned expected_addr, actual_addr);
+      comparisons++;
+      if (actual_addr !== expected_addr) begin
+        mismatches++;
+        `uvm_error("ADDR_REF_MISMATCH", $sformatf(
+          "%s check=%s expected_addr=0x%08h actual_addr=0x%08h",
+          stimulus, rule, expected_addr, actual_addr))
+      end
+    endfunction
 
-        if (common_addr !== golden[i]) begin
-          common_diff++;
+    function automatic void property_error(
+        string rule, string stimulus, longint unsigned expected_addr, actual_addr);
+      property_errors++;
+      `uvm_error("ADDR_REF_PROPERTY", $sformatf(
+        "%s rule=%s expected_addr=0x%08h actual_addr=0x%08h",
+        stimulus, rule, expected_addr, actual_addr))
+    endfunction
 
-          `uvm_info("ADDR_REF_DIFF",
-            $sformatf(
-              "%s Beat %0d: COMMON=0x%0h EXPECTED=0x%0h",
-              name, i, common_addr, golden[i]),
-            UVM_NONE)
-        end
-
-        `uvm_info("ADDR_REF_BEAT",
-          $sformatf(
-            "%s Beat=%0d REF=0x%0h COMMON=0x%0h GOLDEN=0x%0h",
-            name, i, ref_addr, common_addr, golden[i]),
-          UVM_LOW)
-
+    function automatic void check_progress(
+        axi4_burst_e burst, int unsigned beat, string stimulus,
+        longint unsigned start_addr, step, lower, limit, previous_addr, actual_addr);
+      longint unsigned next_addr;
+      if ($isunknown(actual_addr) || actual_addr < lower || actual_addr >= limit) begin
+        property_errors++;
+        `uvm_error("ADDR_REF_PROPERTY", $sformatf(
+          "%s rule=byte_window expected_addr=[0x%08h,0x%08h) actual_addr=0x%08h",
+          stimulus, lower, limit, actual_addr))
+        return;
       end
 
-      `uvm_info("ADDR_REF_CASE",
-        $sformatf("%s completed, common function differences=%0d",
-                  name, common_diff),
-        UVM_NONE)
+      if (beat == 0 || burst == AXI4_BURST_FIXED) begin
+        if (actual_addr !== start_addr)
+          property_error("start_or_fixed", stimulus, start_addr, actual_addr);
+      end else if (burst == AXI4_BURST_INCR && beat == 1) begin
+        // Exactly one aligned address lies within (previous, previous+step].
+        if ((actual_addr & (step - 1)) != 0 ||
+            actual_addr <= previous_addr || actual_addr - previous_addr > step)
+          property_error("incr_next_alignment", stimulus, lower + step, actual_addr);
+      end else begin
+        next_addr = previous_addr + step;
+        if (burst == AXI4_BURST_WRAP && next_addr == limit)
+          next_addr = lower;
+        if (actual_addr !== next_addr)
+          property_error("stride_or_wrap", stimulus, next_addr, actual_addr);
+      end
+    endfunction
 
+    function automatic void sample_coverage(
+        axi4_addr_ref_input_t req, longint unsigned step, limit,
+        bit is_random, bit saw_rollover);
+      int unsigned burst_index, length_bin, margin, page_bin, wrap_bin;
+      bit unaligned;
+      burst_index = int'(req.burst);
+      length_bin = (req.len == 0) ? 0 : ((req.len < 16) ? 1 : 2);
+      margin = 4095 - int'((limit - 1) & 64'hfff);
+      page_bin = (margin == 0) ? 2 : ((margin <= 15) ? 1 : 0);
+      burst_size_hits[is_random][burst_index][req.size]++;
+      burst_len_hits[is_random][burst_index][length_bin]++;
+      page_hits[is_random][burst_index][page_bin]++;
+      if (req.burst == AXI4_BURST_INCR) begin
+        unaligned = ((req.start_addr & (step - 1)) != 0);
+        incr_align_hits[is_random][req.size][unaligned]++;
+        if (page_bin == 2)
+          incr_end_align_hits[is_random][req.size][unaligned]++;
+        if (req.len == 255)
+          incr_max_hits[is_random][req.size]++;
+      end
+      if (req.burst == AXI4_BURST_WRAP) begin
+        case (req.len)
+          1: wrap_bin = 0;
+          3: wrap_bin = 1;
+          7: wrap_bin = 2;
+          15: wrap_bin = 3;
+        endcase
+        wrap_len_hits[is_random][req.size][wrap_bin]++;
+        if (saw_rollover)
+          wrap_roll_hits[is_random][wrap_bin]++;
+      end
+    endfunction
+
+    function automatic void report_bin(
+        string name, int unsigned directed_hits, random_hits, bit legal = 1);
+      string status;
+      if (directed_hits + random_hits != 0)
+        status = "HIT";
+      else if (legal)
+        status = "MISS";
+      else
+        status = "NOT_APPLICABLE";
+      `uvm_info("ADDR_REF_COV", $sformatf(
+        "%s directed=%0d random=%0d status=%s", name, directed_hits, random_hits, status), UVM_NONE)
+    endfunction
+
+    function automatic void report_coverage();
+      axi4_burst_e burst;
+      string length_names[3] = '{"single", "short_2_to_16", "long_17_to_256"};
+      string page_names[3] = '{"ordinary", "near_1_to_15_bytes", "exact_page_end"};
+      for (int b = 0; b < 3; b++) begin
+        burst = axi4_burst_e'(b);
+        for (int s = 0; s < 4; s++)
+          report_bin($sformatf("burst=%s size=%0d", burst.name(), s),
+            burst_size_hits[0][b][s], burst_size_hits[1][b][s]);
+        for (int l = 0; l < 3; l++) begin
+          report_bin($sformatf("burst=%s length=%s", burst.name(), length_names[l]),
+            burst_len_hits[0][b][l], burst_len_hits[1][b][l],
+            (b == int'(AXI4_BURST_INCR)) || (l == 1) ||
+            (b == int'(AXI4_BURST_FIXED) && l == 0));
+          report_bin($sformatf("burst=%s page=%s", burst.name(), page_names[l]),
+            page_hits[0][b][l], page_hits[1][b][l]);
+        end
+      end
+      for (int s = 0; s < 4; s++) begin
+        for (int a = 0; a < 2; a++) begin
+          report_bin($sformatf("incr size=%0d unaligned=%0d", s, a),
+            incr_align_hits[0][s][a], incr_align_hits[1][s][a], s != 0 || a == 0);
+          report_bin($sformatf("incr_page_end size=%0d unaligned=%0d", s, a),
+            incr_end_align_hits[0][s][a], incr_end_align_hits[1][s][a], s != 0 || a == 0);
+        end
+        report_bin($sformatf("incr_256 size=%0d", s), incr_max_hits[0][s], incr_max_hits[1][s]);
+        for (int w = 0; w < 4; w++)
+          report_bin($sformatf("wrap size=%0d beats=%0d", s, 2 << w),
+            wrap_len_hits[0][s][w], wrap_len_hits[1][s][w]);
+      end
+      for (int w = 0; w < 4; w++)
+        report_bin($sformatf("wrap_rollover beats=%0d", 2 << w),
+          wrap_roll_hits[0][w], wrap_roll_hits[1][w]);
+    endfunction
+
+    task automatic check_burst(
+        input string name,
+        input axi4_addr_ref_input_t req,
+        input case_kind_e kind,
+        input longint unsigned golden[]);
+      longint unsigned step, lower, limit, previous_addr, ref_addr, common_addr;
+      int unsigned errors_before;
+      string reason, stimulus;
+      bit saw_rollover;
+
+      reason = request_window(req, step, lower, limit);
+      if (reason != "" || (kind == GOLDEN_CASE && golden.size() != req.len + 1)) begin
+        if (reason == "")
+          reason = $sformatf("expected %0d Golden values, got %0d", req.len + 1, golden.size());
+        input_errors++;
+        `uvm_error("ADDR_REF_INPUT", $sformatf(
+          "%s expected_addr=n/a actual_addr=n/a reason=%s", stimulus_info(name, req, 0), reason))
+        return;
+      end
+
+      transactions[kind]++;
+      errors_before = mismatches + property_errors;
+      previous_addr = req.start_addr;
+      saw_rollover = 0;
+      for (int unsigned beat = 0; beat <= req.len; beat++) begin
+        stimulus = stimulus_info(name, req, beat);
+        if (!tb_expected_beat_addr(req.start_addr, req.size, req.len,
+                                   req.burst, beat, DATA_W, ref_addr)) begin
+          input_errors++;
+          `uvm_error("ADDR_REF_INPUT", $sformatf(
+            "%s expected_addr=n/a actual_addr=n/a reference rejected a legal request", stimulus))
+          return;
+        end
+        common_addr = axi4_beat_addr(req.start_addr, req.size, req.len, req.burst, beat);
+        beats_checked[kind]++;
+        if (kind == GOLDEN_CASE) begin
+          compare_address("golden_vs_reference", stimulus, golden[beat], ref_addr);
+          compare_address("golden_vs_common", stimulus, golden[beat], common_addr);
+        end
+        compare_address("reference_vs_common", stimulus, ref_addr, common_addr);
+        check_progress(req.burst, beat, stimulus, req.start_addr, step,
+                       lower, limit, previous_addr, common_addr);
+        if (beat != 0 && common_addr < previous_addr)
+          saw_rollover = 1;
+        previous_addr = common_addr;
+      end
+      sample_coverage(req, step, limit, kind == RANDOM_CASE, saw_rollover);
+      if (kind == GOLDEN_CASE)
+        `uvm_info("ADDR_REF_CASE", $sformatf("case=%s beats=%0d status=%s",
+          name, req.len + 1, (mismatches + property_errors == errors_before) ? "PASS" : "FAIL"),
+          UVM_NONE)
     endtask
-
 
     task run_phase(uvm_phase phase);
-
-      longint unsigned fixed_exp[4];
-      longint unsigned incr_exp[4];
-      longint unsigned wrap_exp[4];
-      longint unsigned unaligned_exp[3];
+      axi4_addr_ref_random sample;
+      axi4_addr_ref_input_t req;
+      int iterations = 1000;
+      longint unsigned fixed_exp[4] = '{'h1028, 'h1028, 'h1028, 'h1028};
+      longint unsigned incr_exp[4] = '{'h1028, 'h1030, 'h1038, 'h1040};
+      longint unsigned wrap_exp[4] = '{'h1028, 'h1030, 'h1038, 'h1020};
+      longint unsigned unaligned_exp[3] = '{'h1007, 'h1008, 'h100c};
+      longint unsigned page_incr_exp[3] = '{'hffff_fff7, 'hffff_fff8, 'hffff_fffc};
+      longint unsigned page_wrap_exp[2] = '{'hffff_fff8, 'hffff_fff0};
+      longint unsigned near_wrap_exp[4] = '{'hfff7, 'hfff4, 'hfff5, 'hfff6};
+      longint unsigned no_golden[];
 
       phase.raise_objection(this);
+      void'($value$plusargs("ADDR_REF_ITERS=%d", iterations));
+      void'($value$plusargs("ADDR_REF_SEED=%d", seed));
+      if ($isunknown(iterations) || iterations <= 0 || $isunknown(seed)) begin
+        `uvm_error("ADDR_REF_CONFIG", $sformatf(
+          "ADDR_REF_ITERS must be positive and seed numeric: iterations=%0d seed=%0d", iterations, seed))
+        $fatal(1, "ADDR_REF_FAIL invalid options");
+      end
+      sample = new();
+      sample.srandom(seed);
+      `uvm_info("ADDR_REF", $sformatf("iterations=%0d seed=%0d", iterations, seed), UVM_NONE)
 
-      // Case 1: FIXED
-      fixed_exp[0] = 'h1028;
-      fixed_exp[1] = 'h1028;
-      fixed_exp[2] = 'h1028;
-      fixed_exp[3] = 'h1028;
+      check_burst("FIXED", '{'h1028, 3, 3, AXI4_BURST_FIXED}, GOLDEN_CASE, fixed_exp);
+      check_burst("ALIGNED_INCR", '{'h1028, 3, 3, AXI4_BURST_INCR}, GOLDEN_CASE, incr_exp);
+      check_burst("WRAP", '{'h1028, 3, 3, AXI4_BURST_WRAP}, GOLDEN_CASE, wrap_exp);
+      check_burst("UNALIGNED_INCR", '{'h1007, 2, 2, AXI4_BURST_INCR}, GOLDEN_CASE, unaligned_exp);
+      check_burst("UNALIGNED_INCR_PAGE_END", '{'hffff_fff7, 2, 2, AXI4_BURST_INCR},
+                  GOLDEN_CASE, page_incr_exp);
+      check_burst("WRAP_ADDRESS_SPACE_END", '{'hffff_fff8, 3, 1, AXI4_BURST_WRAP},
+                  GOLDEN_CASE, page_wrap_exp);
+      // The 4-byte wrap window [0xfff4, 0xfff8) leaves eight bytes in the page.
+      check_burst("WRAP_NEAR_PAGE_END", '{'hfff7, 0, 3, AXI4_BURST_WRAP},
+                  GOLDEN_CASE, near_wrap_exp);
 
-      check_case("FIXED",
-        'h1028, 3, 3, AXI4_BURST_FIXED, 64, fixed_exp);
+      for (int unsigned size = 0; size < 4; size++) begin
+        req = '{64'h1_0000_0000 - (64'd256 << size), size, 255, AXI4_BURST_INCR};
+        check_burst("INCR_256_ALIGNED_PAGE_END", req, DIRECTED_CASE, no_golden);
+        if (size != 0) begin
+          // Same aligned window, with a partial first transfer.
+          req.start_addr++;
+          check_burst("INCR_256_UNALIGNED_PAGE_END", req, DIRECTED_CASE, no_golden);
+        end
+      end
 
-      // Case 2: Aligned INCR
-      incr_exp[0] = 'h1028;
-      incr_exp[1] = 'h1030;
-      incr_exp[2] = 'h1038;
-      incr_exp[3] = 'h1040;
+      for (int i = 0; i < iterations; i++) begin
+        if (!sample.randomize()) begin
+          randomize_errors++;
+          `uvm_error("ADDR_REF_RANDOMIZE", $sformatf(
+            "iteration=%0d seed=%0d no request generated AWADDR=n/a AWSIZE=n/a AWLEN=n/a AWBURST=n/a beat=n/a expected_addr=n/a actual_addr=n/a",
+            i, seed))
+          continue;
+        end
+        req = '{{32'b0, sample.start_addr}, sample.size, sample.len, sample.burst};
+        `uvm_info("ADDR_REF_SAMPLE", stimulus_info($sformatf("random[%0d]", i), req, 0), UVM_HIGH)
+        check_burst($sformatf("random[%0d]", i), req, RANDOM_CASE, no_golden);
+      end
 
-      check_case("ALIGNED_INCR",
-        'h1028, 3, 3, AXI4_BURST_INCR, 64, incr_exp);
+      report_coverage();
+      `uvm_info("ADDR_REF_SUMMARY", $sformatf(
+        {"seed=%0d requested=%0d golden_txns=%0d golden_beats=%0d directed_txns=%0d directed_beats=%0d ",
+         "random_txns=%0d random_beats=%0d beats=%0d comparisons=%0d mismatches=%0d ",
+         "property_errors=%0d input_errors=%0d randomize_errors=%0d"},
+        seed, iterations, transactions[GOLDEN_CASE], beats_checked[GOLDEN_CASE],
+        transactions[DIRECTED_CASE], beats_checked[DIRECTED_CASE],
+        transactions[RANDOM_CASE], beats_checked[RANDOM_CASE],
+        beats_checked[GOLDEN_CASE] + beats_checked[DIRECTED_CASE] + beats_checked[RANDOM_CASE],
+        comparisons, mismatches, property_errors, input_errors, randomize_errors), UVM_NONE)
 
-      // Case 3: WRAP
-      wrap_exp[0] = 'h1028;
-      wrap_exp[1] = 'h1030;
-      wrap_exp[2] = 'h1038;
-      wrap_exp[3] = 'h1020;
-
-      check_case("WRAP",
-        'h1028, 3, 3, AXI4_BURST_WRAP, 64, wrap_exp);
-
-      // Case 4: Unaligned INCR
-      unaligned_exp[0] = 'h1007;
-      unaligned_exp[1] = 'h1008;
-      unaligned_exp[2] = 'h100C;
-
-      check_case("UNALIGNED_INCR",
-        'h1007, 2, 2, AXI4_BURST_INCR, 64,
-        unaligned_exp);
-
-      `uvm_info("ADDR_REF",
-        "All independent address reference cases completed",
-        UVM_NONE)
-
+      // Report all check failures before stopping. The VCS runner uses
+      // -exitstatus for this test so the fatal also fails the shell command.
+      if (mismatches || property_errors || input_errors || randomize_errors ||
+          transactions[RANDOM_CASE] != iterations)
+        $fatal(1, "ADDR_REF_FAIL see ADDR_REF errors and summary above");
+      `uvm_info("ADDR_REF_PASS", "Independent burst address checks passed", UVM_NONE)
       phase.drop_objection(this);
-
     endtask
-
   endclass
 
 
@@ -2043,5 +2293,8 @@ endtask
 
   endclass
 
+
+  `include "axi4_id_width_test.svh"
+  `include "axi4_coverage_closure_tests.svh"
 
 endpackage

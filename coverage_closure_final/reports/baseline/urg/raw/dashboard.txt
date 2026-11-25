@@ -1,0 +1,33 @@
+Dashboard
+
+Date: Tue Nov 24 23:44:01 2026
+
+User: ICer
+
+Version: O-2018.09-SP2
+Command line: urg -full64 -dir /home/ICer/icdv_project/kvips/coverage_closure_final/reports/baseline/coverage.vdb -format both -show ratios -show tests -cond ids -group maxmissing 1000 -group show_bin_values -report /home/ICer/icdv_project/kvips/coverage_closure_final/reports/baseline/urg/raw
+Number of tests: 23
+
+-------------------------------------------------------------------------------
+Total Coverage Summary 
+SCORE   LINE            COND          TOGGLE            BRANCH        ASSERT        GROUP        
+ 76.33   84.30 204/242   55.91 52/93   74.37 1114/1498   72.41 42/58   78.57 22/28   92.41 73/79 
+
+
+-------------------------------------------------------------------------------
+Hierarchical coverage data for top-level instances 
+SCORE   LINE            COND          TOGGLE            BRANCH        ASSERT        NAME 
+ 73.11   84.30 204/242   55.91 52/93   74.37 1114/1498   72.41 42/58   78.57 22/28  top  
+
+
+-------------------------------------------------------------------------------
+Total Module Definition Coverage Summary 
+SCORE   LINE            COND          TOGGLE            BRANCH        ASSERT       
+ 72.24   84.30 204/242   55.91 52/93   74.37 1114/1498   72.41 42/58   74.19 23/31 
+
+
+-------------------------------------------------------------------------------
+Total Groups Coverage Summary 
+COVERED EXPECTED SCORE  COVERED EXPECTED INST SCORE WEIGHT 
+73      79        92.41 73      79        92.41     1      
+

@@ -1,0 +1,73 @@
+Assertions
+
+
+Assertions by Category
+           ASSERT PROPERTIES SEQUENCES
+Total          31          0         0
+Category 0     31          0         0
+
+-------------------------------------------------------------------------------
+
+Assertions by Severity
+           ASSERT PROPERTIES SEQUENCES
+Total          31          0         0
+Severity 0     31          0         0
+
+-------------------------------------------------------------------------------
+
+Summary for Assertions
+                 NUMBER PERCENT
+Total Number         31  100.00
+Uncovered             3    9.68
+Success              28   90.32
+Failure               0    0.00
+Incomplete            0    0.00
+Without Attempts      2    6.45
+
+-------------------------------------------------------------------------------
+
+Detail Report for Assertions
+
+Assertions Uncovered:
+                       ASSERTIONS                       CATEGORY SEVERITY ATTEMPTS REAL SUCCESSES FAILURES INCOMPLETE
+top.axi.a_kvips_aw_excl_restrictions                           0        0    54988              0        0          0
+uvm_pkg.\uvm_reg_map::do_read .unnamed$$_0.unnamed$$_1         0        0        0              0        0          0
+uvm_pkg.\uvm_reg_map::do_write .unnamed$$_0.unnamed$$_1        0        0        0              0        0          0
+
+Assertions Success:
+                          ASSERTIONS                          CATEGORY SEVERITY ATTEMPTS REAL SUCCESSES FAILURES INCOMPLETE
+top.axi.a_kvips_ar_burst_legal                                       0        0    54988           1530        0          0
+top.axi.a_kvips_ar_excl_restrictions                                 0        0    54988              1        0          0
+top.axi.a_kvips_ar_hold                                              0        0    54988            829        0          0
+top.axi.a_kvips_ar_len_legal                                         0        0    54988           1530        0          0
+top.axi.a_kvips_ar_no_4kb_cross                                      0        0    54988           1530        0          0
+top.axi.a_kvips_ar_size_legal                                        0        0    54988           1530        0          0
+top.axi.a_kvips_ar_transaction_size_legal                            0        0    54988           1530        0          0
+top.axi.a_kvips_ar_wrap_addr_aligned                                 0        0    54988           1530        0          0
+top.axi.a_kvips_ar_wrap_len_legal                                    0        0    54988           1530        0          0
+top.axi.a_kvips_aw_burst_legal                                       0        0    54988           1618        0          0
+top.axi.a_kvips_aw_hold                                              0        0    54988            924        0          0
+top.axi.a_kvips_aw_len_legal                                         0        0    54988           1618        0          0
+top.axi.a_kvips_aw_no_4kb_cross                                      0        0    54988           1618        0          0
+top.axi.a_kvips_aw_size_legal                                        0        0    54988           1618        0          0
+top.axi.a_kvips_aw_transaction_size_legal                            0        0    54988           1618        0          0
+top.axi.a_kvips_aw_wrap_addr_aligned                                 0        0    54988           1618        0          0
+top.axi.a_kvips_aw_wrap_len_legal                                    0        0    54988           1618        0          0
+top.axi.a_kvips_b_hold                                               0        0    54988            768        0          0
+top.axi.a_kvips_known_ar                                             0        0    54988            747        0          0
+top.axi.a_kvips_known_aw                                             0        0    54988            844        0          0
+top.axi.a_kvips_known_b                                              0        0    54988            218        0          0
+top.axi.a_kvips_known_r                                              0        0    54988            503        0          0
+top.axi.a_kvips_known_w                                              0        0    54988            384        0          0
+top.axi.a_kvips_outs_r_limit                                         0        0    54988          54754        0          0
+top.axi.a_kvips_outs_w_limit                                         0        0    54988          54754        0          0
+top.axi.a_kvips_r_hold                                               0        0    54988            298        0          0
+top.axi.a_kvips_w_hold                                               0        0    54988            717        0          0
+uvm_pkg.\uvm_component_name_check_visitor::visit .unnamed$$_0        0        0      806            806        0          0
+
+Assertions Without Attempts:
+                       ASSERTIONS                       CATEGORY SEVERITY ATTEMPTS REAL SUCCESSES FAILURES INCOMPLETE
+uvm_pkg.\uvm_reg_map::do_read .unnamed$$_0.unnamed$$_1         0        0        0              0        0          0
+uvm_pkg.\uvm_reg_map::do_write .unnamed$$_0.unnamed$$_1        0        0        0              0        0          0
+
+

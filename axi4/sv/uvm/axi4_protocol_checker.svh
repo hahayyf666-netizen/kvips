@@ -249,12 +249,16 @@ class axi4_protocol_checker #(
           aw.id, aw.beats, early_beats));
       end
 
-      // Stage 3 will check each cached strobe before removal.
+      // Consume exactly this completed W burst. The FIFO order supplies
+      // the association because AXI4 W has no transaction ID.
       for (int unsigned i = 0; i < early_beats; i++) begin
         if (early_w_strbs.size() == 0) begin
           checker_error("Early WSTRB cache underflow");
         end else begin
-          void'(early_w_strbs.pop_front());
+          logic [DATA_W/8-1:0] strobe;
+          strobe = early_w_strbs.pop_front();
+          if (i < aw.beats)
+            check_wstrb_for_beat(aw, i, strobe);
         end
       end
 

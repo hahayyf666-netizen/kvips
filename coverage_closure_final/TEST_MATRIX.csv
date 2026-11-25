@@ -1,0 +1,38 @@
+﻿Test,Category,Seed,Baseline,Final,Baseline SIM_RC,Final SIM_RC,UVM_ERROR,UVM_FATAL,Checker errors,Scoreboard mismatches,AW,W,B,AR,R,Evidence,Intent
+axi4_dut_smoke_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,48,114,48,48,114,reports/final/regression/axi4_dut_smoke_test.log,Existing DUT regression
+axi4_dut_burst_mix_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,70,316,70,70,316,reports/final/regression/axi4_dut_burst_mix_test.log,Existing DUT regression
+axi4_dut_narrow_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,49,116,49,49,116,reports/final/regression/axi4_dut_narrow_test.log,Existing DUT regression
+axi4_dut_wrap_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,24,204,24,24,204,reports/final/regression/axi4_dut_wrap_test.log,Existing DUT regression
+axi4_dut_strobe_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,9,9,9,8,8,reports/final/regression/axi4_dut_strobe_test.log,Existing DUT regression
+axi4_dut_unaligned_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,8,8,8,8,8,reports/final/regression/axi4_dut_unaligned_test.log,Existing DUT regression
+axi4_dut_boundary_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,4,296,4,4,296,reports/final/regression/axi4_dut_boundary_test.log,Existing DUT regression
+axi4_dut_pipeline_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,16,64,16,16,64,reports/final/regression/axi4_dut_pipeline_test.log,Existing DUT regression
+axi4_dut_error_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,1,1,1,1,1,reports/final/regression/axi4_dut_error_test.log,DUT expected DECERR for one write and one read
+axi4_dut_delay_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,32,143,32,32,143,reports/final/regression/axi4_dut_delay_test.log,Existing DUT regression
+axi4_dut_ral_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,2,2,2,2,2,reports/final/regression/axi4_dut_ral_test.log,Existing DUT regression
+axi4_dut_wrap_alignment_test,DUT positive,1,PASS,PASS,2,2,0,0,0,0,1,4,1,1,4,reports/final/regression/axi4_dut_wrap_alignment_test.log,Expected solver rejection then valid WRAP traffic
+axi4_dut_fixed_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,1,4,1,1,4,reports/final/regression/axi4_dut_fixed_test.log,Existing DUT regression
+axi4_dut_incr_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,1,4,1,1,4,reports/final/regression/axi4_dut_incr_test.log,Existing DUT regression
+axi4_dut_narrow_directed_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,6,24,6,6,24,reports/final/regression/axi4_dut_narrow_directed_test.log,Existing DUT regression
+axi4_dut_4kb_boundary_test,DUT positive,1,PASS,PASS,2,2,0,0,0,0,1,2,1,1,2,reports/final/regression/axi4_dut_4kb_boundary_test.log,Expected solver rejection then valid 4KB-edge traffic
+axi4_dut_lane_sweep_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,16,16,16,16,16,reports/final/regression/axi4_dut_lane_sweep_test.log,Starting byte lanes 0–7
+axi4_dut_burst_size_cross_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,6,24,6,6,24,reports/final/regression/axi4_dut_burst_size_cross_test.log,Existing DUT regression
+axi4_dut_len_256_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,1,256,1,1,256,reports/final/regression/axi4_dut_len_256_test.log,256 beats in each direction
+axi4_dut_sideband_coverage_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,8,8,8,8,8,reports/final/regression/axi4_dut_sideband_coverage_test.log,Existing DUT regression
+axi4_dut_lock_coverage_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,1,1,1,1,1,reports/final/regression/axi4_dut_lock_coverage_test.log,Existing DUT regression
+axi4_dut_unaligned_incr_e2e_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,1,3,1,1,3,reports/final/regression/axi4_dut_unaligned_incr_e2e_test.log,Existing DUT regression
+axi4_dut_id_width_test,DUT positive,1,PASS,PASS,0,0,0,0,0,0,3,3,3,3,3,reports/final/regression/axi4_dut_id_width_test.log,Three writes and reads with ID 0/F/0
+axi4_dut_closure_toggle_test,DUT positive,1,—,PASS,—,0,0,0,0,0,181,181,181,197,197,reports/final/regression/axi4_dut_closure_toggle_test.log,132 data patterns; 29 address bits/regions; 16 DECERR pairs and sentinels
+axi4_dut_closure_random_test,DUT positive,1,—,PASS,—,0,0,0,0,0,140,9137,140,132,7089,reports/final/regression/axi4_dut_closure_random_test.log,132 constrained pairs; narrow masks; address/length/size/ID/data/delay
+axi4_dut_closure_bready_test,DUT positive,1,—,PASS,—,0,0,0,0,0,64,256,64,64,256,reports/final/regression/axi4_dut_closure_bready_test.log,64 bursts per direction; B hold; known SVA; captured waveform / DUTDBG
+axi4_dut_addr_ref_test,Algorithm only,1,PASS,—,0,—,0,0,—,—,0,0,0,0,0,METHOD_EVIDENCE/functional_coverage/addr_ref_runner.log,"42,717 beats and 42,765 comparisons; separate compile/replay"
+closure_bready_control,Dedicated A/B control,1,—,PASS,—,0,0,0,0,0,64,256,64,64,256,METHOD_EVIDENCE/backpressure/control/control.log,"Same 64 bursts, pipelined BREADY random disabled"
+early_w_before_legal,Checker-only,1,PASS,—,0,—,0,0,0,—,4,6,4,0,0,METHOD_EVIDENCE/negative_tests/early_w_before_verified/legal.log,"Two complete early bursts, one overlapping AW and one AW-first control"
+early_w_before_injected,Checker-only,1,Miss reproduced,—,0,—,0,0,0,—,4,6,4,0,0,METHOD_EVIDENCE/negative_tests/early_w_before_verified/injected.log,"Two complete early bursts, one overlapping AW and one AW-first control"
+early_w_after_legal,Checker-only,1,—,PASS,—,0,0,0,0,—,4,6,4,0,0,METHOD_EVIDENCE/negative_tests/early_w_after/legal.log,"Two complete early bursts, one overlapping AW and one AW-first control"
+early_w_after_injected,Checker-only,1,—,Expected error detected,—,0,1,0,1,—,4,6,4,0,0,METHOD_EVIDENCE/negative_tests/early_w_after/injected.log,"Two complete early bursts, one overlapping AW and one AW-first control"
+run_wstrb_negative,Historical injection,—,—,Log confirmed expected error,—,—,1,0,1,—,4,296,4,4,296,METHOD_EVIDENCE/negative_tests/run_wstrb_negative.log,One illegal WSTRB
+run_wlast_missing,Historical injection,—,—,Log confirmed expected error,—,—,1,0,1,—,1,4,1,0,0,METHOD_EVIDENCE/negative_tests/run_wlast_missing.log,Missing WLAST; orphan B
+run_wlast_premature,Historical injection,—,—,Log confirmed expected error,—,—,1,0,1,—,1,2,1,0,0,METHOD_EVIDENCE/negative_tests/run_wlast_premature.log,Premature WLAST; length mismatch
+AW Hold,Historical description,—,—,Source log unavailable,—,—,—,—,—,—,—,—,—,—,—,REGRESSION_SUMMARY.md,Assignment records an AW Hold negative experiment
+4KB SVA,Historical description,—,—,Source log unavailable,—,—,—,—,—,—,—,—,—,—,—,REGRESSION_SUMMARY.md,Assignment records two detections (AW and AR)

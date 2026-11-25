@@ -1,0 +1,94 @@
+﻿Module,Source File,Line Number,Expression,Subconditions (URG column order),Vector,Baseline Hit,Current Hit
+top,axi4/examples/uvm_dut/tb/top.sv,47,(top.dut.rd_active || top.axi.arvalid || top.axi.rvalid || top.axi.rready),1: top.dut.rd_active | 2: top.axi.arvalid | 3: top.axi.rvalid | 4: top.axi.rready,c1 v1 0000,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,47,(top.dut.rd_active || top.axi.arvalid || top.axi.rvalid || top.axi.rready),1: top.dut.rd_active | 2: top.axi.arvalid | 3: top.axi.rvalid | 4: top.axi.rready,c1 v2 0001,0,0
+top,axi4/examples/uvm_dut/tb/top.sv,47,(top.dut.rd_active || top.axi.arvalid || top.axi.rvalid || top.axi.rready),1: top.dut.rd_active | 2: top.axi.arvalid | 3: top.axi.rvalid | 4: top.axi.rready,c1 v3 0010,0,0
+top,axi4/examples/uvm_dut/tb/top.sv,47,(top.dut.rd_active || top.axi.arvalid || top.axi.rvalid || top.axi.rready),1: top.dut.rd_active | 2: top.axi.arvalid | 3: top.axi.rvalid | 4: top.axi.rready,c1 v4 0100,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,47,(top.dut.rd_active || top.axi.arvalid || top.axi.rvalid || top.axi.rready),1: top.dut.rd_active | 2: top.axi.arvalid | 3: top.axi.rvalid | 4: top.axi.rready,c1 v5 1000,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,49,(top.axi.awvalid && top.axi.awready),1: top.axi.awvalid | 2: top.axi.awready,c2 v1 01,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,49,(top.axi.awvalid && top.axi.awready),1: top.axi.awvalid | 2: top.axi.awready,c2 v2 10,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,49,(top.axi.awvalid && top.axi.awready),1: top.axi.awvalid | 2: top.axi.awready,c2 v3 11,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,50,(top.axi.wvalid && top.axi.wready),1: top.axi.wvalid | 2: top.axi.wready,c3 v1 01,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,50,(top.axi.wvalid && top.axi.wready),1: top.axi.wvalid | 2: top.axi.wready,c3 v2 10,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,50,(top.axi.wvalid && top.axi.wready),1: top.axi.wvalid | 2: top.axi.wready,c3 v3 11,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,51,(top.axi.wvalid && ((!top.axi.wready))),1: top.axi.wvalid | 2: ((!top.axi.wready)),c4 v1 01,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,51,(top.axi.wvalid && ((!top.axi.wready))),1: top.axi.wvalid | 2: ((!top.axi.wready)),c4 v2 10,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,51,(top.axi.wvalid && ((!top.axi.wready))),1: top.axi.wvalid | 2: ((!top.axi.wready)),c4 v3 11,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,54,(top.axi.bvalid && top.axi.bready),1: top.axi.bvalid | 2: top.axi.bready,c5 v1 01,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,54,(top.axi.bvalid && top.axi.bready),1: top.axi.bvalid | 2: top.axi.bready,c5 v2 10,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,54,(top.axi.bvalid && top.axi.bready),1: top.axi.bvalid | 2: top.axi.bready,c5 v3 11,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,55,(top.axi.arvalid && top.axi.arready),1: top.axi.arvalid | 2: top.axi.arready,c6 v1 01,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,55,(top.axi.arvalid && top.axi.arready),1: top.axi.arvalid | 2: top.axi.arready,c6 v2 10,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,55,(top.axi.arvalid && top.axi.arready),1: top.axi.arvalid | 2: top.axi.arready,c6 v3 11,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,56,(top.axi.rvalid && top.axi.rready),1: top.axi.rvalid | 2: top.axi.rready,c7 v1 01,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,56,(top.axi.rvalid && top.axi.rready),1: top.axi.rvalid | 2: top.axi.rready,c7 v2 10,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,56,(top.axi.rvalid && top.axi.rready),1: top.axi.rvalid | 2: top.axi.rready,c7 v3 11,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,57,(top.axi.rvalid && ((!top.axi.rready))),1: top.axi.rvalid | 2: ((!top.axi.rready)),c8 v1 01,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,57,(top.axi.rvalid && ((!top.axi.rready))),1: top.axi.rvalid | 2: ((!top.axi.rready)),c8 v2 10,0,1
+top,axi4/examples/uvm_dut/tb/top.sv,57,(top.axi.rvalid && ((!top.axi.rready))),1: top.axi.rvalid | 2: ((!top.axi.rready)),c8 v3 11,0,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,401,(((!areset_n)) || ((!kvips_axi4_assertions_on))),1: ((!areset_n)) | 2: ((!kvips_axi4_assertions_on)),c1 v1 00,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,401,(((!areset_n)) || ((!kvips_axi4_assertions_on))),1: ((!areset_n)) | 2: ((!kvips_axi4_assertions_on)),c1 v2 01,0,0
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,401,(((!areset_n)) || ((!kvips_axi4_assertions_on))),1: ((!areset_n)) | 2: ((!kvips_axi4_assertions_on)),c1 v3 10,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,413,(awvalid && awready),1: awvalid | 2: awready,c2 v1 01,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,413,(awvalid && awready),1: awvalid | 2: awready,c2 v2 10,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,413,(awvalid && awready),1: awvalid | 2: awready,c2 v3 11,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,422,(wvalid && wready),1: wvalid | 2: wready,c3 v1 01,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,422,(wvalid && wready),1: wvalid | 2: wready,c3 v2 10,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,422,(wvalid && wready),1: wvalid | 2: wready,c3 v3 11,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,431,((ctx.beats_left == 1) && ((!wlast))),1: (ctx.beats_left == 1) | 2: ((!wlast)),c4 v1 01,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,431,((ctx.beats_left == 1) && ((!wlast))),1: (ctx.beats_left == 1) | 2: ((!wlast)),c4 v2 10,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,431,((ctx.beats_left == 1) && ((!wlast))),1: (ctx.beats_left == 1) | 2: ((!wlast)),c4 v3 11,0,0
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,434,((ctx.beats_left != 1) && wlast),1: (ctx.beats_left != 1) | 2: wlast,c5 v1 01,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,434,((ctx.beats_left != 1) && wlast),1: (ctx.beats_left != 1) | 2: wlast,c5 v2 10,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,434,((ctx.beats_left != 1) && wlast),1: (ctx.beats_left != 1) | 2: wlast,c5 v3 11,0,0
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,455,(bvalid && bready),1: bvalid | 2: bready,c6 v1 01,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,455,(bvalid && bready),1: bvalid | 2: bready,c6 v2 10,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,455,(bvalid && bready),1: bvalid | 2: bready,c6 v3 11,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,461,((bresp == KVIPS_AXI4_RESP_EXOKAY) && ((!lock_seen))),1: (bresp == KVIPS_AXI4_RESP_EXOKAY) | 2: ((!lock_seen)),c7 v1 01,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,461,((bresp == KVIPS_AXI4_RESP_EXOKAY) && ((!lock_seen))),1: (bresp == KVIPS_AXI4_RESP_EXOKAY) | 2: ((!lock_seen)),c7 v2 10,0,0
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,461,((bresp == KVIPS_AXI4_RESP_EXOKAY) && ((!lock_seen))),1: (bresp == KVIPS_AXI4_RESP_EXOKAY) | 2: ((!lock_seen)),c7 v3 11,0,0
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,471,(arvalid && arready),1: arvalid | 2: arready,c8 v1 01,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,471,(arvalid && arready),1: arvalid | 2: arready,c8 v2 10,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,471,(arvalid && arready),1: arvalid | 2: arready,c8 v3 11,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,477,(rvalid && rready),1: rvalid | 2: rready,c9 v1 01,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,477,(rvalid && rready),1: rvalid | 2: rready,c9 v2 10,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,477,(rvalid && rready),1: rvalid | 2: rready,c9 v3 11,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,485,((beats_left == 1) && ((!rlast))),1: (beats_left == 1) | 2: ((!rlast)),c10 v1 01,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,485,((beats_left == 1) && ((!rlast))),1: (beats_left == 1) | 2: ((!rlast)),c10 v2 10,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,485,((beats_left == 1) && ((!rlast))),1: (beats_left == 1) | 2: ((!rlast)),c10 v3 11,0,0
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,488,((beats_left != 1) && rlast),1: (beats_left != 1) | 2: rlast,c11 v1 01,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,488,((beats_left != 1) && rlast),1: (beats_left != 1) | 2: rlast,c11 v2 10,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,488,((beats_left != 1) && rlast),1: (beats_left != 1) | 2: rlast,c11 v3 11,0,0
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,491,(kvips_axi4_excl_checks_on && (rresp == KVIPS_AXI4_RESP_EXOKAY) && ((!lock_seen))),1: kvips_axi4_excl_checks_on | 2: (rresp == KVIPS_AXI4_RESP_EXOKAY) | 3: ((!lock_seen)),c12 v1 011,0,0
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,491,(kvips_axi4_excl_checks_on && (rresp == KVIPS_AXI4_RESP_EXOKAY) && ((!lock_seen))),1: kvips_axi4_excl_checks_on | 2: (rresp == KVIPS_AXI4_RESP_EXOKAY) | 3: ((!lock_seen)),c12 v2 101,1,1
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,491,(kvips_axi4_excl_checks_on && (rresp == KVIPS_AXI4_RESP_EXOKAY) && ((!lock_seen))),1: kvips_axi4_excl_checks_on | 2: (rresp == KVIPS_AXI4_RESP_EXOKAY) | 3: ((!lock_seen)),c12 v3 110,0,0
+axi4_if,axi4/sv/assertions/axi4_if_sva.svh,491,(kvips_axi4_excl_checks_on && (rresp == KVIPS_AXI4_RESP_EXOKAY) && ((!lock_seen))),1: kvips_axi4_excl_checks_on | 2: (rresp == KVIPS_AXI4_RESP_EXOKAY) | 3: ((!lock_seen)),c12 v4 111,0,0
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,153,(awready && awvalid),1: awready | 2: awvalid,c1 v1 01,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,153,(awready && awvalid),1: awready | 2: awvalid,c1 v2 10,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,153,(awready && awvalid),1: awready | 2: awvalid,c1 v3 11,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,169,(wr_active && ((!wready)) && (wready_stall_count != 0)),1: wr_active | 2: ((!wready)) | 3: (wready_stall_count != 0),c2 v1 011,0,0
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,169,(wr_active && ((!wready)) && (wready_stall_count != 0)),1: wr_active | 2: ((!wready)) | 3: (wready_stall_count != 0),c2 v2 101,0,0
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,169,(wr_active && ((!wready)) && (wready_stall_count != 0)),1: wr_active | 2: ((!wready)) | 3: (wready_stall_count != 0),c2 v3 110,0,0
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,169,(wr_active && ((!wready)) && (wready_stall_count != 0)),1: wr_active | 2: ((!wready)) | 3: (wready_stall_count != 0),c2 v4 111,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,178,(wready && wvalid),1: wready | 2: wvalid,c3 v1 01,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,178,(wready && wvalid),1: wready | 2: wvalid,c3 v2 10,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,178,(wready && wvalid),1: wready | 2: wvalid,c3 v3 11,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,192,(wlast || (wr_beat == wr_len)),1: wlast | 2: (wr_beat == wr_len),c4 v1 00,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,192,(wlast || (wr_beat == wr_len)),1: wlast | 2: (wr_beat == wr_len),c4 v2 01,0,0
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,192,(wlast || (wr_beat == wr_len)),1: wlast | 2: (wr_beat == wr_len),c4 v3 10,0,0
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,197,(beat_ok ? 2'b0 : 2'b11),beat_ok,c5 v1 0,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,197,(beat_ok ? 2'b0 : 2'b11),beat_ok,c5 v2 1,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,211,(bvalid && bready),1: bvalid | 2: bready,c6 v1 01,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,211,(bvalid && bready),1: bvalid | 2: bready,c6 v2 10,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,211,(bvalid && bready),1: bvalid | 2: bready,c6 v3 11,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,216,(arready && arvalid),1: arready | 2: arvalid,c7 v1 01,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,216,(arready && arvalid),1: arready | 2: arvalid,c7 v2 10,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,216,(arready && arvalid),1: arready | 2: arvalid,c7 v3 11,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,232,(rd_active && (((!rvalid)) || rready)),1: rd_active | 2: (((!rvalid)) || rready),c8 v1 01,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,232,(rd_active && (((!rvalid)) || rready)),1: rd_active | 2: (((!rvalid)) || rready),c8 v2 10,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,232,(rd_active && (((!rvalid)) || rready)),1: rd_active | 2: (((!rvalid)) || rready),c8 v3 11,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,232,(((!rvalid)) || rready),1: ((!rvalid)) | 2: rready,c9 v1 00,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,232,(((!rvalid)) || rready),1: ((!rvalid)) | 2: rready,c9 v2 01,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,232,(((!rvalid)) || rready),1: ((!rvalid)) | 2: rready,c9 v3 10,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,239,(rvalid && rlast),1: rvalid | 2: rlast,c10 v1 01,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,239,(rvalid && rlast),1: rvalid | 2: rlast,c10 v2 10,1,1
+axi4_ram_slave,axi4/examples/uvm_dut/tb/dut/axi4_ram_slave.sv,239,(rvalid && rlast),1: rvalid | 2: rlast,c10 v3 11,1,1

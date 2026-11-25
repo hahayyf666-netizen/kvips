@@ -44,6 +44,10 @@ has_verbosity=0
 for arg in "$@"; do
   [[ "${arg}" == +UVM_TESTNAME=* ]] && has_test=1
   [[ "${arg}" == +UVM_VERBOSITY=* ]] && has_verbosity=1
+  if [[ "${arg}" == +UVM_TESTNAME=axi4_dut_addr_ref_test ]]; then
+    # VCS otherwise returns zero even for $fatal on this simulator version.
+    args+=(-exitstatus)
+  fi
 done
 [[ ${has_test} -eq 1 ]] || args+=(+UVM_TESTNAME=axi4_dut_smoke_test)
 [[ ${has_verbosity} -eq 1 ]] || args+=(+UVM_VERBOSITY=UVM_LOW)
