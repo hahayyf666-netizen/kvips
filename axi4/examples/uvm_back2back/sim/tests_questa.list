@@ -31,3 +31,6 @@ axi4_b2b_exclusive_cross_id_test
 axi4_b2b_nonpipelined_reset_test
 axi4_b2b_timeout_recovery_test
 axi4_b2b_sideband_policy_test
+axi4_b2b_slverr_write_test
+axi4_b2b_slverr_read_test
+axi4_b2b_sideband_coverage_test

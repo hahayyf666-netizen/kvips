@@ -49,7 +49,7 @@ module top;
   // Optional wave dump
   initial begin
     `include "kvips_wave_dump.svh"
-    `KVIPS_MAYBE_ENABLE_WAVES("kvips_axi4_b2b")
+    `KVIPS_MAYBE_ENABLE_WAVES_SCOPE("kvips_axi4_b2b", top)
   end
 
   // Provide vif to the test

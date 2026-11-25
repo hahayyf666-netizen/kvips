@@ -1696,7 +1696,9 @@ class axi4_error_write_seq #(
     rd0.allocate_payload();
     start_item(rd0);
     finish_item(rd0);
-    if (rd0.data.size() != 1) `uvm_fatal(get_type_name(), "Baseline read unexpected data size")
+    if (rd0.reset_aborted || rd0.timeout_aborted || rd0.data.size() != 1 ||
+        rd0.rresp.size() != 1 || rd0.rresp[0] !== AXI4_RESP_OKAY || $isunknown(rd0.data[0]))
+      `uvm_fatal(get_type_name(), "Baseline read did not return one known OKAY beat")
     baseline = rd0.data[0];
 
     // Error-injected write must not update memory.
@@ -1710,12 +1712,11 @@ class axi4_error_write_seq #(
     wr_err.burst    = AXI4_BURST_INCR;
     wr_err.user     = '0;
     wr_err.allocate_payload();
-    wr_err.data[0] = {$urandom(), $urandom()};
-    if (DATA_W <= 32) wr_err.data[0] = $urandom();
+    wr_err.data[0] = ~baseline;
     wr_err.strb[0] = '1;
     start_item(wr_err);
     finish_item(wr_err);
-    if (wr_err.bresp != expected_bresp) begin
+    if (wr_err.reset_aborted || wr_err.timeout_aborted || wr_err.bresp !== expected_bresp) begin
       `uvm_fatal(get_type_name(), $sformatf("Expected BRESP=%0d for error write, got %0d", expected_bresp, wr_err.bresp))
     end
 
@@ -1731,8 +1732,10 @@ class axi4_error_write_seq #(
     rd.allocate_payload();
     start_item(rd);
     finish_item(rd);
-    if (rd.data.size() != 1) `uvm_fatal(get_type_name(), "Readback unexpected data size")
-    if (rd.data[0] != baseline) begin
+    if (rd.reset_aborted || rd.timeout_aborted || rd.data.size() != 1 ||
+        rd.rresp.size() != 1 || rd.rresp[0] !== AXI4_RESP_OKAY)
+      `uvm_fatal(get_type_name(), "Readback did not complete with one OKAY beat")
+    if (rd.data[0] !== baseline) begin
       `uvm_fatal(get_type_name(), $sformatf("Error-write readback mismatch exp=0x%0h got=0x%0h", baseline, rd.data[0]))
     end
   endtask
@@ -1749,6 +1752,7 @@ class axi4_error_read_seq #(
   rand logic [ADDR_W-1:0] addr = 32'h5000;
   rand logic [ID_W-1:0]   id   = '0;
   rand axi4_resp_e        expected_rresp = AXI4_RESP_DECERR;
+  bit [7:0]               burst_len = 0;
 
   `uvm_object_param_utils(axi4_error_read_seq#(ADDR_W, DATA_W, ID_W, USER_W))
 
@@ -1766,16 +1770,20 @@ class axi4_error_read_seq #(
     wr0.lock     = 1'b0;
     wr0.id       = id;
     wr0.addr     = addr;
-    wr0.len      = 8'd0;
+    wr0.len      = burst_len;
     wr0.size     = $clog2(DATA_W/8);
     wr0.burst    = AXI4_BURST_INCR;
     wr0.user     = '0;
     wr0.allocate_payload();
-    wr0.data[0] = {$urandom(), $urandom()};
-    if (DATA_W <= 32) wr0.data[0] = $urandom();
-    wr0.strb[0] = '1;
+    foreach (wr0.data[i]) begin
+      wr0.data[i] = {$urandom(), $urandom()};
+      if (DATA_W <= 32) wr0.data[i] = $urandom();
+      wr0.strb[i] = '1;
+    end
     start_item(wr0);
     finish_item(wr0);
+    if (wr0.reset_aborted || wr0.timeout_aborted || wr0.bresp !== AXI4_RESP_OKAY)
+      `uvm_fatal(get_type_name(), "Error-read prefill did not complete with OKAY")
 
     // Read should return injected error response.
     rd_err = new("rd_err");
@@ -1783,17 +1791,22 @@ class axi4_error_read_seq #(
     rd_err.lock     = 1'b0;
     rd_err.id       = id;
     rd_err.addr     = addr;
-    rd_err.len      = 8'd0;
+    rd_err.len      = burst_len;
     rd_err.size     = $clog2(DATA_W/8);
     rd_err.burst    = AXI4_BURST_INCR;
     rd_err.user     = '0;
     rd_err.allocate_payload();
     start_item(rd_err);
     finish_item(rd_err);
-    if (rd_err.rresp.size() != 1) `uvm_fatal(get_type_name(), "Error read unexpected rresp size")
-    if (rd_err.rresp[0] != expected_rresp) begin
-      `uvm_fatal(get_type_name(), $sformatf("Expected RRESP=%0d for error read, got %0d", expected_rresp, rd_err.rresp[0]))
+    if (rd_err.reset_aborted || rd_err.timeout_aborted || rd_err.rresp.size() != rd_err.num_beats())
+      `uvm_fatal(get_type_name(), "Error read did not complete with the requested beat count")
+    foreach (rd_err.rresp[i]) begin
+      if (rd_err.rresp[i] !== expected_rresp)
+        `uvm_fatal(get_type_name(), $sformatf("Error read beat %0d expected RRESP=%0d, got %0d",
+          i, expected_rresp, rd_err.rresp[i]))
     end
+    `uvm_info("VIP_RESP_CHECK", $sformatf("Address-scoped read resp=%0d id=%0h beats=%0d passed",
+      expected_rresp, rd_err.id, rd_err.rresp.size()), UVM_LOW)
   endtask
 
 endclass

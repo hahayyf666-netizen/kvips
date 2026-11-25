@@ -761,6 +761,9 @@ package tb_pkg;
   class axi4_b2b_error_write_test extends axi4_b2b_base_test;
     `uvm_component_utils(axi4_b2b_error_write_test)
 
+    localparam logic [ADDR_W-1:0] ERROR_ADDR = 32'h4000;
+    protected axi4_resp_e error_response = AXI4_RESP_DECERR;
+
     function new(string name, uvm_component parent);
       super.new(name, parent);
     endfunction
@@ -770,9 +773,9 @@ package tb_pkg;
       env_cfg.agent_cfgs[1].slave_err_enable   = 1'b1;
       env_cfg.agent_cfgs[1].slave_err_on_write = 1'b1;
       env_cfg.agent_cfgs[1].slave_err_on_read  = 1'b0;
-      env_cfg.agent_cfgs[1].slave_err_start    = 32'h4000;
-      env_cfg.agent_cfgs[1].slave_err_end      = 32'h4000;
-      env_cfg.agent_cfgs[1].slave_err_resp     = AXI4_RESP_DECERR;
+      env_cfg.agent_cfgs[1].slave_err_start    = ERROR_ADDR;
+      env_cfg.agent_cfgs[1].slave_err_end      = ERROR_ADDR;
+      env_cfg.agent_cfgs[1].slave_err_resp     = error_response;
     endfunction
 
     task run_phase(uvm_phase phase);
@@ -784,8 +787,8 @@ package tb_pkg;
       if (seqr == null) `uvm_fatal(get_type_name(), "Master sequencer not found at index 0")
 
       seq = new("seq");
-      seq.addr = 32'h4000;
-      seq.expected_bresp = AXI4_RESP_DECERR;
+      seq.addr = ERROR_ADDR;
+      seq.expected_bresp = error_response;
       seq.start(seqr);
 
       phase.drop_objection(this);
@@ -794,6 +797,11 @@ package tb_pkg;
 
   class axi4_b2b_error_read_test extends axi4_b2b_base_test;
     `uvm_component_utils(axi4_b2b_error_read_test)
+
+    localparam logic [ADDR_W-1:0] ERROR_ADDR = 32'h5000;
+    protected axi4_resp_e error_response = AXI4_RESP_DECERR;
+    protected bit [7:0] burst_len = 0;
+    protected logic [ID_W-1:0] txn_id = '0;
 
     function new(string name, uvm_component parent);
       super.new(name, parent);
@@ -804,9 +812,9 @@ package tb_pkg;
       env_cfg.agent_cfgs[1].slave_err_enable   = 1'b1;
       env_cfg.agent_cfgs[1].slave_err_on_write = 1'b0;
       env_cfg.agent_cfgs[1].slave_err_on_read  = 1'b1;
-      env_cfg.agent_cfgs[1].slave_err_start    = 32'h5000;
-      env_cfg.agent_cfgs[1].slave_err_end      = 32'h5000;
-      env_cfg.agent_cfgs[1].slave_err_resp     = AXI4_RESP_DECERR;
+      env_cfg.agent_cfgs[1].slave_err_start    = ERROR_ADDR;
+      env_cfg.agent_cfgs[1].slave_err_end      = ERROR_ADDR;
+      env_cfg.agent_cfgs[1].slave_err_resp     = error_response;
     endfunction
 
     task run_phase(uvm_phase phase);
@@ -818,10 +826,131 @@ package tb_pkg;
       if (seqr == null) `uvm_fatal(get_type_name(), "Master sequencer not found at index 0")
 
       seq = new("seq");
-      seq.addr = 32'h5000;
-      seq.expected_rresp = AXI4_RESP_DECERR;
+      seq.addr = ERROR_ADDR;
+      seq.id = txn_id;
+      seq.burst_len = burst_len;
+      seq.expected_rresp = error_response;
       seq.start(seqr);
 
+      phase.drop_objection(this);
+    endtask
+  endclass
+
+  class axi4_b2b_slverr_write_test extends axi4_b2b_error_write_test;
+    `uvm_component_utils(axi4_b2b_slverr_write_test)
+    localparam logic [DATA_W-1:0] SENTINEL = 64'h1357_9BDF_2468_ACE0;
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+      error_response = AXI4_RESP_SLVERR;
+    endfunction
+
+    task run_phase(uvm_phase phase);
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+      axi4_item_seq#(ADDR_W, DATA_W, ID_W, USER_W) prefill;
+      phase.raise_objection(this);
+      seqr = env.get_master_sequencer(0);
+      if (seqr == null) `uvm_fatal(get_type_name(), "Master sequencer not found at index 0")
+
+      // Prefill the exact mapped address before enabling the write error.
+      env_cfg.agent_cfgs[1].slave_err_enable = 1'b0;
+      prefill = new("prefill");
+      prefill.item = new("wr_sentinel");
+      prefill.item.is_write = 1'b1;
+      prefill.item.id = 'ha;
+      prefill.item.addr = ERROR_ADDR;
+      prefill.item.len = 0;
+      prefill.item.size = $clog2(DATA_W/8);
+      prefill.item.burst = AXI4_BURST_INCR;
+      prefill.item.user = '0;
+      prefill.item.allocate_payload();
+      prefill.item.data[0] = SENTINEL;
+      prefill.item.strb[0] = '1;
+      prefill.start(seqr);
+      if (prefill.item.reset_aborted || prefill.item.timeout_aborted ||
+          prefill.item.bresp !== AXI4_RESP_OKAY)
+        `uvm_fatal(get_type_name(), "SLVERR write prefill did not complete with OKAY")
+      env_cfg.agent_cfgs[1].slave_err_enable = 1'b1;
+
+      super.run_phase(phase);
+      `uvm_info("VIP_RESP_CHECK", "Address-scoped write SLVERR and readback passed", UVM_LOW)
+      phase.drop_objection(this);
+    endtask
+  endclass
+
+  class axi4_b2b_slverr_read_test extends axi4_b2b_error_read_test;
+    `uvm_component_utils(axi4_b2b_slverr_read_test)
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+      error_response = AXI4_RESP_SLVERR;
+      burst_len = 8'd3;
+      txn_id = 'hb;
+    endfunction
+  endclass
+
+  class axi4_b2b_sideband_coverage_test extends axi4_b2b_base_test;
+    `uvm_component_utils(axi4_b2b_sideband_coverage_test)
+    localparam logic [ADDR_W-1:0] TEST_ADDR = 32'h9000;
+    localparam logic [DATA_W-1:0] TEST_DATA = 64'h7654_3210_89AB_CDEF;
+
+    function new(string name, uvm_component parent);
+      super.new(name, parent);
+    endfunction
+
+    virtual function void post_build_cfg();
+      env_cfg.agent_cfgs[0].master_pipelined = 1'b0;
+    endfunction
+
+    task run_phase(uvm_phase phase);
+      axi4_sequencer#(ADDR_W, DATA_W, ID_W, USER_W) seqr;
+      axi4_item_seq#(ADDR_W, DATA_W, ID_W, USER_W) seq;
+      logic [2:0] prot_values[6] = '{1, 2, 4, 5, 6, 7};
+      logic [3:0] qos_values[3] = '{4, 12, 15};
+      phase.raise_objection(this);
+      seqr = env.get_master_sequencer(0);
+      if (seqr == null) `uvm_fatal(get_type_name(), "Master sequencer not found at index 0")
+
+      // Write a full word before verifying the six attribute combinations.
+      seq = new("sideband_prefill");
+      seq.item = new("wr");
+      seq.item.is_write = 1'b1;
+      seq.item.id = 'hc;
+      seq.item.addr = TEST_ADDR;
+      seq.item.len = 0;
+      seq.item.size = $clog2(DATA_W/8);
+      seq.item.burst = AXI4_BURST_INCR;
+      seq.item.user = '0;
+      seq.item.allocate_payload();
+      seq.item.data[0] = TEST_DATA;
+      seq.item.strb[0] = '1;
+      seq.start(seqr);
+      if (seq.item.reset_aborted || seq.item.timeout_aborted ||
+          seq.item.bresp !== AXI4_RESP_OKAY)
+        `uvm_fatal(get_type_name(), "Sideband prefill did not complete with OKAY")
+
+      foreach (prot_values[i]) begin
+        seq = new($sformatf("sideband_read_%0d", i));
+        seq.item = new("rd");
+        seq.item.is_write = 1'b0;
+        seq.item.id = 'hc;
+        seq.item.addr = TEST_ADDR;
+        seq.item.len = 0;
+        seq.item.size = $clog2(DATA_W/8);
+        seq.item.burst = AXI4_BURST_INCR;
+        seq.item.user = '0;
+        seq.item.prot = prot_values[i];
+        seq.item.qos = qos_values[i % $size(qos_values)];
+        seq.item.cache = '1;
+        seq.item.region = '1;
+        seq.item.allocate_payload();
+        seq.start(seqr);
+        if (seq.item.reset_aborted || seq.item.timeout_aborted ||
+            seq.item.rresp.size() != 1 || seq.item.rresp[0] !== AXI4_RESP_OKAY ||
+            seq.item.data.size() != 1 || seq.item.data[0] !== TEST_DATA)
+          `uvm_fatal(get_type_name(), $sformatf("Sideband readback failed for ARPROT=%0d", prot_values[i]))
+      end
+      `uvm_info("VIP_RESP_CHECK", "Six sideband reads returned OKAY and matched data", UVM_LOW)
       phase.drop_objection(this);
     endtask
   endclass
